@@ -16,72 +16,30 @@
 #include <iostream>
 
 // Challenge
-#include "ShaderProgram.h"
-#include "Image.h"
-#include "Texture.h"
-#include "Common.hpp"
+#include <Source\ShaderProgram.h>
+#include <Source\Image.h>
+#include <Source\Texture.h>
+#include <Source\Common.hpp>
+#include <Source\Clock.hpp>
+#include <Source\TickCounter.hpp>
+#include <Math\Vector2.h>
+#include <Math\Vector3.h>
+
 
 #include <sstream>
 
-//const valuse
+//const value
 const int WindowWidth = 1024;
 const int WindowHeight = 768;
 
 using namespace glm;
 
-class Clock
-{
-public:
-	Clock()
-	{
-	}
-
-	double getElapsedTime() const
-	{
-		return (glfwGetTime() - m_startTime);
-	}
-
-	double restart() 
-	{
-		double now = glfwGetTime();
-		double elapsed = now - m_startTime;
-		m_startTime = now;
-
-		return elapsed;
-	}
-
-private:
-		double m_startTime = glfwGetTime();
-};
-
-class TickCounter
-{
-public:
-	bool update(double _frequency)
-	{
-		bool reset = false;
-		if (m_clock.getElapsedTime() >= _frequency)
-		{
-			m_tickRate = m_tick / _frequency;
-			m_tick = 0;
-			reset = true;
-			m_clock.restart();
-		}
-		m_tick++;
-
-		return reset;
-	}
-	inline std::size_t getTickRate() const {
-		return m_tickRate;
-	}
-
-private:
-	std::size_t m_tick;
-	std::size_t m_tickRate;
-	Clock m_clock;
-};
 
 
+
+
+//Note(mate): window close
+//TODO(mate): keyboardhandler
 INTERNAL void
 HandleInput(GLFWwindow* _window, bool* _running)
 {
@@ -121,6 +79,13 @@ glfwHint()
 	glfwSwapInterval(1);
 }
 
+struct Vertex
+{
+	Challenge::Vector2 position;
+	Challenge::Vector3 color;
+	Challenge::Vector2 texCoord;
+};
+
 int
 main(void)
 {
@@ -128,13 +93,13 @@ main(void)
 
 	// Initialize GLFW
 	assert(glfwInit() && "Failed to init GLFW\n");
-
+	window = nullptr;
 	window = glfwCreateWindow(WindowWidth, WindowHeight,
 							  "Challenge",
 							  NULL, NULL);
 
 	assert(window != NULL && "Failed to open GLFW window");
-
+	
 	glfwMakeContextCurrent(window);
 
 	// Initialize GLEW
@@ -147,18 +112,18 @@ main(void)
 
 	glfwHint();
 
-	//rect
-	float vertices[] =
+//Note(mate): rect
+	Vertex vertices[] =
 	{
 		//      x      y     r     g     b     s     t
-			+0.5f, +0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, // Vertex 0
-			-0.5f, +0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, // Vertex 1
-			+0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, // Vertex 2
-			-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, // Vertex 3
+			{{+0.5f, +0.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 0.0f}}, // Vertex 0
+			{{-0.5f, +0.5f}, {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f}}, // Vertex 1
+			{{+0.5f, -0.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f}}, // Vertex 2
+			{{-0.5f, -0.5f}, {1.0f, 1.0f, 1.0f}, {0.0f, 1.0f}}, // Vertex 3
 	};
 
-	//Vertex Buffer Object
-	GLuint vbo; // Vertex Buffer Object
+	//Note(mate): Vertex Buffer Object
+	GLuint vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER,
@@ -166,38 +131,37 @@ main(void)
 				 vertices,
 				 GL_STATIC_DRAW);
 
-	//Note(mate): shader
+//Note(mate): shader
 	Challenge::ShaderProgram shaderProgram;
 
-	if (!shaderProgram.attachShaderfromFile(Challenge::ShaderType::Vertex, "Shaders\\vert.glsl")) {
-		throw std::runtime_error(shaderProgram.getErrorLog());
-	}
+	if (!shaderProgram.attachShaderfromFile(Challenge::ShaderType::Vertex, "Source\\Shaders\\vert.glsl")) {
+		throw std::runtime_error(shaderProgram.getErrorLog());}
 
-	if (!shaderProgram.attachShaderfromFile(Challenge::ShaderType::Fragment, "Shaders\\frag.glsl")) {
-		throw std::runtime_error(shaderProgram.getErrorLog());
-	}
+	if (!shaderProgram.attachShaderfromFile(Challenge::ShaderType::Fragment, "Source\\Shaders\\frag.glsl")) {
+		throw std::runtime_error(shaderProgram.getErrorLog());}
 
 	shaderProgram.bindAttributeLocation(0, "vertPosition");
 	shaderProgram.bindAttributeLocation(1, "vertColor");
 	shaderProgram.bindAttributeLocation(2, "vertTexCoord");
 
 	if (!shaderProgram.Link()) {
-		throw std::runtime_error(shaderProgram.getErrorLog());
-	}
+		throw std::runtime_error(shaderProgram.getErrorLog());}
+
 	shaderProgram.Use();
 
-	//rect end
 
+
+//Note(mate): texture
 	Challenge::Texture tex;
-	tex.loadFromFile("Textures\\test.jpg");
+	tex.loadFromFile("Source\\Textures\\test.jpg");
 	tex.bind(0);
 
 	shaderProgram.setUniform("uniTex", 0);
 
 	bool running = true;
 
-	//Note(mate): FPS
-	TickCounter tc;
+//Note(mate): FPS
+	Challenge::TickCounter tc;
 
 	while (running)
 	{

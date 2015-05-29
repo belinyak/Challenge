@@ -19,25 +19,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Common.hpp" />
-    <ClInclude Include="Source\Image.h" />
-    <ClInclude Include="Source\NonCopyable.hpp" />
-    <ClInclude Include="Source\ShaderProgram.h" />
-    <ClInclude Include="Source\Texture.h" />
-    <ClInclude Include="Source\Types.hpp" />
+    <Image Include="Source\Textures\test.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Core.cpp" />
-    <ClCompile Include="Source\Image.cpp" />
-    <ClCompile Include="Source\ShaderProgram.cpp" />
-    <ClCompile Include="Source\Texture.cpp" />
+    <ClInclude Include="Source\Math\Vector2.h" />
+    <ClInclude Include="Source\Math\Vector3.h" />
+    <ClInclude Include="Source\Source\Clock.hpp" />
+    <ClInclude Include="Source\Source\Common.hpp" />
+    <ClInclude Include="Source\Source\Image.h" />
+    <ClInclude Include="Source\Source\NonCopyable.hpp" />
+    <ClInclude Include="Source\Source\ShaderProgram.h" />
+    <ClInclude Include="Source\Source\Texture.h" />
+    <ClInclude Include="Source\Source\TickCounter.hpp" />
+    <ClInclude Include="Source\Source\Types.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Textures\test.jpg" />
+    <ClCompile Include="Source\Math\Vector2.cpp" />
+    <ClCompile Include="Source\Math\Vector3.cpp" />
+    <ClCompile Include="Source\Source\Core.cpp" />
+    <ClCompile Include="Source\Source\Image.cpp" />
+    <ClCompile Include="Source\Source\ShaderProgram.cpp" />
+    <ClCompile Include="Source\Source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\frag.glsl" />
-    <None Include="Shaders\vert.glsl" />
+    <None Include="Source\Shaders\frag.glsl" />
+    <None Include="Source\Shaders\vert.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FFC3F50E-BC2D-4628-BD45-2C1520604A74}</ProjectGuid>
@@ -93,7 +99,7 @@
     <LibraryPath>f:\Programozás\OpenGl\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>F:\Programozás\Boost\boost_1_58_0;F:\Programozás\OpenGl\Includes\OpenGL includes;F:\Programozás\OpenGl\Includes\FreeType includes;F:\Programozás\OpenGl\Includes\STB includes;$(IncludePath)</IncludePath>
+    <IncludePath>F:\Programozás\Boost\boost_1_58_0;F:\Programozás\OpenGl\Includes\OpenGL includes;F:\Programozás\OpenGl\Includes\FreeType includes;c:\Users\T520\Documents\GitHub\Challenge\Source;F:\Programozás\OpenGl\Includes\STB includes;$(IncludePath)</IncludePath>
     <LibraryPath>F:\Programozás\Boost\boost_1_58_0\stage\lib;f:\Programozás\OpenGl\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

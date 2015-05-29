@@ -1,11 +1,13 @@
-#include "ShaderProgram.h"
+#include <Source/ShaderProgram.h>
 #include <fstream>
 #include <assert.h> //TODO(mate): boost assert??
+
+
 
 namespace Challenge
 {
 
-std::string //TODO(mate): boost string??
+std::string //TODO(mate): boost??
 StringfromFile(const std::string& _fileName)
 {
 	std::ifstream file;
@@ -16,6 +18,7 @@ StringfromFile(const std::string& _fileName)
 	std::string line;
 
 	assert(file.is_open() && "Failed to open file at StringfromFile");
+
 
 	while (file.good())
 	{
@@ -111,8 +114,7 @@ ShaderProgram::attachShaderfromMemory(ShaderType _type,
 void
 ShaderProgram::Use() const
 {
-	if (!isInUse())
-	{
+	if (!isInUse()) {
 		glUseProgram(m_object);
 	}
 }
@@ -130,8 +132,7 @@ ShaderProgram::isInUse() const
 void
 ShaderProgram::stopUsing() const
 {
-	if (isInUse())
-	{
+	if (isInUse()) {
 		glUseProgram(0);
 	}
 }
@@ -139,8 +140,7 @@ ShaderProgram::stopUsing() const
 bool
 ShaderProgram::Link()
 {
-	if (!m_object)
-	{
+	if (!m_object) {
 		m_object = glCreateProgram();
 	}
 
@@ -158,7 +158,7 @@ ShaderProgram::Link()
 				std::string msg("Program linking failure : \n");
 
 				GLint infoLogLength;
-				
+
 				glGetProgramiv(m_object, GL_INFO_LOG_LENGTH, &infoLogLength);
 				char* strInfoLog = new char[infoLogLength + 1];
 				glGetProgramInfoLog(m_object, infoLogLength, NULL, strInfoLog);
@@ -271,5 +271,4 @@ ShaderProgram::setUniform(const GLchar* _name,
 {
 	glUniform1ui(getUniformLocation(_name), _x);
 }
-
 }

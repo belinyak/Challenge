@@ -2,59 +2,80 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source">
-      <UniqueIdentifier>{7fe41ad2-8b99-453e-9173-c69bb0bd7b00}</UniqueIdentifier>
+      <UniqueIdentifier>{fa065f72-4e8f-4597-8a0f-0c2c9836fb50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{1a838dd8-511a-4fc6-af17-003361bd7cbf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders">
-      <UniqueIdentifier>{8c7f3d3c-0cc1-4962-b585-10b2e40040be}</UniqueIdentifier>
+      <UniqueIdentifier>{e4691c79-4e47-4f42-b115-9d66d47f47b4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Textures">
-      <UniqueIdentifier>{127c1904-8390-4151-8be1-3f927b13eda3}</UniqueIdentifier>
+      <UniqueIdentifier>{de76cd46-383d-4c29-bce3-26c139ab6722}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Common.hpp">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Image.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\NonCopyable.hpp">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ShaderProgram.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Texture.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Types.hpp">
-      <Filter>Source</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Source\Core.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Image.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ShaderProgram.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Textures\test.jpg">
+    <Image Include="Source\Textures\test.jpg">
       <Filter>Textures</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\frag.glsl">
+    <ClInclude Include="Source\Source\Clock.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Common.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Image.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\NonCopyable.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\ShaderProgram.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Texture.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\TickCounter.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Types.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Vector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Vector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Source\Core.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Image.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\ShaderProgram.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Texture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Vector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Vector3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Shaders\frag.glsl">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\vert.glsl">
+    <None Include="Source\Shaders\vert.glsl">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

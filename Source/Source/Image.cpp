@@ -1,4 +1,4 @@
-#include "Image.h"
+#include <Source/Image.h>
 
 #define STBI_FAILURE_USERMSG
 #define STB_IMAGE_IMPLEMENTATION
@@ -16,9 +16,7 @@ Image::Image()
 	, m_width(0)
 	, m_height(0)
 	, m_pixels(nullptr)
-{
-
-}
+{}
 
 Image::Image(u32 _width, u32 _height,
 			 Format _format,
@@ -86,7 +84,6 @@ Image::loadFromFile(const char* _fileName)
 	}
 }
 
-
 u8*
 Image::getPixel(u32 _column, u32 _row) const
 {
@@ -149,14 +146,12 @@ Image::loadFromMemory(u32 _width, u32 _height,
 
 	size_t imageSize = _width * _height * _format;
 
-	if (m_pixels)
-	{
+	if (m_pixels) {
 		delete[] m_pixels;
 	}
 	m_pixels = new u8[imageSize];
 
-	if (_pixels != nullptr)
-	{
+	if (_pixels != nullptr) {
 		std::memcpy(m_pixels, _pixels, imageSize);
 	}
 	return(true);
