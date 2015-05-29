@@ -89,7 +89,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>F:\Programozás\OpenGl\Includes\OpenGL includes;F:\Programozás\OpenGl\Includes\FreeType includes;$(IncludePath)</IncludePath>
+    <IncludePath>F:\Programozás\OpenGl\Includes\OpenGL includes;F:\Programozás\OpenGl\Includes\FreeType includes;f:\Programozás\OpenGl\Includes\STB includes\stb\;$(IncludePath)</IncludePath>
     <LibraryPath>f:\Programozás\OpenGl\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
