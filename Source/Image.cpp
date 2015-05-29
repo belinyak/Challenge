@@ -132,7 +132,6 @@ Image::flipVertically()
 	delete[] rowBuffer;
 }
 
-
 bool
 Image::loadFromMemory(u32 _width, u32 _height,
 					  Format _format,

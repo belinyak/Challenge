@@ -41,11 +41,15 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::~ShaderProgram()
 {
+	if (m_object)
+	{
+		glDeleteProgram(m_object);
+	}
+
 	glDeleteProgram(m_object);
 }
 
 bool
-
 ShaderProgram::attachShaderfromFile(ShaderType _type,
 									const std::string _fileName)
 {
@@ -58,6 +62,10 @@ bool
 ShaderProgram::attachShaderfromMemory(ShaderType _type,
 									  const std::string _source)
 {
+	if (!m_object)
+	{
+		m_object = glCreateProgram();
+	}
 	const char* shaderSource = _source.c_str();
 
 	GLuint shader;
@@ -75,7 +83,29 @@ ShaderProgram::attachShaderfromMemory(ShaderType _type,
 	glAttachShader(m_object, shader);
 	glCompileShader(shader);
 
-	return true;
+	//Note(mate): error handling
+	{
+		GLint status;
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+		if (status == GL_FALSE)
+		{
+			std::string msg("compile failure in shader: \n");
+
+			GLint infoLogLength;
+			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
+			char* strInfoLog = new char[infoLogLength + 1];
+			glGetShaderInfoLog(shader, infoLogLength, nullptr, strInfoLog);
+			msg.append(strInfoLog);
+			delete[] strInfoLog;
+			msg.append("\n");
+			m_errorLog.append(msg);
+
+			glDeleteShader(shader);
+
+			return(false);
+		}
+	}
+	return(true);
 }
 
 void
@@ -109,9 +139,42 @@ ShaderProgram::stopUsing() const
 bool
 ShaderProgram::Link()
 {
+	if (!m_object)
+	{
+		m_object = glCreateProgram();
+	}
+
 	if (!isLinked())
 	{
 		glLinkProgram(m_object);
+
+		//Note(mate): error handling
+		{
+			GLint status;
+			glGetProgramiv(m_object, GL_LINK_STATUS, &status);
+
+			if (status == GL_FALSE)
+			{
+				std::string msg("Program linking failure : \n");
+
+				GLint infoLogLength;
+				
+				glGetProgramiv(m_object, GL_INFO_LOG_LENGTH, &infoLogLength);
+				char* strInfoLog = new char[infoLogLength + 1];
+				glGetProgramInfoLog(m_object, infoLogLength, NULL, strInfoLog);
+				msg.append(strInfoLog);
+				delete[] strInfoLog;
+
+				msg.append("\n");
+				m_errorLog.append(msg);
+
+				glDeleteProgram(m_object);
+				m_object = 0;
+
+				m_linked = false;
+				return(m_linked);
+			}
+		}
 
 		m_linked = true;
 	}
@@ -156,8 +219,7 @@ ShaderProgram::setUniform(const GLchar* _name,
 
 void
 ShaderProgram::setUniform(const GLchar* _name,
-						  float _x,
-						  float _y)
+						  float _x, float _y)
 {
 	if (!isInUse())
 	{
@@ -168,9 +230,7 @@ ShaderProgram::setUniform(const GLchar* _name,
 
 void
 ShaderProgram::setUniform(const GLchar* _name,
-						  float _x,
-						  float _y,
-						  float _z)
+						  float _x, float _y, float _z)
 {
 	if (!isInUse())
 	{
@@ -181,9 +241,7 @@ ShaderProgram::setUniform(const GLchar* _name,
 
 void
 ShaderProgram::setUniform(const GLchar* _name,
-						  float _x,
-						  float _y,
-						  float _z,
+						  float _x, float _y, float _z,
 						  float _w)
 {
 	if (!isInUse())

@@ -11,9 +11,9 @@
 // Include GLM
 #include <glm/glm.hpp>
 
-
 #include <string>
 #include <fstream>
+#include <iostream>
 
 #include "ShaderProgram.h"
 #include "Image.h"
@@ -24,13 +24,6 @@ const int WindowWidth = 1024;
 const int WindowHeight = 768;
 
 using namespace glm;
-
-
-void glfwHints()
-{
-	glfwWindowHint(GLFW_VERSION_MAJOR, 2);
-	glfwWindowHint(GLFW_VERSION_MINOR, 1);
-}
 
 
 int
@@ -79,12 +72,22 @@ main(void)
 
 	//Note(mate): shader
 	Challenge::ShaderProgram shaderProgram;
-	shaderProgram.attachShaderfromFile(Challenge::ShaderType::Vertex, "Shaders\\vert.glsl");
-	shaderProgram.attachShaderfromFile(Challenge::ShaderType::Fragment, "Shaders\\frag.glsl");
+
+	if (!shaderProgram.attachShaderfromFile(Challenge::ShaderType::Vertex,"Shaders\\vert.glsl")){
+		throw std::runtime_error( shaderProgram.getErrorLog());
+	}
+	
+	if (!shaderProgram.attachShaderfromFile(Challenge::ShaderType::Fragment, "Shaders\\frag.glsl")){
+		throw std::runtime_error(shaderProgram.getErrorLog());
+	}
+
 	shaderProgram.bindAttributeLocation(0, "vertPosition");
 	shaderProgram.bindAttributeLocation(1, "vertColor");
 	shaderProgram.bindAttributeLocation(2, "vertTexCoord");
-	shaderProgram.Link();
+
+	if (!shaderProgram.Link()){
+		throw std::runtime_error(shaderProgram.getErrorLog());
+	}
 	shaderProgram.Use();
 
 //rect end
@@ -95,9 +98,7 @@ main(void)
 
 	shaderProgram.setUniform("uniTex", 0);
 
-
 	bool running = true;
-
 
 	while (running)
 	{
@@ -117,20 +118,16 @@ main(void)
 			glEnableVertexAttribArray(1); // vertColor
 			glEnableVertexAttribArray(2); // vertTexCoord
 
-
 			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)0);
 			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)(2 * sizeof(float)));
 			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)(5 * sizeof(float)));
-
 
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 			glDisableVertexAttribArray(0); // vertPosition
 			glDisableVertexAttribArray(1); // vertColor
 			glDisableVertexAttribArray(2); // vertTexCoord
-
 		}
-
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

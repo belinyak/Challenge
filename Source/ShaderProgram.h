@@ -55,6 +55,4 @@ private:
 	std::string m_errorLog;
 };
 }
-
-
 #endif // !#define CHALLENGE_SHADERPROGRA_H

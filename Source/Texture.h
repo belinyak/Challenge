@@ -2,12 +2,10 @@
 #define CHALLENGE_TEXTURE_H
 
 #include "NonCopyable.hpp"
-
 #include "Image.h"
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
-
 
 namespace Challenge
 {

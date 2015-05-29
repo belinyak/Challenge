@@ -30,7 +30,6 @@
     <ClCompile Include="Source\Core.cpp" />
     <ClCompile Include="Source\Image.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
-    <ClCompile Include="Source\Source.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>

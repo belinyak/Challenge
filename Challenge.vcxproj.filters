@@ -41,9 +41,6 @@
     <ClCompile Include="Source\ShaderProgram.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Texture.cpp">
       <Filter>Source</Filter>
     </ClCompile>

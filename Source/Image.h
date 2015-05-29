@@ -46,9 +46,6 @@ private:
 };
 }
 
-
-
-
 #endif // !#define CHALLENGE_IMAGE_H
 
 
