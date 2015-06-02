@@ -1,6 +1,7 @@
 #define OPENGL_MAJOR_VERSION	2
 #define OPENGL_MINOR_VERSION	1
 
+
 // Include GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -35,10 +36,6 @@ const int WindowHeight = 768;
 using namespace glm;
 
 
-
-
-
-//Note(mate): window close
 //TODO(mate): keyboardhandler
 INTERNAL void
 HandleInput(GLFWwindow* _window, bool* _running)
@@ -146,10 +143,7 @@ main(void)
 
 	if (!shaderProgram.Link()) {
 		throw std::runtime_error(shaderProgram.getErrorLog());}
-
 	shaderProgram.Use();
-
-
 
 //Note(mate): texture
 	Challenge::Texture tex;
@@ -159,7 +153,6 @@ main(void)
 	shaderProgram.setUniform("uniTex", 0);
 
 	bool running = true;
-
 //Note(mate): FPS
 	Challenge::TickCounter tc;
 
@@ -190,6 +183,6 @@ main(void)
 
 	glfwDestroyWindow(window);
 	glfwTerminate();
-	return EXIT_SUCCESS;
+	return( EXIT_SUCCESS);
 }
 

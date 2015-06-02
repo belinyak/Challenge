@@ -22,8 +22,11 @@
     <Image Include="Source\Textures\test.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Math\Matrix.hpp" />
+    <ClInclude Include="Source\Math\Matrix4.hpp" />
     <ClInclude Include="Source\Math\Vector2.h" />
     <ClInclude Include="Source\Math\Vector3.h" />
+    <ClInclude Include="Source\Math\Vector4.hpp" />
     <ClInclude Include="Source\Source\Clock.hpp" />
     <ClInclude Include="Source\Source\Common.hpp" />
     <ClInclude Include="Source\Source\Image.h" />

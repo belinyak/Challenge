@@ -26,10 +26,10 @@ public:
 	bool loadFromFile(const char* _fileName);
 	bool loadFromMemory(u32 _width, u32 _height, Format _format, const u8* _pixels);
 
-	inline u32 getWidth() const { return m_width; }
-	inline u32 getHeight() const { return m_height; }
-	inline Format getFormat() const { return m_format; }
-	inline u8* getPixelPtr() const { return m_pixels; }
+	inline u32 getWidth()		const { return( m_width	)	; }
+	inline u32 getHeight()		const { return( m_height)	; }
+	inline Format getFormat()	const { return( m_format)	; }
+	inline u8* getPixelPtr()	const { return( m_pixels)	; }
 
 	u8*  getPixel(u32 _column, u32 _row) const;
 	void	setPixel(u32 _column, u32 _row,const u32* _pixel) const;

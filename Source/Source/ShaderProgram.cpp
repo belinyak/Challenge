@@ -30,7 +30,7 @@ StringfromFile(const std::string& _fileName)
 
 	assert(output.length() != 0 && "StringfromFile output = null");
 
-	return output;
+	return( output);
 }
 
 
@@ -44,11 +44,9 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::~ShaderProgram()
 {
-	if (m_object)
-	{
+	if (m_object){
 		glDeleteProgram(m_object);
 	}
-
 	glDeleteProgram(m_object);
 }
 
@@ -58,27 +56,24 @@ ShaderProgram::attachShaderfromFile(ShaderType _type,
 {
 	std::string source = StringfromFile(_fileName);
 
-	return attachShaderfromMemory(_type, source);
+	return( attachShaderfromMemory(_type, source));
 }
 
 bool
 ShaderProgram::attachShaderfromMemory(ShaderType _type,
 									  const std::string _source)
 {
-	if (!m_object)
-	{
+	if (!m_object){
 		m_object = glCreateProgram();
 	}
 	const char* shaderSource = _source.c_str();
 
 	GLuint shader;
 
-	if (_type == ShaderType::Vertex)
-	{
+	if (_type == ShaderType::Vertex){
 		shader = glCreateShader(GL_VERTEX_SHADER);
 	}
-	else if (_type == ShaderType::Fragment)
-	{
+	else if (_type == ShaderType::Fragment){
 		shader = glCreateShader(GL_FRAGMENT_SHADER);
 	}
 
@@ -86,7 +81,7 @@ ShaderProgram::attachShaderfromMemory(ShaderType _type,
 	glAttachShader(m_object, shader);
 	glCompileShader(shader);
 
-	//Note(mate): error handling
+	// Note(mate): error handling
 	{
 		GLint status;
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
@@ -126,7 +121,7 @@ ShaderProgram::isInUse() const
 	glGetIntegerv(GL_CURRENT_PROGRAM,
 				  &currentProgram);
 
-	return (currentProgram == (GLint)m_object);
+	return( (currentProgram == (GLint)m_object) );
 }
 
 void
@@ -178,13 +173,13 @@ ShaderProgram::Link()
 
 		m_linked = true;
 	}
-	return m_linked;
+	return( m_linked);
 }
 
 bool
 ShaderProgram::isLinked()
 {
-	return m_linked;
+	return( m_linked);
 }
 
 void
@@ -197,13 +192,13 @@ ShaderProgram::bindAttributeLocation(GLuint _location,
 GLint
 ShaderProgram::getAttributeLocation(const GLchar* _name)
 {
-	return glGetAttribLocation(m_object, _name);
+	return( glGetAttribLocation(m_object, _name));
 }
 
 GLint
 ShaderProgram::getUniformLocation(const GLchar* _name)
 {
-	return glGetUniformLocation(m_object, _name);
+	return( glGetUniformLocation(m_object, _name));
 }
 
 void

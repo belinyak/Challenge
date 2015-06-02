@@ -22,9 +22,9 @@ public:
 
 	void bind(GLuint _position);
 
-	inline GLuint getObject() const { return m_object; }
-	inline GLfloat getWidth() const { return m_width; }
-	inline GLfloat getHeight() const { return m_height; }
+	inline GLuint getObject()	const { return( m_object)	; }
+	inline GLfloat getWidth()	const { return( m_width)	; }
+	inline GLfloat getHeight()	const { return( m_height)	; }
 
 private:
 	GLuint m_object;

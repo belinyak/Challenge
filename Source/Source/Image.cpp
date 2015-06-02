@@ -41,7 +41,7 @@ Image::Image(const Image& _other)
 Image& Image::operator=(const Image& _other)
 {
 	loadFromMemory(_other.m_width, _other.m_height, _other.m_format, _other.m_pixels);
-	return *this;
+	return( *this );
 }
 
 Image::~Image()
@@ -64,7 +64,7 @@ Image::loadFromFile(const char* _fileName)
 	if (!pixels)
 	{
 		std::cerr << stbi_failure_reason() << std::endl;
-		return false;
+		return(false);
 	}
 
 //	assert(pixels && "Image::loadFromFile");
