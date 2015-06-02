@@ -62,34 +62,34 @@ struct Vector4
 		, w(w)
 	{}
 
-	float& operator[](usize index) { return( data[index]; }
-	const float& operator[](usize index) const { return( data[index]; }
+	float& operator[](usize index) { return( data[index]); }
+	const float& operator[](usize index) const { return( data[index]); }
 
 	bool operator==(const Vector4& other) const
 	{
 		for (usize i = 0; i < 4; i++)
 		{
 			if (data[i] != other.data[i]) {
-				return( false;
+				return( false);
 			}
 		}
-		return( true;
+		return( true);
 	}
 
 	bool operator!=(const Vector4& other) const	{
-		return( (!operator==(other));
+		return( (!operator==(other)));
 	}
 
 	Vector4 operator+(const Vector4& other) const{
-		return( (Vector4(x + other.x, y + other.y, z + other.z, w + other.w));
+		return( (Vector4(x + other.x, y + other.y, z + other.z, w + other.w)));
 	}
 
 	Vector4 operator-(const Vector4& other) const	{
-		return(( Vector4(x - other.x, y - other.y, z - other.z, w - other.w) );
+		return(( Vector4(x - other.x, y - other.y, z - other.z, w - other.w) ));
 	}
 
 	Vector4 operator*(float scalar) const	{
-		return( (Vector4(scalar * x, scalar * y, scalar * z, scalar * w));
+		return( (Vector4(scalar * x, scalar * y, scalar * z, scalar * w)));
 	}
 
 	// Hadamard Product
@@ -99,12 +99,12 @@ struct Vector4
 		for (usize i = 0; i < 4; i++) {
 			result[i] = data[i] * other.data[i];
 		}
-		return( result;
+		return( result);
 	}
 
 	Vector4 operator/(float scalar) const
 	{
-		return(( Vector4(x / scalar, y / scalar, z / scalar, w / scalar) );
+		return(( Vector4(x / scalar, y / scalar, z / scalar, w / scalar) ));
 	}
 
 	Vector4& operator+=(const Vector4& other)
@@ -114,7 +114,7 @@ struct Vector4
 		z += other.z;
 		w += other.w;
 
-		return( ( *this);
+		return(*this);
 	}
 
 	Vector4& operator-=(const Vector4& other)
@@ -124,7 +124,7 @@ struct Vector4
 		z -= other.z;
 		w -= other.w;
 
-		return( *this;
+		return( *this);
 	}
 
 	Vector4& operator*=(float scalar)
@@ -134,7 +134,7 @@ struct Vector4
 		z *= scalar;
 		w *= scalar;
 
-		return( *this;
+		return( *this);
 	}
 
 	Vector4& operator/=(float scalar)
@@ -144,7 +144,7 @@ struct Vector4
 		z /= scalar;
 		w /= scalar;
 
-		return( *this;
+		return(*this);
 	}
 
 	union
@@ -166,28 +166,28 @@ struct Vector4
 };
 
 inline Vector4 operator*(float scalar, const Vector4& vector){
-	return( vector * scalar;
+	return( vector * scalar);
 }
 
 inline float dot(const Vector4& a, const Vector4& b)
 {
-	return( a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+	return( a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w);
 }
 
 inline float lengthSquared(const Vector4& a) { 
-	return( dot(a, a); 
+	return( dot(a, a)); 
 }
 
 inline float length(const Vector4& a) { 
-	return( std::sqrtf(lengthSquared(a)); 
+	return( std::sqrtf(lengthSquared(a))); 
 }
 
 inline Vector4 normalized(const Vector4& a) {
-	return( a * (1.0f / length(a));
+	return( a * (1.0f / length(a)));
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Vector4& v){
-	return( os << "Vector4(" << v[0] << ", " << v[1] << ", " << v[2] << ", " << v[3] << ")";
+	return( os << "Vector4(" << v[0] << ", " << v[1] << ", " << v[2] << ", " << v[3] << ")");
 }
 
 } // !namespace Dunjun
