@@ -52,7 +52,7 @@ rotate(float _angle, const Vector3& _v)
 	rot[2][3] = 0;
 	
 	return (rot);
-}
+} 
 
 inline Matrix4
 scale(const Vector3& _v)
