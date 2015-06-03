@@ -4,8 +4,8 @@
 #include <Source/Types.hpp>
 #include <cmath>
 
-#include <Math/Vector3.h>
-#include <Math/Vector2.h>
+#include <Math/Vector3.hpp>
+#include <Math/Vector2.hpp>
 
 namespace Challenge
 {

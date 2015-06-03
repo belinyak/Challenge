@@ -22,12 +22,14 @@
     <Image Include="Source\Textures\test.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Math\Functions.hpp" />
     <ClInclude Include="Source\Math\Matrix.hpp" />
     <ClInclude Include="Source\Math\Matrix4.hpp" />
-    <ClInclude Include="Source\Math\Vector2.h" />
-    <ClInclude Include="Source\Math\Vector3.h" />
+    <ClInclude Include="Source\Math\Vector2.hpp" />
+    <ClInclude Include="Source\Math\Vector3.hpp" />
     <ClInclude Include="Source\Math\Vector4.hpp" />
     <ClInclude Include="Source\Source\Clock.hpp" />
+    <ClInclude Include="Source\Source\Color.hpp" />
     <ClInclude Include="Source\Source\Common.hpp" />
     <ClInclude Include="Source\Source\Image.h" />
     <ClInclude Include="Source\Source\NonCopyable.hpp" />
@@ -37,8 +39,6 @@
     <ClInclude Include="Source\Source\Types.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Math\Vector2.cpp" />
-    <ClCompile Include="Source\Math\Vector3.cpp" />
     <ClCompile Include="Source\Source\Core.cpp" />
     <ClCompile Include="Source\Source\Image.cpp" />
     <ClCompile Include="Source\Source\ShaderProgram.cpp" />

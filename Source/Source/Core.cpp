@@ -23,9 +23,10 @@
 #include <Source\Common.hpp>
 #include <Source\Clock.hpp>
 #include <Source\TickCounter.hpp>
-#include <Math\Vector2.h>
-#include <Math\Vector3.h>
+#include <Math\Vector2.hpp>
+#include <Math\Vector3.hpp>
 #include <Math\Matrix.hpp>
+#include <Source\Color.hpp>
 
 #include <sstream>
 
@@ -34,6 +35,40 @@ const int WindowWidth = 1024;
 const int WindowHeight = 768;
 
 using namespace glm;
+
+struct Vertex
+{
+	Challenge::Vector2 position;
+	Challenge::Color color;
+	Challenge::Vector2 texCoord;
+};
+
+ INTERNAL void 
+glfwHints()
+ {
+	 	glfwDefaultWindowHints();
+	 	glfwWindowHint(GLFW_VERSION_MAJOR, 2);
+	 	glfwWindowHint(GLFW_VERSION_MINOR, 1);
+	 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+ }
+
+INTERNAL void
+Render()
+{
+	glEnableVertexAttribArray(0); // vertPosition
+	glEnableVertexAttribArray(1); // vertColor
+	glEnableVertexAttribArray(2); // vertTexCoord
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)(2 * sizeof(float)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof( Challenge::Vector2 ) + sizeof(Challenge::Color)));
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	glDisableVertexAttribArray(0); // vertPosition
+	glDisableVertexAttribArray(1); // vertColor
+	glDisableVertexAttribArray(2); // vertTexCoord
+}
 
 
 //TODO(mate): keyboardhandler
@@ -46,42 +81,6 @@ HandleInput(GLFWwindow* _window, bool* _running)
 		*_running = false;
 	}
 }
-
-INTERNAL void
-Render()
-{
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glEnableVertexAttribArray(0); // vertPosition
-	glEnableVertexAttribArray(1); // vertColor
-	glEnableVertexAttribArray(2); // vertTexCoord
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)(2 * sizeof(float)));
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)(5 * sizeof(float)));
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-	glDisableVertexAttribArray(0); // vertPosition
-	glDisableVertexAttribArray(1); // vertColor
-	glDisableVertexAttribArray(2); // vertTexCoord
-}
-
-INTERNAL void
-glfwHint()
-{
-	glfwWindowHint(GLFW_VERSION_MAJOR, 2);
-	glfwWindowHint(GLFW_VERSION_MINOR, 1);
-	glfwSwapInterval(1);
-}
-
-struct Vertex
-{
-	Challenge::Vector2 position;
-	Challenge::Vector3 color;
-	Challenge::Vector2 texCoord;
-};
 
 int
 main(void)
@@ -107,7 +106,7 @@ main(void)
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-	glfwHint();
+	glfwHints();
 
 //Note(mate): rect
 	Vertex vertices[] =
@@ -119,7 +118,7 @@ main(void)
 			{{-0.5f, -0.5f}, {1.0f, 1.0f, 1.0f}, {0.0f, 1.0f}}, // Vertex 3
 	};
 
-	//Note(mate): Vertex Buffer Object
+//Note(mate): Vertex Buffer Object
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -149,12 +148,15 @@ main(void)
 	Challenge::Texture tex;
 	tex.loadFromFile("Source\\Textures\\test.jpg");
 	tex.bind(0);
-
 	shaderProgram.setUniform("uniTex", 0);
 
+//Note(mate):  013,31:19
+
 	bool running = true;
+
 //Note(mate): FPS
 	Challenge::TickCounter tc;
+	Challenge::Clock frameClock;
 
 	while (running)
 	{
@@ -165,6 +167,16 @@ main(void)
 			glViewport(0, 0, width, height);
 		}
 
+		glClearColor(0.5f, 0.69f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		shaderProgram.Use();
+		Challenge::Matrix4 mat = Challenge::translate({ 0.5f,0.5f,0.0f }) * Challenge::rotate(3.14f / 3.0f, { 0,0,1 });
+		
+		shaderProgram.setUniform("uniModel", mat);
+		Render();
+		shaderProgram.stopUsing();
+
 		//Note(mate): FPS
 		if (tc.update(0.5))
 		{
@@ -172,8 +184,6 @@ main(void)
 			ss << "Challenge  |  " << tc.getTickRate() << " FPS";
 			glfwSetWindowTitle(window, ss.str().c_str());
 		}
-
-		Render();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

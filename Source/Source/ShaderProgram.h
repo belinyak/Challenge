@@ -7,6 +7,11 @@
 #include <string>
 
 #include <Source/NonCopyable.hpp>
+#include <Math\Vector2.hpp>
+#include <Math\Vector3.hpp>
+#include <Math\Vector4.hpp>
+#include <Math\Matrix4.hpp>
+
 
 namespace Challenge
 {
@@ -45,6 +50,11 @@ public:
 	void setUniform(const GLchar* _name, unsigned int _x);
 	void setUniform(const GLchar* _name, int _x);
 	void setUniform(const GLchar* _name, bool _x);
+
+	void setUniform(const GLchar* _name, Vector2& _v);
+	void setUniform(const GLchar* _name, Vector3& _v);
+	void setUniform(const GLchar* _name, Vector4& _v);
+	void setUniform(const GLchar* _name,const  Matrix4& _v);
 
 	inline GLuint getObject() const { 
 		return( m_object); 

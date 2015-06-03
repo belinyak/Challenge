@@ -44,19 +44,25 @@
     <ClInclude Include="Source\Source\Types.hpp">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Vector2.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Vector3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Math\Vector4.hpp">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Math\Matrix4.hpp">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Matrix.hpp" />
+    <ClInclude Include="Source\Math\Vector2.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Vector3.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Matrix.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Functions.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Color.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Source\Core.cpp">
@@ -70,12 +76,6 @@
     </ClCompile>
     <ClCompile Include="Source\Source\Texture.cpp">
       <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Math\Vector2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Math\Vector3.cpp">
-      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

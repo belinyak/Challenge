@@ -2,12 +2,10 @@
 #include <fstream>
 #include <assert.h> //TODO(mate): boost assert??
 
-
-
 namespace Challenge
 {
 
-std::string //TODO(mate): boost??
+std::string 
 StringfromFile(const std::string& _fileName)
 {
 	std::ifstream file;
@@ -205,33 +203,30 @@ void
 ShaderProgram::setUniform(const GLchar* _name,
 						  float _x)
 {
-	if (!isInUse())
-	{
+	if (!isInUse()){
 		Use();
-		glUniform1f(getUniformLocation(_name), _x);
 	}
+	glUniform1f(getUniformLocation(_name), _x);
 }
 
 void
 ShaderProgram::setUniform(const GLchar* _name,
 						  float _x, float _y)
 {
-	if (!isInUse())
-	{
+	if (!isInUse()){
 		Use();
-		glUniform2f(getUniformLocation(_name), _x, _y);
 	}
+	glUniform2f(getUniformLocation(_name), _x, _y);
 }
 
 void
 ShaderProgram::setUniform(const GLchar* _name,
 						  float _x, float _y, float _z)
 {
-	if (!isInUse())
-	{
+	if (!isInUse()){
 		Use();
-		glUniform3f(getUniformLocation(_name), _x, _y, _z);
 	}
+	glUniform3f(getUniformLocation(_name), _x, _y, _z);
 }
 
 void
@@ -239,17 +234,19 @@ ShaderProgram::setUniform(const GLchar* _name,
 						  float _x, float _y, float _z,
 						  float _w)
 {
-	if (!isInUse())
-	{
+	if (!isInUse()){
 		Use();
-		glUniform4f(getUniformLocation(_name), _x, _y, _z, _w);
 	}
+	glUniform4f(getUniformLocation(_name), _x, _y, _z, _w);
 }
 
 void
 ShaderProgram::setUniform(const GLchar* _name,
 						  int _x)
 {
+	if (!isInUse()){
+		Use();
+	}
 	glUniform1i(getUniformLocation(_name), _x);
 }
 
@@ -257,6 +254,9 @@ void
 ShaderProgram::setUniform(const GLchar* _name,
 						  bool _x)
 {
+	if (!isInUse()){
+		Use();
+	}
 	glUniform1i(getUniformLocation(_name), _x);
 }
 
@@ -264,6 +264,46 @@ void
 ShaderProgram::setUniform(const GLchar* _name,
 						  unsigned int _x)
 {
+	if (!isInUse()){
+		Use();
+	}
 	glUniform1ui(getUniformLocation(_name), _x);
 }
+
+void 
+ShaderProgram::setUniform(const GLchar* _name, Vector2& _v)
+{
+	if (!isInUse()){
+		Use();
+	}
+	glUniform2fv(getUniformLocation(_name), 1, _v.data);
 }
+
+void 
+ShaderProgram::setUniform(const GLchar* _name, Vector3& _v)
+{
+	if (!isInUse()) {
+		Use();
+	}
+	glUniform3fv(getUniformLocation(_name), 1, _v.data);
+}
+
+void
+ShaderProgram::setUniform(const GLchar* _name, Vector4& _v)
+{
+	if (!isInUse()) {
+		Use();
+	}
+	glUniform4fv(getUniformLocation(_name), 1, _v.data);
+}
+
+void 
+ShaderProgram::setUniform(const GLchar* _name, const Matrix4& _m)
+{
+	if (!isInUse()) {
+		Use();
+	}
+	glUniformMatrix4fv(getUniformLocation(_name), 1,GL_FALSE, _m[0].data);
+	}
+
+} // !namespace Challenge
