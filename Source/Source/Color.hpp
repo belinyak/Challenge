@@ -5,7 +5,6 @@
 
 namespace Challenge
 {
-
 union Color
 {
 	u8 data[4];
@@ -16,6 +15,5 @@ union Color
 };
 
 } //!namespace Challenge
-
 #endif // !#define CHALLENGE_COLOR_HPP
 

@@ -62,7 +62,15 @@
     <ClInclude Include="Source\Math\Functions.hpp">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Color.hpp" />
+    <ClInclude Include="Source\Source\Color.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Unit.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Angle.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Source\Core.cpp">

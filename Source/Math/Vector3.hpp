@@ -158,7 +158,7 @@ inline float length(const Vector3& a) {
 	return(std::sqrtf(lengthSquared(a)));
 }
 
-inline Vector3 normalized(const Vector3& a) {
+inline Vector3 normalize(const Vector3& a) {
 	return(a * (1.0f / length(a)));
 }
 

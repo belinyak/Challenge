@@ -111,8 +111,6 @@ struct Vector2
 		return(true);
 	}
 
-
-
 	union
 	{
 		float data[2];
@@ -171,7 +169,7 @@ length(const Vector2& _a)
 
 //Note(mate): normalizált v/hossz(v)
 inline Vector2
-normalized(const Vector2& _a)
+normalize(const Vector2& _a)
 {
 	return(_a  * (1.0f / length(_a)));
 }

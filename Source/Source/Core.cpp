@@ -59,11 +59,11 @@ Render()
 	glEnableVertexAttribArray(1); // vertColor
 	glEnableVertexAttribArray(2); // vertTexCoord
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid*)(2 * sizeof(float)));
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof( Challenge::Vector2 ) + sizeof(Challenge::Color)));
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(0));
+	glVertexAttribPointer(1,4,GL_UNSIGNED_BYTE,GL_TRUE,sizeof(Vertex), (const GLvoid*)(sizeof(Challenge::Vector2)));
+	glVertexAttribPointer(2,2,GL_FLOAT,GL_FALSE,sizeof(Vertex),(const GLvoid*)(sizeof(Challenge::Vector2) + sizeof(Challenge::Color)));
+	
+glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 	glDisableVertexAttribArray(0); // vertPosition
 	glDisableVertexAttribArray(1); // vertColor
@@ -89,10 +89,10 @@ main(void)
 
 	// Initialize GLFW
 	assert(glfwInit() && "Failed to init GLFW\n");
-	window = nullptr;
+	
 	window = glfwCreateWindow(WindowWidth, WindowHeight,
-							  "Challenge",
-							  NULL, NULL);
+									  "Challenge",
+									  NULL, NULL);
 
 	assert(window != NULL && "Failed to open GLFW window");
 	
@@ -101,8 +101,8 @@ main(void)
 	// Initialize GLEW
 	assert(!glewInit() && "Failed to init GLEW");
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
@@ -111,11 +111,11 @@ main(void)
 //Note(mate): rect
 	Vertex vertices[] =
 	{
-		//      x      y     r     g     b     s     t
-			{{+0.5f, +0.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 0.0f}}, // Vertex 0
-			{{-0.5f, +0.5f}, {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f}}, // Vertex 1
-			{{+0.5f, -0.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f}}, // Vertex 2
-			{{-0.5f, -0.5f}, {1.0f, 1.0f, 1.0f}, {0.0f, 1.0f}}, // Vertex 3
+		//  x      y     r     g     b     a       s     t
+		{ { +0.5f, +0.5f },{ { 255, 255, 255, 255 } },{ 1.0f, 0.0f } }, // Vertex 0
+		{ { -0.5f, +0.5f },{ { 255, 0, 0, 255 } },{ 0.0f, 0.0f } },     // Vertex 1
+		{ { +0.5f, -0.5f },{ { 0, 255, 0, 255 } },{ 1.0f, 1.0f } },     // Vertex 2
+		{ { -0.5f, -0.5f },{ { 0, 0, 255, 255 } },{ 0.0f, 1.0f } },     // Vertex 3
 	};
 
 //Note(mate): Vertex Buffer Object
@@ -123,18 +123,20 @@ main(void)
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER,
-				 sizeof(vertices),
-				 vertices,
-				 GL_STATIC_DRAW);
+							 sizeof(vertices),
+							 vertices,
+							 GL_STATIC_DRAW);
 
 //Note(mate): shader
 	Challenge::ShaderProgram shaderProgram;
 
 	if (!shaderProgram.attachShaderfromFile(Challenge::ShaderType::Vertex, "Source\\Shaders\\vert.glsl")) {
-		throw std::runtime_error(shaderProgram.getErrorLog());}
+		throw std::runtime_error(shaderProgram.getErrorLog());
+	}
 
 	if (!shaderProgram.attachShaderfromFile(Challenge::ShaderType::Fragment, "Source\\Shaders\\frag.glsl")) {
-		throw std::runtime_error(shaderProgram.getErrorLog());}
+		throw std::runtime_error(shaderProgram.getErrorLog());
+	}
 
 	shaderProgram.bindAttributeLocation(0, "vertPosition");
 	shaderProgram.bindAttributeLocation(1, "vertColor");
@@ -161,19 +163,27 @@ main(void)
 	while (running)
 	{
 		//Note(mate): resize window
-		{
-			int width, height;
-			glfwGetWindowSize(window, &width, &height);
-			glViewport(0, 0, width, height);
-		}
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
+		glViewport(0, 0, width, height);
 
 		glClearColor(0.5f, 0.69f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram.Use();
-		Challenge::Matrix4 mat = Challenge::translate({ 0.5f,0.5f,0.0f }) * Challenge::rotate(3.14f / 3.0f, { 0,0,1 });
-		
-		shaderProgram.setUniform("uniModel", mat);
+		{
+			float TAU = 6.28318530918f;
+			using namespace Challenge;
+			Matrix4 model = rotate(Radian(glfwGetTime() / 0.6f), { 0,1,0 });
+			Matrix4 view = lookAt({1.0f,2.0f,4.0f }, {0.0f,0.0f,0.0f }, {0.0f,1.0f,0.0f });
+			Matrix4 proj = perspective(Degree(50.0f), width/height, 0.1f, 100.0f);
+
+			Matrix4 camera = proj * view;
+
+			shaderProgram.setUniform("uniCamera", camera);
+			shaderProgram.setUniform("uniModel", model);
+		}
+
 		Render();
 		shaderProgram.stopUsing();
 

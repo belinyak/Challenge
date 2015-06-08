@@ -182,7 +182,7 @@ inline float length(const Vector4& a) {
 	return( std::sqrtf(lengthSquared(a))); 
 }
 
-inline Vector4 normalized(const Vector4& a) {
+inline Vector4 normalize(const Vector4& a) {
 	return( a * (1.0f / length(a)));
 }
 
@@ -191,5 +191,4 @@ inline std::ostream& operator<<(std::ostream& os, const Vector4& v){
 }
 
 } // !namespace Dunjun
-
 #endif

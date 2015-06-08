@@ -17,7 +17,6 @@ StringfromFile(const std::string& _fileName)
 
 	assert(file.is_open() && "Failed to open file at StringfromFile");
 
-
 	while (file.good())
 	{
 		getline(file, line);
@@ -168,7 +167,6 @@ ShaderProgram::Link()
 				return(m_linked);
 			}
 		}
-
 		m_linked = true;
 	}
 	return( m_linked);
