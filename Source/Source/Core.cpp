@@ -13,6 +13,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 // Challenge
 #include <Source\ShaderProgram.h>
@@ -26,8 +27,7 @@
 #include <Math\Matrix.hpp>
 #include <Source\Color.hpp>
 #include <Math\Constants.hpp>
-
-#include <sstream>
+#include <Math\Quaternion.hpp>
 
 //const value
 int WindowWidth = 1024;

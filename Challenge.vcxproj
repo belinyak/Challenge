@@ -28,6 +28,7 @@
     <ClInclude Include="Source\Math\Functions.hpp" />
     <ClInclude Include="Source\Math\Matrix.hpp" />
     <ClInclude Include="Source\Math\Matrix4.hpp" />
+    <ClInclude Include="Source\Math\Quaternion.hpp" />
     <ClInclude Include="Source\Math\Unit.hpp" />
     <ClInclude Include="Source\Math\Vector2.hpp" />
     <ClInclude Include="Source\Math\Vector3.hpp" />
