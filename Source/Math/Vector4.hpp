@@ -24,21 +24,18 @@ struct Vector4
 		, z(xyzw)
 		, w(xyzw)
 	{}
-
 	Vector4(float x, float y, float z, float w)
 		: x(x)
 		, y(y)
 		, z(z)
 		, w(w)
 	{}
-
 	Vector4(float xyzw[4])
 		: x(xyzw[0])
 		, y(xyzw[1])
 		, z(xyzw[2])
 		, w(xyzw[3])
 	{}
-
 	Vector4(const Vector4& _other) = default;
 
 	explicit Vector4(const Vector2& xy, float z, float w)
@@ -47,20 +44,22 @@ struct Vector4
 		, z(z)
 		, w(w)
 	{}
-
 	explicit Vector4(const Vector2& xy, const Vector2& zw)
 		: x(xy.x)
 		, y(xy.y)
 		, z(zw.x)
 		, w(zw.y)
 	{}
-
 	explicit Vector4(const Vector3& xyz, float w)
 		: x(xyz.x)
 		, y(xyz.y)
 		, z(xyz.z)
 		, w(w)
 	{}
+
+	Vector4 operator-() const {
+		return{ -x,-y,-z,-w };
+	}
 
 	float& operator[](usize index) { return( data[index]); }
 	const float& operator[](usize index) const { return( data[index]); }

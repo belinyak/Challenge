@@ -7,18 +7,23 @@ namespace Challenge
 
 //TODO(mate): srgb??
 INTERNAL GLenum
-getInternalFormat(Image::Format _format, bool _srgb)
+getInternalFormat(ImageFormat _format, bool _srgb)
 {
 	switch (_format)
 	{
-	case Image::Format_Greyscale:
-		return( GL_LUMINANCE);
-	case Image::Format_GreyscaleAlpha:
-		return( GL_LUMINANCE_ALPHA);
-	case Image::Format_RGB:
-		return( _srgb ? GL_SRGB : GL_RGB);
-	case Image::Format_RGBA:
-		return( _srgb ? GL_SRGB_ALPHA : GL_RGBA);
+	case ImageFormat::Greyscale:
+		return(GL_LUMINANCE);
+	case ImageFormat::GreyscaleAlpha:
+		return(GL_LUMINANCE_ALPHA);
+	case ImageFormat::RGB:
+		return(_srgb ? GL_SRGB : GL_RGB);
+	case ImageFormat::RGBA:
+		return(_srgb ? GL_SRGB_ALPHA : GL_RGBA);
+	//TODO(mate): assert
+	default:
+	case ImageFormat::None:
+		return(0);
+
 	}
 }
 
@@ -42,13 +47,13 @@ Texture::Texture(const Image& _image,
 	assert(loadFromImage(_image, _minMagFilter, _wrapMode) && "Texture::Texture()");
 }
 
-bool 
-Texture::loadFromFile(const char* _filename, 
-					  GLint _minMagFilter, 
-					  GLint _wrapMode )
+bool
+Texture::loadFromFile(const char* _filename,
+					  GLint _minMagFilter,
+					  GLint _wrapMode)
 {
 	Image image;
-	if (!image.loadFromFile(_filename)){
+	if (!image.loadFromFile(_filename)) {
 		return(false);
 	}
 	image.flipVertically();
@@ -56,12 +61,12 @@ Texture::loadFromFile(const char* _filename,
 	return(loadFromImage(image, _minMagFilter, _wrapMode));
 }
 
-bool 
-Texture::loadFromImage(const Image& _image, 
-						GLint _minMagFilter, 
-						GLint wrapMode )
+bool
+Texture::loadFromImage(const Image& _image,
+					   GLint _minMagFilter,
+					   GLint wrapMode)
 {
-	if (_image.getFormat() <=0 || _image.getFormat() > 4 ){
+	if ((usize)_image.getFormat() <= 0 || (usize)_image.getFormat() > 4) {
 		return(false);
 	}
 	m_width = (GLfloat)_image.getWidth();
@@ -90,7 +95,7 @@ Texture::~Texture()
 	glDeleteTextures(1, &m_object);
 }
 
-void 
+void
 Texture::bind(GLuint _position)
 {
 	//TODO(mate): error message
@@ -99,7 +104,7 @@ Texture::bind(GLuint _position)
 		_position = 31;
 	}
 
-	glActiveTexture(GL_TEXTURE0 + _position );
+	glActiveTexture(GL_TEXTURE0 + _position);
 	glClientActiveTexture(GL_TEXTURE0 + _position);
 	glEnable(GL_TEXTURE_2D);
 

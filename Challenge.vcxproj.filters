@@ -18,6 +18,9 @@
     <Image Include="Source\Textures\test.jpg">
       <Filter>Textures</Filter>
     </Image>
+    <Image Include="Source\Textures\sh.jpg">
+      <Filter>Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Source\Clock.hpp">
@@ -71,6 +74,9 @@
     <ClInclude Include="Source\Math\Angle.hpp">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Math\Constants.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Source\Core.cpp">
@@ -85,6 +91,7 @@
     <ClCompile Include="Source\Source\Texture.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Math\Constants.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\frag.glsl">

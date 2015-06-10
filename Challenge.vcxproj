@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Source\Textures\sh.jpg" />
     <Image Include="Source\Textures\test.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Math\Angle.hpp" />
+    <ClInclude Include="Source\Math\Constants.hpp" />
     <ClInclude Include="Source\Math\Functions.hpp" />
     <ClInclude Include="Source\Math\Matrix.hpp" />
     <ClInclude Include="Source\Math\Matrix4.hpp" />
@@ -41,6 +43,7 @@
     <ClInclude Include="Source\Source\Types.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Math\Constants.cpp" />
     <ClCompile Include="Source\Source\Core.cpp" />
     <ClCompile Include="Source\Source\Image.cpp" />
     <ClCompile Include="Source\Source\ShaderProgram.cpp" />
@@ -104,7 +107,7 @@
     <LibraryPath>f:\Programozás\OpenGl\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\Programozás\Boost\boost_1_58_0;E:\Programozás\OpenGl\Includes\OpenGL includes;E:\Programozás\OpenGl\Includes\FreeType includes;c:\Users\Belinyák Máté\Documents\GitHub\Challenge\Source;E:\Programozás\OpenGl\Includes\STB includes;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Programozás\Boost\boost_1_58_0;E:\Programozás\OpenGl\Includes\OpenGL includes;E:\Programozás\OpenGl\Includes\FreeType includes;c:\Users\Belinyak\Documents\GitHub\Challenge\Source;E:\Programozás\OpenGl\Includes\STB includes;$(IncludePath)</IncludePath>
     <LibraryPath>E:\Programozás\Boost\boost_1_58_0\stage\lib;E:\Programozás\OpenGl\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

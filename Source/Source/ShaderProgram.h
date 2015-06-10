@@ -5,6 +5,7 @@
 #include <GLFW\glfw3.h>
 
 #include <string>
+#include <map>
 
 #include <Source/NonCopyable.hpp>
 #include <Math\Vector2.hpp>
@@ -67,6 +68,9 @@ private:
 	GLuint m_object;
 	bool m_linked;
 	std::string m_errorLog;
+
+	std::map<const GLchar*, GLint> m_attribLocations;
+	std::map<const GLchar*, GLint> m_uniformLocations;
 };
 }
 #endif // !#define CHALLENGE_SHADERPROGRA_H

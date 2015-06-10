@@ -2,6 +2,8 @@
 #include <fstream>
 #include <assert.h> //TODO(mate): boost assert??
 
+
+
 namespace Challenge
 {
 
@@ -180,22 +182,38 @@ ShaderProgram::isLinked()
 
 void
 ShaderProgram::bindAttributeLocation(GLuint _location,
-									 const GLchar* _name)
+												 const GLchar* _name)
 {
 	glBindAttribLocation(m_object, _location, _name);
+	m_attribLocations[_name] = _location;
 }
 
 GLint
 ShaderProgram::getAttributeLocation(const GLchar* _name)
 {
-	return( glGetAttribLocation(m_object, _name));
+	auto found = m_attribLocations.find(_name);
+	if (found != m_attribLocations.end()){
+		return(found->second);
+	}
+
+	GLint loc = glGetAttribLocation(m_object, _name);
+	m_attribLocations[_name] = loc;
+	return(loc);
 }
 
 GLint
 ShaderProgram::getUniformLocation(const GLchar* _name)
 {
-	return( glGetUniformLocation(m_object, _name));
+	auto found = m_uniformLocations.find(_name);
+	if (found != m_uniformLocations.end()){
+		return(found->second);
+	}
+
+	GLint loc = glGetUniformLocation(m_object, _name);
+	m_uniformLocations[_name] = loc;
+	return(loc);
 }
+
 
 void
 ShaderProgram::setUniform(const GLchar* _name,
@@ -203,6 +221,11 @@ ShaderProgram::setUniform(const GLchar* _name,
 {
 	if (!isInUse()){
 		Use();
+	}
+
+	GLint loc = getUniformLocation(_name);
+	if (loc==-1){
+		return;
 	}
 	glUniform1f(getUniformLocation(_name), _x);
 }
@@ -214,6 +237,12 @@ ShaderProgram::setUniform(const GLchar* _name,
 	if (!isInUse()){
 		Use();
 	}
+
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
+	}
+
 	glUniform2f(getUniformLocation(_name), _x, _y);
 }
 
@@ -223,6 +252,10 @@ ShaderProgram::setUniform(const GLchar* _name,
 {
 	if (!isInUse()){
 		Use();
+	}
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
 	}
 	glUniform3f(getUniformLocation(_name), _x, _y, _z);
 }
@@ -235,6 +268,10 @@ ShaderProgram::setUniform(const GLchar* _name,
 	if (!isInUse()){
 		Use();
 	}
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
+	}
 	glUniform4f(getUniformLocation(_name), _x, _y, _z, _w);
 }
 
@@ -244,6 +281,10 @@ ShaderProgram::setUniform(const GLchar* _name,
 {
 	if (!isInUse()){
 		Use();
+	}
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
 	}
 	glUniform1i(getUniformLocation(_name), _x);
 }
@@ -255,6 +296,10 @@ ShaderProgram::setUniform(const GLchar* _name,
 	if (!isInUse()){
 		Use();
 	}
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
+	}
 	glUniform1i(getUniformLocation(_name), _x);
 }
 
@@ -265,6 +310,10 @@ ShaderProgram::setUniform(const GLchar* _name,
 	if (!isInUse()){
 		Use();
 	}
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
+	}
 	glUniform1ui(getUniformLocation(_name), _x);
 }
 
@@ -273,6 +322,10 @@ ShaderProgram::setUniform(const GLchar* _name, Vector2& _v)
 {
 	if (!isInUse()){
 		Use();
+	}
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
 	}
 	glUniform2fv(getUniformLocation(_name), 1, _v.data);
 }
@@ -283,6 +336,10 @@ ShaderProgram::setUniform(const GLchar* _name, Vector3& _v)
 	if (!isInUse()) {
 		Use();
 	}
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
+	}
 	glUniform3fv(getUniformLocation(_name), 1, _v.data);
 }
 
@@ -292,6 +349,10 @@ ShaderProgram::setUniform(const GLchar* _name, Vector4& _v)
 	if (!isInUse()) {
 		Use();
 	}
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
+	}
 	glUniform4fv(getUniformLocation(_name), 1, _v.data);
 }
 
@@ -300,6 +361,10 @@ ShaderProgram::setUniform(const GLchar* _name, const Matrix4& _m)
 {
 	if (!isInUse()) {
 		Use();
+	}
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
 	}
 	glUniformMatrix4fv(getUniformLocation(_name), 1,GL_FALSE, _m[0].data);
 	}

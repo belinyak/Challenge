@@ -39,6 +39,9 @@ struct Vector3
 
 	Vector3(const Vector3& _other) = default;
 
+	Vector3 operator-() const {
+		return{ -x,-y,-z };
+	}
 
 	float& operator[](usize _index) {
 		return(data[_index]);

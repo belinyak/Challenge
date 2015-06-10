@@ -12,18 +12,20 @@ class Clock
 {
 public:
 
-	inline double getElapsedTime() const { 
-		return( (glfwGetTime() - m_startTime)); 
+	inline double
+	getElapsedTime() const
+	{
+		return((glfwGetTime() - m_startTime));
 	}
 
-	double
-		restart()
+	inline double
+	restart()
 	{
 		double now = glfwGetTime();
 		double elapsed = now - m_startTime;
 		m_startTime = now;
 
-		return( elapsed);
+		return(elapsed);
 	}
 
 private:

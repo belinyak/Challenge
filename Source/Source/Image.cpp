@@ -12,16 +12,16 @@ namespace Challenge
 {
 
 Image::Image()
-	: m_format(Format(0))
+	: m_format(ImageFormat(0))
 	, m_width(0)
 	, m_height(0)
 	, m_pixels(nullptr)
 {}
 
 Image::Image(u32 _width, u32 _height,
-			 Format _format,
+			 ImageFormat _format,
 			 const u8* _pixels)
-	: m_format(Format(0))
+	: m_format(ImageFormat(0))
 	, m_width(0)
 	, m_height(0)
 	, m_pixels(nullptr)
@@ -30,7 +30,7 @@ Image::Image(u32 _width, u32 _height,
 }
 
 Image::Image(const Image& _other)
-	: m_format(Format(0))
+	: m_format(ImageFormat(0))
 	, m_width(0)
 	, m_height(0)
 	, m_pixels(nullptr)
@@ -70,7 +70,7 @@ Image::loadFromFile(const char* _fileName)
 //	assert(pixels && "Image::loadFromFile");
 
 	loadFromMemory(width, height,
-			  (Format)format,
+			  (ImageFormat)format,
 			  pixels);
 	stbi_image_free(pixels);
 
@@ -92,7 +92,7 @@ Image::getPixel(u32 _column, u32 _row) const
 	{
 		return(nullptr);
 	}
-	return(m_pixels + (_row * m_width + _column)*m_format);
+	return(m_pixels + (_row * m_width + _column)* (usize)m_format);
 }
 
 void
@@ -106,21 +106,21 @@ Image::setPixel(u32 _column, u32 _row,
 	}
 
 	u8* pixel = getPixel(_column, _row);
-	std::memcpy(pixel, _pixel, m_format);
+	std::memcpy(pixel, _pixel, (usize)m_format);
 
 }
 
 void 
 Image::flipVertically()
 {
-	std::size_t pitch = m_width * m_format;
+	std::size_t pitch = m_width * (usize)m_format;
 	u32 halfRows = m_height / 2;
 	u8* rowBuffer = new u8[pitch];
 
 	for (u32 i = 0; i < halfRows; i++)
 	{
-		u8* row = m_pixels + (i * m_width) * m_format;
-		u8* oppositeRow = m_pixels + ((m_height - i - 1) * m_width) * m_format;
+		u8* row = m_pixels + (i * m_width) * (usize)m_format;
+		u8* oppositeRow = m_pixels + ((m_height - i - 1) * m_width) * (usize)m_format;
 
 		std::memcpy(rowBuffer, row, pitch);
 		std::memcpy(row, oppositeRow, pitch);
@@ -132,19 +132,19 @@ Image::flipVertically()
 
 bool
 Image::loadFromMemory(u32 _width, u32 _height,
-					  Format _format,
+					  ImageFormat _format,
 					  const u8* _pixels)
 {
 
 	assert(_width != 0 && "Image::setPixels -> width=0 ");
 	assert(_height != 0 && "Image::setPixels -> height=0");
-	assert((_format >= 0 && _format <= 4) && "Image::setPixels-> invalid format");
+	//TODO(mate):  assert((_format >= 0 && _format <= 4) && "Image::setPixels-> invalid format");
 
 	m_width = _width;
 	m_height = _height;
 	m_format = _format;
 
-	size_t imageSize = _width * _height * _format;
+	size_t imageSize = _width * _height * (usize)_format;
 
 	if (m_pixels) {
 		delete[] m_pixels;

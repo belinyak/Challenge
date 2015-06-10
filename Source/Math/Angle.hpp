@@ -2,6 +2,7 @@
 #define CHALLENGE_ANGLE_HPP
 
 #include <Math\Unit.hpp>
+#include <Math\Constants.hpp>
 #include <ostream>
 
 namespace Challenge { namespace Impl {
@@ -59,26 +60,21 @@ explicit Radian(Unit<Challenge::Impl::Radian, U> _value)
 Radian(Unit<Degree, T> _value);
 };
 
-// FIXME(bill): Setup Constants  
 template <class T>
 Degree<T>::Degree(Unit<Radian, T> _value)
-    //: Unit<Challenge::Impl::Degree, T>(T(360) * T(_value) /  
-    // Constants<T>::tau())  
-: Unit<Challenge::Impl::Degree, T>(T(360) * T(_value) / T(6.28318530718))
+: Unit<Challenge::Impl::Degree, T>(T(360) * T(_value) / T(Constants::TAU))
 {
 }
-// FIXME(bill): Setup Constants  
 template <class T>
 Radian<T>::Radian(Unit<Degree, T> _value)
-    //: Unit<Challenge::Impl::Radian, T>(T(_value) * Constants<T>::tau() /  
-    // T(360))  
-: Unit<Challenge::Impl::Radian, T>(T(_value) * T(6.28318530718) / T(360))
-{
-}
+: Unit<Challenge::Impl::Radian, T>(T(_value) * T(Constants::TAU) / T(360))
+{}
+
 } //!namespace Impl  
 
 using Radian = Impl::Radian<float>;
 using Degree = Impl::Degree<float>;
+
 } //!namespace Challenge
 #endif // !#define CHALLENGE_ANGLE_HPP
 

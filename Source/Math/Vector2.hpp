@@ -27,56 +27,60 @@ struct Vector2
 		, y(_xy[1])
 	{}
 
-	float& operator[](usize _index) {
+	inline float& operator[](usize _index) {
 		return(data[_index]);
 	};
-	const float& operator[](usize _index) const {
+	inline const float& operator[](usize _index) const {
 		return(data[_index]);
 	};
 
 	Vector2(const Vector2& _other) = default;
 
-	Vector2 operator+(const Vector2& _other) const
+	inline Vector2 operator-() const {
+		return{ -x,-y };
+	}
+
+	inline Vector2 operator+(const Vector2& _other) const
 	{
 		return(Vector2(x + _other.x, y + _other.y));
 	}
-	Vector2 operator-(const Vector2& _other) const
+	inline Vector2 operator-(const Vector2& _other) const
 	{
 		return(Vector2(x - _other.x, y - _other.y));
 
 	}
-	Vector2 operator*(float _scalar) const
+	inline Vector2 operator*(float _scalar) const
 	{
 		return(Vector2(x * _scalar, y * _scalar));
 
 	}
-	Vector2 operator/(float _scalar) const
+	inline Vector2 operator/(float _scalar) const
 	{
 		return(Vector2(x / _scalar, y / _scalar));
 	}
 
-	Vector2& operator+=(const Vector2& _other)
+	inline Vector2& operator+=(const Vector2& _other)
 	{
 		x += _other.x;
 		y += _other.y;
 
 		return(*this);
 	}
-	Vector2& operator-=(const Vector2& _other)
+	inline Vector2& operator-=(const Vector2& _other)
 	{
 		x -= _other.x;
 		y -= _other.y;
 
 		return(*this);
 	}
-	Vector2& operator*=(float _scalar)
+	inline Vector2& operator*=(float _scalar)
 	{
 		x *= _scalar;
 		y *= _scalar;
 
 		return(*this);
 	}
-	Vector2& operator/=(float _scalar)
+	inline Vector2& operator/=(float _scalar)
 	{
 		x /= _scalar;
 		y /= _scalar;
@@ -84,7 +88,7 @@ struct Vector2
 		return(*this);
 	}
 
-	Vector2 operator*(const Vector2& other) const
+	inline Vector2 operator*(const Vector2& other) const
 	{
 		Vector2 result;
 		for (usize i = 0; i < 2; i++)
@@ -92,7 +96,7 @@ struct Vector2
 		return(result);
 	}
 
-	bool operator==(const Vector2& _other) const
+	inline bool operator==(const Vector2& _other) const
 	{
 		if (data[0] != _other[0] ||
 			data[1] != _other[1])
@@ -101,7 +105,7 @@ struct Vector2
 		}
 		return(true);
 	}
-	bool operator!=(const Vector2& _other) const
+	inline bool operator!=(const Vector2& _other) const
 	{
 		if (data[0] == _other[0] ||
 			data[1] == _other[1])
