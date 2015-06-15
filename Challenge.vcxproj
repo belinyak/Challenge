@@ -61,6 +61,7 @@
   <ItemGroup>
     <None Include="Source\Shaders\frag.glsl" />
     <None Include="Source\Shaders\vert.glsl" />
+    <None Include="Source\todo.bat" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FFC3F50E-BC2D-4628-BD45-2C1520604A74}</ProjectGuid>

@@ -129,5 +129,6 @@
     <None Include="Source\Shaders\vert.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Source\todo.bat" />
   </ItemGroup>
 </Project>
