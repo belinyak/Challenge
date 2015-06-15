@@ -1,5 +1,5 @@
-#ifndef CHALLENGE_VECTOR2_Hpp
-#define CHALLENGE_VECTOR2_Hpp
+#ifndef CHALLENGE_MATH_VECTOR2_Hpp
+#define CHALLENGE_MATH_VECTOR2_Hpp
 
 #include <Source\Types.hpp>
 #include <cmath>
@@ -88,14 +88,21 @@ struct Vector2
 		return(*this);
 	}
 
-	inline Vector2 operator*(const Vector2& other) const
+	inline Vector2 operator*(const Vector2& _other) const
 	{
 		Vector2 result;
 		for (usize i = 0; i < 2; i++)
-			result[i] = data[i] * other.data[i];
+			result[i] = data[i] * _other.data[i];
 		return(result);
 	}
-
+	inline Vector2 operator/(const Vector2& _other) const
+	{
+		Vector2 result;
+		for (usize i = 0; i < 2; i++) {
+			result[i] = data[i] / _other.data[i];
+		}
+		return(result);
+	}
 	inline bool operator==(const Vector2& _other) const
 	{
 		if (data[0] != _other[0] ||
@@ -133,52 +140,26 @@ struct Vector2
 	};
 };
 
-//Note(mate): calculations
-
-//Note(mate): vektor * skalár
-inline Vector2
-operator*(float _scalar, const Vector2& _vector) {
+inline Vector2 operator*(float _scalar, const Vector2& _vector) {
 	return(_vector * _scalar);
 }
-
-//Note(mate): skaláris szorzat 
-inline float
-dot(const Vector2& _a, const Vector2& _b)
+inline float dot(const Vector2& _a, const Vector2& _b)
 {
 	return(_a.x * _b.x + _a.y * _b.y);
 }
-
-/*
-//TODO(mate): ezmiez?
-inline float
-cross(const Vector2& _a, const Vector2& _b)
-{
-return( _a.x * _b.y - _b.x * _a.y;
-}
-*/
-
-//Note(mate): ez mire jó??
-inline float
-lengthSquared(const Vector2& _a)
+inline float lengthSquared(const Vector2& _a)
 {
 	return(dot(_a, _a));
 }
-
-//Note(mate): vektor hossza
-inline float
-length(const Vector2& _a)
+inline float length(const Vector2& _a)
 {
 	return(std::sqrtf(lengthSquared(_a)));
 }
-
-//Note(mate): normalizált v/hossz(v)
-inline Vector2
-normalize(const Vector2& _a)
+inline Vector2 normalize(const Vector2& _a)
 {
 	return(_a  * (1.0f / length(_a)));
 }
 
-//Note(mate): teszteléshez
 inline std::ostream& operator<<(std::ostream& _os, const Vector2& _v)
 {
 	return(_os << "Vector2( " << _v[0] << " " << _v[1] << " )");

@@ -12,43 +12,43 @@ namespace Challenge
 {
 
 Image::Image()
-	: m_format(ImageFormat(0))
-	, m_width(0)
-	, m_height(0)
-	, m_pixels(nullptr)
+	: format(ImageFormat(0))
+	, width(0)
+	, height(0)
+	, pixels(nullptr)
 {}
 
 Image::Image(u32 _width, u32 _height,
 			 ImageFormat _format,
 			 const u8* _pixels)
-	: m_format(ImageFormat(0))
-	, m_width(0)
-	, m_height(0)
-	, m_pixels(nullptr)
+	: format(ImageFormat(0))
+	, width(0)
+	, height(0)
+	, pixels(nullptr)
 {
 	loadFromMemory(_width, _height, _format, _pixels);
 }
 
 Image::Image(const Image& _other)
-	: m_format(ImageFormat(0))
-	, m_width(0)
-	, m_height(0)
-	, m_pixels(nullptr)
+	: format(ImageFormat(0))
+	, width(0)
+	, height(0)
+	, pixels(nullptr)
 {
-	loadFromMemory(_other.m_width, _other.m_height, _other.m_format, _other.m_pixels);
+	loadFromMemory(_other.width, _other.height, _other.format, _other.pixels);
 }
 
 Image& Image::operator=(const Image& _other)
 {
-	loadFromMemory(_other.m_width, _other.m_height, _other.m_format, _other.m_pixels);
+	loadFromMemory(_other.width, _other.height, _other.format, _other.pixels);
 	return( *this );
 }
 
 Image::~Image()
 {
-	if (m_pixels)
+	if (pixels)
 	{
-		delete[] m_pixels;
+		delete[] pixels;
 	}
 }
 
@@ -74,7 +74,7 @@ Image::loadFromFile(const char* _fileName)
 			  pixels);
 	stbi_image_free(pixels);
 
-	if (m_pixels)
+	if (pixels)
 	{
 		return(true);
 	}
@@ -87,40 +87,40 @@ Image::loadFromFile(const char* _fileName)
 u8*
 Image::getPixel(u32 _column, u32 _row) const
 {
-	if (_column >= m_width ||
-		_row >= m_height)
+	if (_column >= width ||
+		_row >= height)
 	{
 		return(nullptr);
 	}
-	return(m_pixels + (_row * m_width + _column)* (usize)m_format);
+	return(pixels + (_row * width + _column)* (usize)format);
 }
 
 void
 Image::setPixel(u32 _column, u32 _row,
 				const u32* _pixel) const
 {
-	if (_column >= m_width ||
-		_row >= m_height)
+	if (_column >= width ||
+		_row >= height)
 	{
 		return;
 	}
 
 	u8* pixel = getPixel(_column, _row);
-	std::memcpy(pixel, _pixel, (usize)m_format);
+	std::memcpy(pixel, _pixel, (usize)format);
 
 }
 
 void 
 Image::flipVertically()
 {
-	std::size_t pitch = m_width * (usize)m_format;
-	u32 halfRows = m_height / 2;
+	std::size_t pitch = width * (usize)format;
+	u32 halfRows = height / 2;
 	u8* rowBuffer = new u8[pitch];
 
 	for (u32 i = 0; i < halfRows; i++)
 	{
-		u8* row = m_pixels + (i * m_width) * (usize)m_format;
-		u8* oppositeRow = m_pixels + ((m_height - i - 1) * m_width) * (usize)m_format;
+		u8* row = pixels + (i * width) * (usize)format;
+		u8* oppositeRow = pixels + ((height - i - 1) * width) * (usize)format;
 
 		std::memcpy(rowBuffer, row, pitch);
 		std::memcpy(row, oppositeRow, pitch);
@@ -140,19 +140,19 @@ Image::loadFromMemory(u32 _width, u32 _height,
 	assert(_height != 0 && "Image::setPixels -> height=0");
 	//TODO(mate):  assert((_format >= 0 && _format <= 4) && "Image::setPixels-> invalid format");
 
-	m_width = _width;
-	m_height = _height;
-	m_format = _format;
+	width = _width;
+	height = _height;
+	format = _format;
 
 	size_t imageSize = _width * _height * (usize)_format;
 
-	if (m_pixels) {
-		delete[] m_pixels;
+	if (pixels) {
+		delete[] pixels;
 	}
-	m_pixels = new u8[imageSize];
+	pixels = new u8[imageSize];
 
 	if (_pixels != nullptr) {
-		std::memcpy(m_pixels, _pixels, imageSize);
+		std::memcpy(pixels, _pixels, imageSize);
 	}
 	return(true);
 }

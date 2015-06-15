@@ -1,5 +1,5 @@
-#ifndef CHALLENGE_VECTOR3_HPP
-#define CHALLENGE_VECTOR3_HPP
+#ifndef CHALLENGE_MATH_VECTOR3_HPP
+#define CHALLENGE_MATH_VECTOR3_HPP
 
 #include <Source\Types.hpp>
 #include <Math\Vector2.hpp>
@@ -77,7 +77,7 @@ struct Vector3
 	}
 
 	// Hadamard Product
-	Vector3  operator*(const Vector3& other) const
+	inline Vector3  operator*(const Vector3& other) const
 	{
 		Vector3 result;
 		for (usize i = 0; i < 3; i++) {
@@ -85,7 +85,15 @@ struct Vector3
 		}
 		return(result);
 	}
-	Vector3& operator+=(const Vector3& other)
+	inline Vector3 operator/(const Vector3& _other) const
+	{
+		Vector3 result;
+		for (usize i = 0; i < 3; i++) {
+			result[i] = data[i] / _other.data[i];
+		}
+		return(result);
+	}
+	inline Vector3& operator+=(const Vector3& other)
 	{
 		x += other.x;
 		y += other.y;
@@ -93,7 +101,7 @@ struct Vector3
 
 		return(*this);
 	}
-	Vector3& operator-=(const Vector3& other)
+	inline Vector3& operator-=(const Vector3& other)
 	{
 		x -= other.x;
 		y -= other.y;
@@ -101,7 +109,7 @@ struct Vector3
 
 		return(*this);
 	}
-	Vector3& operator*=(float scalar)
+	inline Vector3& operator*=(float scalar)
 	{
 		x *= scalar;
 		y *= scalar;
@@ -109,7 +117,7 @@ struct Vector3
 
 		return(*this);
 	}
-	Vector3& operator/=(float scalar)
+	inline Vector3& operator/=(float scalar)
 	{
 		x /= scalar;
 		y /= scalar;
@@ -136,7 +144,6 @@ struct Vector3
 	};
 };
 
-
 inline Vector3 operator*(float _scalar, const Vector3& _vector) {
 	return(_vector * _scalar);
 }
@@ -156,7 +163,6 @@ inline Vector3 cross(const Vector3& _a, const Vector3& _b)
 inline float lengthSquared(const Vector3& a) {
 	return(dot(a, a));
 }
-
 inline float length(const Vector3& a) {
 	return(std::sqrtf(lengthSquared(a)));
 }
@@ -168,7 +174,5 @@ inline Vector3 normalize(const Vector3& a) {
 inline std::ostream& operator<<(std::ostream& os, const Vector3& v) {
 	return(os << "Vector3(" << v[0] << ", " << v[1] << ", " << v[2] << ")");
 }
-
-
 } //namespace Challenge
 #endif // !#define CHALLENGE_VECTOR3_HPP

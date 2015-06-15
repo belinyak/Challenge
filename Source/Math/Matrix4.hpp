@@ -12,31 +12,31 @@ class Matrix4
 public:
 	Matrix4()
 		: data({ { Vector4(1, 0, 0, 0),
-				   Vector4(0, 1, 0, 0),
-				   Vector4(0, 0, 1, 0),
-				   Vector4(0, 0, 0, 1) } })
+					Vector4(0, 1, 0, 0),
+					Vector4(0, 0, 1, 0),
+					Vector4(0, 0, 0, 1) } })
 	{}
-	Matrix4(f32 x) 
+	explicit Matrix4(f32 x)
 		: data({ { Vector4(x, 0, 0, 0),
-			   Vector4(0, x, 0, 0),
-			   Vector4(0, 0, x, 0),
-			   Vector4(0, 0, 0, x) } })
+				Vector4(0, x, 0, 0),
+				Vector4(0, 0, x, 0),
+				Vector4(0, 0, 0, x) } })
 	{}
-	Matrix4(const Vector4& v0,
-			const Vector4& v1,
-			const Vector4& v2,
-			const Vector4& v3)
+	explicit Matrix4(const Vector4& v0,
+						  const Vector4& v1,
+						  const Vector4& v2,
+						  const Vector4& v3)
 		: data({ { v0, v1, v2, v3 } })
 	{}
 
-	Vector4& operator[](usize index) { 
-		return( data[index]); 
-	}
-	const Vector4& operator[](usize index) const { 
+	Matrix4(const Matrix4& _other) = default;
+
+	Vector4& operator[](usize index) {
 		return(data[index]);
 	}
-
-	Matrix4& operator=(const Matrix4& other) = default;
+	const Vector4& operator[](usize index) const {
+		return(data[index]);
+	}
 
 	bool operator==(const Matrix4& m2) const
 	{
@@ -50,16 +50,18 @@ public:
 		return(true);
 	}
 	bool operator!=(const Matrix4& m2) const {
-		return( !operator==(m2));
+		return(!operator==(m2));
 	}
+	
+	Matrix4& operator=(const Matrix4& other) = default;
 
 	Matrix4 operator+(const Matrix4& other) const
 	{
 		Matrix4 mat;
-		for (usize i = 0; i < 4; i++){
+		for (usize i = 0; i < 4; i++) {
 			mat[i] = data[i] + other.data[i];
 		}
-		return( mat);
+		return(mat);
 	}
 	Matrix4 operator-(const Matrix4& other) const
 	{
@@ -67,8 +69,9 @@ public:
 		for (usize i = 0; i < 4; i++) {
 			mat[i] = data[i] - other.data[i];
 		}
-		return( mat);
+		return(mat);
 	}
+	
 	Matrix4 operator*(const Matrix4& m2) const
 	{
 		const Matrix4& m1 = *this; // shorthand
@@ -89,9 +92,8 @@ public:
 		result[2] = srcA0 * srcB2[0] + srcA1 * srcB2[1] + srcA2 * srcB2[2] + srcA3 * srcB2[3];
 		result[3] = srcA0 * srcB3[0] + srcA1 * srcB3[1] + srcA2 * srcB3[2] + srcA3 * srcB3[3];
 
-		return( result);
+		return(result);
 	}
-	
 	Vector4 operator*(const Vector4& v) const
 	{
 		const Matrix4& m = *this;
@@ -104,48 +106,48 @@ public:
 		const Vector4 add0 = mul0 + mul1;
 		const Vector4 add1 = mul2 + mul3;
 
-		return( add0 + add1);
+		return(add0 + add1);
 	}
-
 	Matrix4 operator*(f32 scalar) const
 	{
 		Matrix4 mat;
 		for (usize i = 0; i < 4; i++) {
 			mat[i] = data[i] * scalar;
 		}
-		return( mat);
+		return(mat);
 	}
+	
 	Matrix4 operator/(f32 scalar) const
 	{
 		Matrix4 mat;
 		for (usize i = 0; i < 4; i++) {
 			mat[i] = data[i] / scalar;
 		}
-		return( mat);
+		return(mat);
 	}
 	Matrix4& operator+=(const Matrix4& other)
 	{
-		return( (*this = (*this) + other));
+		return((*this = (*this) + other));
 	}
 	Matrix4& operator-=(const Matrix4& other)
 	{
-		return( (*this = (*this) - other));
+		return((*this = (*this) - other));
 	}
 	Matrix4& operator*=(const Matrix4& other)
 	{
-		return( (*this = (*this) * other));
+		return((*this = (*this) * other));
 	}
 
 	inline Matrix4 transpose() const
 	{
 		Matrix4 result;
 
-		for (usize i = 0; i < 4; i++){
+		for (usize i = 0; i < 4; i++) {
 			for (usize j = 0; j < 4; j++) {
 				result[i][j] = data[j][i];
 			}
 		}
-		return( result);
+		return(result);
 	}
 
 	f32 determinant() const
@@ -201,9 +203,8 @@ public:
 
 		Vector4 dot0(m[0] * row0);
 		f32 dot1 = (dot0.x + dot0.y) + (dot0.z + dot0.w);
-		return( dot1);
+		return(dot1);
 	}
-
 	Matrix4 inverse() const
 	{
 		const Matrix4& m = *this;
@@ -255,7 +256,7 @@ public:
 
 		f32 oneOverDeterminant = 1.0f / dot1;
 
-		return( inverse * oneOverDeterminant);
+		return(inverse * oneOverDeterminant);
 	}
 
 	std::array<Vector4, 4> data;
@@ -263,17 +264,17 @@ public:
 
 inline Matrix4 operator*(f32 scalar, const Matrix4& m)
 {
-	return( m * scalar);
+	return(m * scalar);
 }
 
 inline Matrix4 transpose(const Matrix4& m)
 {
-	return( m.transpose());
+	return(m.transpose());
 }
 
 inline f32 determinant(const Matrix4& m)
 {
-	return( m.determinant());
+	return(m.determinant());
 }
 
 inline Matrix4 inverse(const Matrix4& m)
@@ -288,7 +289,7 @@ inline Matrix4 hadamardProduct(const Matrix4& a, const Matrix4& b)
 	for (usize i = 0; i < 4; i++) {
 		result[i] = a[i] * b[i];
 	}
-	return( result);
+	return(result);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Matrix4& m)
@@ -298,7 +299,7 @@ inline std::ostream& operator<<(std::ostream& os, const Matrix4& m)
 		os << "\n\t" << m[i];
 	}
 	os << "\n)";
-	return( os);
+	return(os);
 }
 
 } // !namespace Dunjun

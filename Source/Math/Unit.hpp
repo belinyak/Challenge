@@ -20,87 +20,87 @@ public:
 	: m_value(T(0))
 	{}
 	
-	explicit Unit(T value)
-	: m_value(value)
+	explicit Unit(T _value)
+	: m_value(_value)
 	{}
 
 	template <class U>
-	explicit Unit(Unit<Derived, U> value)
-						: m_value(T(value.m_value))
+	explicit Unit(Unit<Derived, U> _value)
+						: m_value(T(_value.m_value))
 	{}
 
 	explicit operator T() const { return m_value; }
 
-	bool operator==(Unit<Derived, T> other) const {
-		return m_value == other.m_value;
+	bool operator==(Unit<Derived, T> _other) const {
+		return m_value == _other.m_value;
 	}
 
-	bool operator!=(Unit<Derived, T> other) const { 
-		return !operator==(other); 
+	bool operator!=(Unit<Derived, T> _other) const { 
+		return !operator==(_other); 
 	}
 
-	bool operator<(Unit<Derived, T> other) const {
-		return m_value < other.m_value;
+	bool operator<(Unit<Derived, T> _other) const {
+		return m_value < _other.m_value;
 	}
 
-	bool operator>(Unit<Derived, T> other) const {
-		return m_value > other.m_value;
+	bool operator>(Unit<Derived, T> _other) const {
+		return m_value > _other.m_value;
 	}
 
-	bool operator<=(Unit<Derived, T> other) const { 
-		return !operator>(other);
+	bool operator<=(Unit<Derived, T> _other) const { 
+		return !operator>(_other);
 	}
 
-	bool operator>=(Unit<Derived, T> other) const {
-		return !operator<(other);
+	bool operator>=(Unit<Derived, T> _other) const {
+		return !operator<(_other);
 	}
 
 	Unit<Derived, T> operator-() const {
 		return Unit<Derived, T>(-m_value);
 	}
 
-	Unit<Derived, T>& operator+=(Unit<Derived, T> other)
+	Unit<Derived, T>& operator+=(Unit<Derived, T> _other)
 	{
-		m_value += other.m_value;
+		m_value += _other.m_value;
 		return *this;
 	}
 
-	Unit<Derived, T> operator+(Unit<Derived, T> other) const	{
-		return Unit<Derived, T>(m_value + other.m_value);
+	Unit<Derived, T> operator+(Unit<Derived, T> _other) const	{
+		return Unit<Derived, T>(m_value + _other.m_value);
 	}
 
-	Unit<Derived, T>& operator-=(Unit<Derived, T> other)
+	Unit<Derived, T>& operator-=(Unit<Derived, T> _other)
 	{
-		m_value -= other.m_value;
+		m_value -= _other.m_value;
 		return *this;
 	}
 
-	Unit<Derived, T> operator-(Unit<Derived, T> other) const	{
-		return Unit<Derived, T>(m_value - other.m_value);
+	Unit<Derived, T> operator-(Unit<Derived, T> _other) const	{
+		return Unit<Derived, T>(m_value - _other.m_value);
 	}
 
-	Unit<Derived, T>& operator*=(T number)
+	Unit<Derived, T>& operator*=(T _number)
 	{
-		m_value *= number;
+		m_value *= _number;
 		return *this;
 	}
 
-	Unit<Derived, T> operator*(T number) const	{
-		return Unit<Derived, T>(m_value * number);
+	Unit<Derived, T> operator*(T _number) const	{
+		return Unit<Derived, T>(m_value * _number);
 	}
 
-	Unit<Derived, T>& operator/=(T number)
+	Unit<Derived, T>& operator/=(T _number)
 	{
-		m_value /= number;
+		m_value /= _number;
 		return *this;
 	}
 
-	Unit<Derived, T> operator/(T number) const	{
- 		return Unit<Derived, T>(m_value / number);
+	Unit<Derived, T> operator/(T _number) const	{
+ 		return Unit<Derived, T>(m_value / _number);
  	}
 
- 	T operator/(Unit<Derived, T> other) const { 
-		return m_value / other.value; 
+ 	T operator/(Unit<Derived, T> _other) const { 
+		return m_value / _other.value; 
 	}
 
  private:
@@ -108,9 +108,9 @@ public:
  };
 
  template <template <class> class Derived, class T>
- Unit<Derived, T> operator*(typename std::common_type<T>::type number,
-									       const Unit<Derived, T>& value) {
- 	return value * number;
+ Unit<Derived, T> operator*(typename std::common_type<T>::type _number,
+									       const Unit<Derived, T>& _value) {
+ 	return _value * _number;
  }
 
 } //!namespace Challenge

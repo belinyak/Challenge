@@ -5,8 +5,8 @@
 
 //OpenGl
 #include <GL/glew.h>
-#include <GLFW\glfw3.h>
 #include <glm/glm.hpp>
+#include <GLFW\glfw3.h>
 
 //std
 #include <string>
@@ -16,31 +16,26 @@
 #include <sstream>
 
 // Challenge
-#include <Source\ShaderProgram.h>
+#include <Source\Common.hpp>
+#include <Source\ShaderProgram.hpp>
 #include <Source\Image.h>
 #include <Source\Texture.h>
-#include <Source\Common.hpp>
+
 #include <Source\Clock.hpp>
 #include <Source\TickCounter.hpp>
-#include <Math\Vector2.hpp>
-#include <Math\Vector3.hpp>
-#include <Math\Matrix.hpp>
-#include <Source\Color.hpp>
-#include <Math\Constants.hpp>
-#include <Math\Quaternion.hpp>
+#include <Source\Camera.hpp>
+#include <Source\Vertex.hpp>
+#include <Source\Transform.hpp>
+
+#include <Math\Math.hpp>
+
 
 //const value
-int WindowWidth = 1024;
-int WindowHeight = 768;
+GLOBAL int WindowWidth = 1024;
+GLOBAL int WindowHeight = 768;
+GLOBAL const float TIME_STEP = 1.0f / 60.0f;
 
 using namespace glm;
-
-struct Vertex
-{
-	Challenge::Vector2 position;
-	Challenge::Color color;
-	Challenge::Vector2 texCoord;
-};
 
 struct ModelAsset
 {
@@ -53,20 +48,18 @@ struct ModelAsset
 	GLenum drawType;
 	GLint drawCount;
 };
-
 struct ModelInstance
 {
 	ModelAsset* asset;
-	Challenge::Matrix4 transform;
+	Challenge::Transform transform;
 };
 
 GLOBAL Challenge::ShaderProgram* g_defaultShader;
 GLOBAL ModelAsset g_sprite;
 GLOBAL std::vector<ModelInstance> g_instances;
-GLOBAL Challenge::Matrix4 g_cameraMatrix;
+GLOBAL Challenge::Camera g_camera;
 
-INTERNAL void
-glfwHints()
+INTERNAL void glfwHints()
 {
 	glfwDefaultWindowHints();
 	glfwWindowHint(GLFW_VERSION_MAJOR, 2);
@@ -74,9 +67,14 @@ glfwHints()
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 }
 
+INTERNAL void resizeCallback(GLFWwindow* _window, int _width, int _height)
+{
+	WindowWidth = _width;
+	WindowHeight = _height;
+}
+
 //TODO(mate): keyboardhandler
-INTERNAL void
-HandleInput(GLFWwindow* _window, bool* _running)
+INTERNAL void HandleInput(GLFWwindow* _window, bool* _running)
 {
 	if (glfwWindowShouldClose(_window) ||
 		 glfwGetKey(_window, GLFW_KEY_ESCAPE))
@@ -86,15 +84,18 @@ HandleInput(GLFWwindow* _window, bool* _running)
 	}
 }
 
-INTERNAL void
-loadShaders()
+INTERNAL void loadShaders()
 {
 	g_defaultShader = new Challenge::ShaderProgram();
-	if (!g_defaultShader->attachShaderfromFile(Challenge::ShaderType::Vertex, "Source\\Shaders\\vert.glsl")) {
-		throw std::runtime_error(g_defaultShader->getErrorLog());
+	if (!g_defaultShader->attachShaderfromFile(Challenge::ShaderType::Vertex,
+															"Source\\Shaders\\vert.glsl"))
+	{
+		throw std::runtime_error(g_defaultShader->errorLog);
 	}
-	if (!g_defaultShader->attachShaderfromFile(Challenge::ShaderType::Fragment, "Source\\Shaders\\frag.glsl")) {
-		throw std::runtime_error(g_defaultShader->getErrorLog());
+	if (!g_defaultShader->attachShaderfromFile(Challenge::ShaderType::Fragment, 
+															"Source\\Shaders\\frag.glsl")) 
+	{
+		throw std::runtime_error(g_defaultShader->errorLog);
 	}
 
 	g_defaultShader->bindAttributeLocation(0, "a_position");
@@ -102,20 +103,19 @@ loadShaders()
 	g_defaultShader->bindAttributeLocation(2, "a_texCoord");
 
 	if (!g_defaultShader->Link()) {
-		throw std::runtime_error(g_defaultShader->getErrorLog());
+		throw std::runtime_error(g_defaultShader->errorLog);
 	}
 }
 
-INTERNAL void
-loadSpriteAsset()
+INTERNAL void loadSpriteAsset()
 {
-	Vertex vertices[] =
+	Challenge::Vertex vertices[] =
 	{
-		//  x      y     r     g     b     a       s     t
-		{ { -0.5f, -0.5f },{ { 0xFF, 0xFF, 0xFF, 0xFF } },{ 0.0f, 0.0f } }, // Vertex 3
-		{ { +0.5f, -0.5f },{ { 0xFF, 0xFF, 0xFF, 0xFF } },{ 1.0f, 0.0f } }, // Vertex 2
-		{ { +0.5f, +0.5f },{ { 0xFF, 0xFF, 0xFF, 0xFF } },{ 1.0f, 1.0f } },	// Vertex 0
-		{ { -0.5f, +0.5f },{ { 0xFF, 0xFF, 0xFF, 0xFF } },{ 0.0f, 1.0f } }, // Vertex 1
+		//  x      y		z				r     g     b     a			 s     t
+		{ { -0.5f, -0.5f, 0.0f },{ { 0xFF, 0xFF, 0xFF, 0xFF } },{ 0.0f, 0.0f } }, 
+		{ { +0.5f, -0.5f, 0.0f },{ { 0xFF, 0xFF, 0xFF, 0xFF } },{ 1.0f, 0.0f } }, 
+		{ { +0.5f, +0.5f, 0.0f },{ { 0xFF, 0xFF, 0xFF, 0xFF } },{ 1.0f, 1.0f } },	
+		{ { -0.5f, +0.5f, 0.0f },{ { 0xFF, 0xFF, 0xFF, 0xFF } },{ 0.0f, 1.0f } }, 
 	};
 
 	glGenBuffers(1, &g_sprite.vbo);
@@ -126,7 +126,10 @@ loadSpriteAsset()
 
 	glGenBuffers(1, &g_sprite.ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_sprite.ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 
+					 sizeof(indices), 
+					 indices, 
+					 GL_STATIC_DRAW);
 
 	g_sprite.shaders = g_defaultShader;
 	g_sprite.texture = new Challenge::Texture();
@@ -136,35 +139,61 @@ loadSpriteAsset()
 	g_sprite.drawCount = 6;
 }
 
-INTERNAL void
-loadInstance()
+INTERNAL void loadInstance()
 {
 
-	ModelInstance inst1;
-	inst1.asset = &g_sprite;
-	inst1.transform = Challenge::translate({ 1,0,0 });
-	g_instances.push_back(inst1);
+	Challenge::Transform parent;
 
-	ModelInstance inst2;
-	inst2.asset = &g_sprite;
-	inst2.transform = Challenge::translate({ 0,1.2f,1 });
-	g_instances.push_back(inst2);
+	ModelInstance a;
+	a.asset = &g_sprite;
+	a.transform.position = { 0, 0, 0 };
+	a.transform.scale = { 3, 3, 3 };
+	a.transform.orientation = Challenge::angleAxis(Challenge::Degree(45), { 0, 0, 1 });
+	g_instances.push_back(a);
 
-	ModelInstance inst3;
-	inst3.asset = &g_sprite;
-	inst3.transform = Challenge::translate({ 0,0,2 });
-	g_instances.push_back(inst3);
+	ModelInstance b;
+	b.asset = &g_sprite;
+	b.transform.position = { 2, 0, 0.1f };
+	g_instances.push_back(b);
+
+	ModelInstance c;
+	c.asset = &g_sprite;
+	c.transform.position = { 0, 0, 1 };
+	c.transform.orientation = Challenge::angleAxis(Challenge::Degree(45), { 0, 1, 0 });
+	g_instances.push_back(c);
 
 }
 
-INTERNAL void
-renderInstance(const ModelInstance& _instance)
+INTERNAL void update(float _dt)
 {
-	_instance.asset->shaders->setUniform("u_camera", g_cameraMatrix);
-	_instance.asset->shaders->setUniform("u_model", _instance.transform);
+	using namespace Challenge;
+/*
+	g_instances[0].transform.orientation =
+		angleAxis(Degree(120) * _dt, { 0, 1, 0 }) *
+		g_instances[0].transform.orientation;
+*/
+
+	Vector3& camPos = g_camera.transform.position;
+
+	camPos.x = 7.0f * std::cos(glfwGetTime());
+	camPos.y = 5.0f;
+	camPos.z = 10.0f * std::sin(glfwGetTime());
+
+	
+	g_camera.lookAt({ 0,0,0 });
+	g_camera.projectiontype = ProjectionType::Perspective;
+	g_camera.fieldofView = Degree(50.0f);
+	g_camera.viewportaspectRatio = (float)WindowWidth / (float)WindowHeight;
+}
+
+INTERNAL void renderInstance(const ModelInstance& _instance)
+{
+	_instance.asset->shaders->setUniform("u_camera", g_camera.getMatrix());
+	_instance.asset->shaders->setUniform("u_transform",_instance.transform);
 	_instance.asset->shaders->setUniform("u_tex", 0);
 
 	_instance.asset->texture->bind(0);
+
 	glBindBuffer(GL_ARRAY_BUFFER, g_sprite.vbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_sprite.ibo);
 
@@ -172,38 +201,48 @@ renderInstance(const ModelInstance& _instance)
 	glEnableVertexAttribArray(1); // vertColor
 	glEnableVertexAttribArray(2); // vertTexCoord
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(0));
-	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (const GLvoid*)(sizeof(Challenge::Vector2)));
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(Challenge::Vector2) + sizeof(Challenge::Color)));
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 
+								 sizeof(Challenge::Vertex), (const GLvoid*)(0));
+	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, 
+								 sizeof(Challenge::Vector3), 
+								 (const GLvoid*)(sizeof(Challenge::Vector3)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Challenge::Vertex), 
+								 (const GLvoid*)(sizeof(Challenge::Vector3) + 
+								 sizeof(Challenge::Color)));
 
-	glDrawElements(_instance.asset->drawType, _instance.asset->drawCount, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(_instance.asset->drawType, 
+						_instance.asset->drawCount, 
+						GL_UNSIGNED_INT, 
+						nullptr);
 	glDisableVertexAttribArray(0); // vertPosition
 	glDisableVertexAttribArray(1); // vertColor
 	glDisableVertexAttribArray(2); // vertTexCoord
 }
 
-INTERNAL void
-render()
+INTERNAL void render(GLFWwindow* _window)
 {
+	glViewport(0, 0, WindowWidth, WindowHeight);
+
+	glClearColor(0.5f, 0.69f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	Challenge::ShaderProgram* currentShaders = nullptr;
 
-	for (const auto& inst : g_instances)
-	{
-		if (inst.asset->shaders != currentShaders)
-		{
+	for (const auto& inst : g_instances){
+		if (inst.asset->shaders != currentShaders){
 			currentShaders = inst.asset->shaders;
 			currentShaders->Use();
 		}
 		renderInstance(inst);
 	}
-
 	if (currentShaders) {
 		currentShaders->stopUsing();
 	}
+	glfwSwapBuffers(_window);
+	glfwPollEvents();
 }
 
-int
-main(void)
+int main(void)
 {
 	GLFWwindow* window;
 
@@ -215,7 +254,7 @@ main(void)
 									  NULL, NULL);
 
 	assert(window != NULL && "Failed to open GLFW window");
-
+	glfwSetWindowSizeCallback(window,resizeCallback);
 	glfwMakeContextCurrent(window);
 
 	// Initialize GLEW
@@ -223,6 +262,9 @@ main(void)
 
 	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwHints();
@@ -232,46 +274,45 @@ main(void)
 	loadInstance();
 
 	bool running = true;
-
 //Note(mate): FPS
 	Challenge::TickCounter tc;
 	Challenge::Clock frameClock;
 
+	double accumulator = 0;
+	double prevTime = glfwGetTime();
+
+	std::stringstream titleStream;
+
 	while (running)
 	{
-		//Note(mate): resize window
-		int width, height;
-		glfwGetWindowSize(window, &width, &height);
-		glViewport(0, 0, width, height);
-		WindowWidth = width;
-		WindowHeight = height;
+		double currentTime = glfwGetTime();
+		double dt = currentTime - prevTime;
+		prevTime = currentTime;
+		accumulator += dt;
 
+		HandleInput(window, &running);
+
+		while (accumulator >= TIME_STEP)
 		{
-			using namespace Challenge;
-			Matrix4 model = rotate(Degree(glfwGetTime() * 60.0f), { 0,1,0 });
-			Matrix4 view = lookAt({ 1.0f,2.0f,4.0f }, { 0.0f,0.0f,0.0f }, { 0.0f,1.0f,0.0f });
-			Matrix4 proj = perspective(Degree(50.0f), WindowWidth / WindowHeight, 0.1f, 100.0f);
-
-			g_cameraMatrix = proj * view;
+			accumulator -= TIME_STEP;
+			update(TIME_STEP);
 		}
-
-		glClearColor(0.5f, 0.69f, 1.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		render();
 
 		//Note(mate): FPS
 		if (tc.update(0.5))
 		{
-			std::stringstream ss;
-			ss << "Challenge  |  " << tc.getTickRate() << " FPS";
-			glfwSetWindowTitle(window, ss.str().c_str());
+			titleStream.str("");
+			titleStream.clear();
+			titleStream << "Dunjun - " << 1000.0 / tc.getTickRate() << " ms";
+			glfwSetWindowTitle(window, titleStream.str().c_str());
 		}
+		
+		render(window);
 
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-
-		HandleInput(window, &running);
+		// Frame Limiter
+		while (frameClock.getElapsedTime() < 1.0 / 240.0)
+		{}
+		frameClock.restart();
 	}
 	glfwDestroyWindow(window);
 	glfwTerminate();

@@ -79,20 +79,18 @@ struct Vector4
 		return( (!operator==(other)));
 	}
 
-	Vector4 operator+(const Vector4& other) const{
+	inline Vector4 operator+(const Vector4& other) const{
 		return( (Vector4(x + other.x, y + other.y, z + other.z, w + other.w)));
 	}
-
-	Vector4 operator-(const Vector4& other) const	{
+	inline Vector4 operator-(const Vector4& other) const	{
 		return(( Vector4(x - other.x, y - other.y, z - other.z, w - other.w) ));
 	}
-
-	Vector4 operator*(float scalar) const	{
+	inline Vector4 operator*(float scalar) const	{
 		return( (Vector4(scalar * x, scalar * y, scalar * z, scalar * w)));
 	}
 
 	// Hadamard Product
-	Vector4 operator*(const Vector4& other) const
+	inline Vector4 operator*(const Vector4& other) const
 	{
 		Vector4 result;
 		for (usize i = 0; i < 4; i++) {
@@ -100,13 +98,20 @@ struct Vector4
 		}
 		return( result);
 	}
+	inline Vector4 operator/(const Vector4& _other) const
+	{
+		Vector4 result;
+		for (usize i = 0; i < 4; i++) {
+			result[i] = data[i] / _other.data[i];
+		}
+		return(result);
+	}
 
-	Vector4 operator/(float scalar) const
+	inline Vector4 operator/(float scalar) const
 	{
 		return(( Vector4(x / scalar, y / scalar, z / scalar, w / scalar) ));
 	}
-
-	Vector4& operator+=(const Vector4& other)
+	inline Vector4& operator+=(const Vector4& other)
 	{
 		x += other.x;
 		y += other.y;
@@ -115,8 +120,7 @@ struct Vector4
 
 		return(*this);
 	}
-
-	Vector4& operator-=(const Vector4& other)
+	inline Vector4& operator-=(const Vector4& other)
 	{
 		x -= other.x;
 		y -= other.y;
@@ -125,8 +129,7 @@ struct Vector4
 
 		return( *this);
 	}
-
-	Vector4& operator*=(float scalar)
+	inline Vector4& operator*=(float scalar)
 	{
 		x *= scalar;
 		y *= scalar;
@@ -135,8 +138,7 @@ struct Vector4
 
 		return( *this);
 	}
-
-	Vector4& operator/=(float scalar)
+	inline Vector4& operator/=(float scalar)
 	{
 		x /= scalar;
 		y /= scalar;

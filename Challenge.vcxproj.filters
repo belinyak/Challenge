@@ -35,9 +35,6 @@
     <ClInclude Include="Source\Source\NonCopyable.hpp">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\ShaderProgram.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Source\Texture.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -80,6 +77,15 @@
     <ClInclude Include="Source\Math\Quaternion.hpp">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Source\Transform.hpp" />
+    <ClInclude Include="Source\Math\Math.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Vertex.hpp" />
+    <ClInclude Include="Source\Source\ShaderProgram.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Camera.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Source\Core.cpp">
@@ -95,6 +101,8 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Math\Constants.cpp" />
+    <ClCompile Include="Source\Math\Matrix.cpp" />
+    <ClCompile Include="Source\Source\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\frag.glsl">

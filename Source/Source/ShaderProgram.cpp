@@ -1,18 +1,14 @@
-#include <Source/ShaderProgram.h>
+#include <Source/ShaderProgram.hpp>
 #include <fstream>
 #include <assert.h> //TODO(mate): boost assert??
 
-
-
 namespace Challenge
 {
-
-std::string 
-StringfromFile(const std::string& _fileName)
+INTERNAL std::string StringfromFile(const std::string& _fileName)
 {
 	std::ifstream file;
 	file.open(_fileName.c_str(),
-			  std::ios::in | std::ios::binary);
+				 std::ios::in | std::ios::binary);
 
 	std::string output;
 	std::string line;
@@ -29,55 +25,48 @@ StringfromFile(const std::string& _fileName)
 
 	assert(output.length() != 0 && "StringfromFile output = null");
 
-	return( output);
+	return(output);
 }
-
 
 ShaderProgram::ShaderProgram()
-	: m_object(0)
-	, m_linked(false)
-	, m_errorLog()
+	: object(0)
+	, isLinked(false)
+	, errorLog()
 {
-	m_object = glCreateProgram();
+	object = glCreateProgram();
 }
-
 ShaderProgram::~ShaderProgram()
 {
-	if (m_object){
-		glDeleteProgram(m_object);
+	if (object) {
+		glDeleteProgram(object);
 	}
-	glDeleteProgram(m_object);
+	glDeleteProgram(object);
 }
 
-bool
-ShaderProgram::attachShaderfromFile(ShaderType _type,
-									const std::string _fileName)
+bool ShaderProgram::attachShaderfromFile(ShaderType _type, const std::string _fileName)
 {
 	std::string source = StringfromFile(_fileName);
 
-	return( attachShaderfromMemory(_type, source));
+	return(attachShaderfromMemory(_type, source));
 }
-
-bool
-ShaderProgram::attachShaderfromMemory(ShaderType _type,
-									  const std::string _source)
+bool ShaderProgram::attachShaderfromMemory(ShaderType _type, const std::string _source)
 {
-	if (!m_object){
-		m_object = glCreateProgram();
+	if (!object) {
+		object = glCreateProgram();
 	}
 	const char* shaderSource = _source.c_str();
 
 	GLuint shader;
 
-	if (_type == ShaderType::Vertex){
+	if (_type == ShaderType::Vertex) {
 		shader = glCreateShader(GL_VERTEX_SHADER);
 	}
-	else if (_type == ShaderType::Fragment){
+	else if (_type == ShaderType::Fragment) {
 		shader = glCreateShader(GL_FRAGMENT_SHADER);
 	}
 
 	glShaderSource(shader, 1, &shaderSource, nullptr);
-	glAttachShader(m_object, shader);
+	glAttachShader(object, shader);
 	glCompileShader(shader);
 
 	// Note(mate): error handling
@@ -95,7 +84,7 @@ ShaderProgram::attachShaderfromMemory(ShaderType _type,
 			msg.append(strInfoLog);
 			delete[] strInfoLog;
 			msg.append("\n");
-			m_errorLog.append(msg);
+			errorLog.append(msg);
 
 			glDeleteShader(shader);
 
@@ -105,47 +94,41 @@ ShaderProgram::attachShaderfromMemory(ShaderType _type,
 	return(true);
 }
 
-void
-ShaderProgram::Use() const
+void ShaderProgram::Use() const
 {
 	if (!isInUse()) {
-		glUseProgram(m_object);
+		glUseProgram(object);
 	}
 }
-
-bool
-ShaderProgram::isInUse() const
+bool ShaderProgram::isInUse() const
 {
 	GLint currentProgram = 0;
 	glGetIntegerv(GL_CURRENT_PROGRAM,
-				  &currentProgram);
+					  &currentProgram);
 
-	return( (currentProgram == (GLint)m_object) );
+	return((currentProgram == (GLint)object));
 }
-
-void
-ShaderProgram::stopUsing() const
+void ShaderProgram::stopUsing() const
 {
 	if (isInUse()) {
 		glUseProgram(0);
 	}
 }
 
-bool
-ShaderProgram::Link()
+bool ShaderProgram::Link()
 {
-	if (!m_object) {
-		m_object = glCreateProgram();
+	if (!object) {
+		object = glCreateProgram();
 	}
 
-	if (!isLinked())
+	if (!isLinked)
 	{
-		glLinkProgram(m_object);
+		glLinkProgram(object);
 
 		//Note(mate): error handling
 		{
 			GLint status;
-			glGetProgramiv(m_object, GL_LINK_STATUS, &status);
+			glGetProgramiv(object, GL_LINK_STATUS, &status);
 
 			if (status == GL_FALSE)
 			{
@@ -153,88 +136,72 @@ ShaderProgram::Link()
 
 				GLint infoLogLength;
 
-				glGetProgramiv(m_object, GL_INFO_LOG_LENGTH, &infoLogLength);
+				glGetProgramiv(object, GL_INFO_LOG_LENGTH, &infoLogLength);
 				char* strInfoLog = new char[infoLogLength + 1];
-				glGetProgramInfoLog(m_object, infoLogLength, NULL, strInfoLog);
+				glGetProgramInfoLog(object, infoLogLength, NULL, strInfoLog);
 				msg.append(strInfoLog);
 				delete[] strInfoLog;
 
 				msg.append("\n");
-				m_errorLog.append(msg);
+				errorLog.append(msg);
 
-				glDeleteProgram(m_object);
-				m_object = 0;
+				glDeleteProgram(object);
+				object = 0;
 
-				m_linked = false;
-				return(m_linked);
+				isLinked = false;
+				return(isLinked);
 			}
 		}
-		m_linked = true;
+		isLinked = true;
 	}
-	return( m_linked);
+	return(isLinked);
 }
 
-bool
-ShaderProgram::isLinked()
+void ShaderProgram::bindAttributeLocation(GLuint _location, const std::string& _name)
 {
-	return( m_linked);
-}
-
-void
-ShaderProgram::bindAttributeLocation(GLuint _location,
-												 const GLchar* _name)
-{
-	glBindAttribLocation(m_object, _location, _name);
+	glBindAttribLocation(object, _location, _name.c_str());
 	m_attribLocations[_name] = _location;
 }
 
-GLint
-ShaderProgram::getAttributeLocation(const GLchar* _name)
+GLint ShaderProgram::getAttributeLocation(const std::string& _name)
 {
 	auto found = m_attribLocations.find(_name);
-	if (found != m_attribLocations.end()){
+	if (found != m_attribLocations.end()) {
 		return(found->second);
 	}
 
-	GLint loc = glGetAttribLocation(m_object, _name);
+	GLint loc = glGetAttribLocation(object, _name.c_str());
 	m_attribLocations[_name] = loc;
 	return(loc);
 }
-
-GLint
-ShaderProgram::getUniformLocation(const GLchar* _name)
+GLint ShaderProgram::getUniformLocation(const std::string& _name)
 {
 	auto found = m_uniformLocations.find(_name);
-	if (found != m_uniformLocations.end()){
+	if (found != m_uniformLocations.end()) {
 		return(found->second);
 	}
 
-	GLint loc = glGetUniformLocation(m_object, _name);
+	GLint loc = glGetUniformLocation(object, _name.c_str());
 	m_uniformLocations[_name] = loc;
 	return(loc);
 }
 
 
-void
-ShaderProgram::setUniform(const GLchar* _name,
-						  float _x)
+void ShaderProgram::setUniform(const std::string& _name, float _x)
 {
-	if (!isInUse()){
+	if (!isInUse()) {
 		Use();
 	}
 
 	GLint loc = getUniformLocation(_name);
-	if (loc==-1){
+	if (loc == -1) {
 		return;
 	}
 	glUniform1f(getUniformLocation(_name), _x);
 }
-
-void
-ShaderProgram::setUniform(const GLchar* _name,
-						  float _x, float _y)
+void ShaderProgram::setUniform(const std::string& _name, float _x, float _y)
 {
-	if (!isInUse()){
+	if (!isInUse()) {
 		Use();
 	}
 
@@ -245,12 +212,9 @@ ShaderProgram::setUniform(const GLchar* _name,
 
 	glUniform2f(getUniformLocation(_name), _x, _y);
 }
-
-void
-ShaderProgram::setUniform(const GLchar* _name,
-						  float _x, float _y, float _z)
+void ShaderProgram::setUniform(const std::string& _name, float _x, float _y, float _z)
 {
-	if (!isInUse()){
+	if (!isInUse()) {
 		Use();
 	}
 	GLint loc = getUniformLocation(_name);
@@ -259,13 +223,9 @@ ShaderProgram::setUniform(const GLchar* _name,
 	}
 	glUniform3f(getUniformLocation(_name), _x, _y, _z);
 }
-
-void
-ShaderProgram::setUniform(const GLchar* _name,
-						  float _x, float _y, float _z,
-						  float _w)
+void ShaderProgram::setUniform(const std::string& _name, float _x, float _y, float _z, float _w)
 {
-	if (!isInUse()){
+	if (!isInUse()) {
 		Use();
 	}
 	GLint loc = getUniformLocation(_name);
@@ -275,11 +235,9 @@ ShaderProgram::setUniform(const GLchar* _name,
 	glUniform4f(getUniformLocation(_name), _x, _y, _z, _w);
 }
 
-void
-ShaderProgram::setUniform(const GLchar* _name,
-						  int _x)
+void ShaderProgram::setUniform(const std::string& _name, int _x)
 {
-	if (!isInUse()){
+	if (!isInUse()) {
 		Use();
 	}
 	GLint loc = getUniformLocation(_name);
@@ -288,12 +246,9 @@ ShaderProgram::setUniform(const GLchar* _name,
 	}
 	glUniform1i(getUniformLocation(_name), _x);
 }
-
-void
-ShaderProgram::setUniform(const GLchar* _name,
-						  bool _x)
+void ShaderProgram::setUniform(const std::string& _name, bool _x)
 {
-	if (!isInUse()){
+	if (!isInUse()) {
 		Use();
 	}
 	GLint loc = getUniformLocation(_name);
@@ -302,12 +257,9 @@ ShaderProgram::setUniform(const GLchar* _name,
 	}
 	glUniform1i(getUniformLocation(_name), _x);
 }
-
-void
-ShaderProgram::setUniform(const GLchar* _name,
-						  unsigned int _x)
+void ShaderProgram::setUniform(const std::string& _name, unsigned int _x)
 {
-	if (!isInUse()){
+	if (!isInUse()) {
 		Use();
 	}
 	GLint loc = getUniformLocation(_name);
@@ -317,10 +269,9 @@ ShaderProgram::setUniform(const GLchar* _name,
 	glUniform1ui(getUniformLocation(_name), _x);
 }
 
-void 
-ShaderProgram::setUniform(const GLchar* _name, Vector2& _v)
+void ShaderProgram::setUniform(const std::string& _name, const Vector2& _v)
 {
-	if (!isInUse()){
+	if (!isInUse()) {
 		Use();
 	}
 	GLint loc = getUniformLocation(_name);
@@ -329,9 +280,7 @@ ShaderProgram::setUniform(const GLchar* _name, Vector2& _v)
 	}
 	glUniform2fv(getUniformLocation(_name), 1, _v.data);
 }
-
-void 
-ShaderProgram::setUniform(const GLchar* _name, Vector3& _v)
+void ShaderProgram::setUniform(const std::string& _name, const Vector3& _v)
 {
 	if (!isInUse()) {
 		Use();
@@ -342,9 +291,7 @@ ShaderProgram::setUniform(const GLchar* _name, Vector3& _v)
 	}
 	glUniform3fv(getUniformLocation(_name), 1, _v.data);
 }
-
-void
-ShaderProgram::setUniform(const GLchar* _name, Vector4& _v)
+void ShaderProgram::setUniform(const std::string& _name, const Vector4& _v)
 {
 	if (!isInUse()) {
 		Use();
@@ -355,9 +302,7 @@ ShaderProgram::setUniform(const GLchar* _name, Vector4& _v)
 	}
 	glUniform4fv(getUniformLocation(_name), 1, _v.data);
 }
-
-void 
-ShaderProgram::setUniform(const GLchar* _name, const Matrix4& _m)
+void ShaderProgram::setUniform(const std::string& _name, const Matrix4& _m)
 {
 	if (!isInUse()) {
 		Use();
@@ -366,7 +311,23 @@ ShaderProgram::setUniform(const GLchar* _name, const Matrix4& _m)
 	if (loc == -1) {
 		return;
 	}
-	glUniformMatrix4fv(getUniformLocation(_name), 1,GL_FALSE, _m[0].data);
+	glUniformMatrix4fv(getUniformLocation(_name), 1, GL_FALSE, _m[0].data);
+}
+void ShaderProgram::setUniform(const std::string& _name, const Quaternion& _q)
+{
+	if (!isInUse()) {
+		Use();
 	}
-
+	GLint loc = getUniformLocation(_name);
+	if (loc == -1) {
+		return;
+	}
+	glUniform4fv(loc, 1, _q.data);
+}
+void ShaderProgram::setUniform(const std::string& _name, const  Transform& _t)
+{
+	setUniform(_name + ".position", _t.position);
+	setUniform(_name + ".orientation",_t.orientation);
+	setUniform(_name + ".scale", _t.scale);
+}
 } // !namespace Challenge

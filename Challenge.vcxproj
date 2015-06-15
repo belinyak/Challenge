@@ -26,6 +26,7 @@
     <ClInclude Include="Source\Math\Angle.hpp" />
     <ClInclude Include="Source\Math\Constants.hpp" />
     <ClInclude Include="Source\Math\Functions.hpp" />
+    <ClInclude Include="Source\Math\Math.hpp" />
     <ClInclude Include="Source\Math\Matrix.hpp" />
     <ClInclude Include="Source\Math\Matrix4.hpp" />
     <ClInclude Include="Source\Math\Quaternion.hpp" />
@@ -33,18 +34,23 @@
     <ClInclude Include="Source\Math\Vector2.hpp" />
     <ClInclude Include="Source\Math\Vector3.hpp" />
     <ClInclude Include="Source\Math\Vector4.hpp" />
+    <ClInclude Include="Source\Source\Camera.hpp" />
     <ClInclude Include="Source\Source\Clock.hpp" />
     <ClInclude Include="Source\Source\Color.hpp" />
     <ClInclude Include="Source\Source\Common.hpp" />
     <ClInclude Include="Source\Source\Image.h" />
     <ClInclude Include="Source\Source\NonCopyable.hpp" />
-    <ClInclude Include="Source\Source\ShaderProgram.h" />
+    <ClInclude Include="Source\Source\ShaderProgram.hpp" />
     <ClInclude Include="Source\Source\Texture.h" />
     <ClInclude Include="Source\Source\TickCounter.hpp" />
+    <ClInclude Include="Source\Source\Transform.hpp" />
     <ClInclude Include="Source\Source\Types.hpp" />
+    <ClInclude Include="Source\Source\Vertex.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Constants.cpp" />
+    <ClCompile Include="Source\Math\Matrix.cpp" />
+    <ClCompile Include="Source\Source\Camera.cpp" />
     <ClCompile Include="Source\Source\Core.cpp" />
     <ClCompile Include="Source\Source\Image.cpp" />
     <ClCompile Include="Source\Source\ShaderProgram.cpp" />

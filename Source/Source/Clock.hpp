@@ -11,15 +11,11 @@ namespace Challenge
 class Clock
 {
 public:
-
-	inline double
-	getElapsedTime() const
+	inline double getElapsedTime() const
 	{
 		return((glfwGetTime() - m_startTime));
 	}
-
-	inline double
-	restart()
+	inline double restart()
 	{
 		double now = glfwGetTime();
 		double elapsed = now - m_startTime;
@@ -27,7 +23,6 @@ public:
 
 		return(elapsed);
 	}
-
 private:
 	double m_startTime = glfwGetTime();
 };
