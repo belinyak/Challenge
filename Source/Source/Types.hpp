@@ -1,6 +1,8 @@
 #ifndef CHALLENGE_TYPES_HPP
 #define CHALLENGE_TYPES_HPP
 
+//TODO(mate): get rid of it
+
 #include <cstdint>
 #include <cstddef>
 

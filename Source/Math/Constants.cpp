@@ -1,11 +1,10 @@
-#include <Math\Constants.hpp>
+#include <Math\Constants.h>
 
 #include <cfloat>
 
 namespace Challenge {
 namespace Constants 
 {
-
 const float EPSILON = FLT_EPSILON;
 
 const float ZERO				=	0.0f;

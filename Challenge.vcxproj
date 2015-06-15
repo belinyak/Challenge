@@ -24,39 +24,46 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Math\Angle.hpp" />
-    <ClInclude Include="Source\Math\Constants.hpp" />
-    <ClInclude Include="Source\Math\Functions.hpp" />
-    <ClInclude Include="Source\Math\Math.hpp" />
-    <ClInclude Include="Source\Math\Matrix.hpp" />
-    <ClInclude Include="Source\Math\Matrix4.hpp" />
-    <ClInclude Include="Source\Math\Quaternion.hpp" />
+    <ClInclude Include="Source\Math\Constants.h" />
+    <ClInclude Include="Source\Math\Math.h" />
+    <ClInclude Include="Source\Math\Matrix.h" />
+    <ClInclude Include="Source\Math\Matrix4.h" />
+    <ClInclude Include="Source\Math\Quaternion.h" />
+    <ClInclude Include="Source\Math\Transform.h" />
     <ClInclude Include="Source\Math\Unit.hpp" />
-    <ClInclude Include="Source\Math\Vector2.hpp" />
-    <ClInclude Include="Source\Math\Vector3.hpp" />
-    <ClInclude Include="Source\Math\Vector4.hpp" />
-    <ClInclude Include="Source\Source\Camera.hpp" />
-    <ClInclude Include="Source\Source\Clock.hpp" />
+    <ClInclude Include="Source\Math\Vector2.h" />
+    <ClInclude Include="Source\Math\Vector3.h" />
+    <ClInclude Include="Source\Math\Vector4.h" />
+    <ClInclude Include="Source\Source\Camera.h" />
+    <ClInclude Include="Source\Source\Clock.h" />
     <ClInclude Include="Source\Source\Color.hpp" />
-    <ClInclude Include="Source\Source\Common.hpp" />
+    <ClInclude Include="Source\Source\Common.h" />
     <ClInclude Include="Source\Source\Core.h" />
     <ClInclude Include="Source\Source\Image.h" />
     <ClInclude Include="Source\Source\NonCopyable.hpp" />
-    <ClInclude Include="Source\Source\ShaderProgram.hpp" />
+    <ClInclude Include="Source\Source\ShaderProgram.h" />
     <ClInclude Include="Source\Source\Texture.h" />
-    <ClInclude Include="Source\Source\TickCounter.hpp" />
-    <ClInclude Include="Source\Source\Transform.hpp" />
+    <ClInclude Include="Source\Source\TickCounter.h" />
     <ClInclude Include="Source\Source\Types.hpp" />
-    <ClInclude Include="Source\Source\Vertex.hpp" />
+    <ClInclude Include="Source\Source\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Source\Math\Constants.cpp" />
     <ClCompile Include="Source\Math\Matrix.cpp" />
+    <ClCompile Include="Source\Math\Matrix4.cpp" />
+    <ClCompile Include="Source\Math\Quaternion.cpp" />
+    <ClCompile Include="Source\Math\Transform.cpp" />
+    <ClCompile Include="Source\Math\Vector2.cpp" />
+    <ClCompile Include="Source\Math\Vector3.cpp" />
+    <ClCompile Include="Source\Math\Vector4.cpp" />
     <ClCompile Include="Source\Source\Camera.cpp" />
     <ClCompile Include="Source\Source\Core.cpp" />
     <ClCompile Include="Source\Source\Image.cpp" />
     <ClCompile Include="Source\Source\main.cpp" />
     <ClCompile Include="Source\Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\Source\Texture.cpp" />
+    <ClCompile Include="TickCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\frag.glsl" />

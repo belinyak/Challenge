@@ -2,8 +2,10 @@
 #define CHALLENGE_ANGLE_HPP
 
 #include <Math\Unit.hpp>
-#include <Math\Constants.hpp>
+#include <Math\Constants.h>
 #include <ostream>
+
+//TODO(mate): Laci template magic
 
 namespace Challenge { namespace Impl {
 template <class T>

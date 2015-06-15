@@ -23,12 +23,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Source\Clock.hpp">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\Common.hpp">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Source\Image.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -38,61 +32,64 @@
     <ClInclude Include="Source\Source\Texture.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\TickCounter.hpp">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Source\Types.hpp">
       <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Vector4.hpp">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Matrix4.hpp">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Vector2.hpp">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Vector3.hpp">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Matrix.hpp">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Functions.hpp">
-      <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Source\Color.hpp">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Unit.hpp">
-      <Filter>Math</Filter>
+    <ClInclude Include="Source\Source\Core.h">
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Math\Angle.hpp">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Constants.hpp">
+    <ClInclude Include="Source\Math\Constants.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Quaternion.hpp">
+    <ClInclude Include="Source\Math\Math.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Math.hpp">
+    <ClInclude Include="Source\Math\Matrix.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\ShaderProgram.hpp">
+    <ClInclude Include="Source\Math\Matrix4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Quaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Transform.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Unit.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Vector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Vector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Vector4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Camera.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Camera.hpp">
+    <ClInclude Include="Source\Source\Clock.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Transform.hpp">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\Vertex.hpp">
+    <ClInclude Include="Source\Source\Common.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Core.h">
+    <ClInclude Include="Source\Source\ShaderProgram.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\TickCounter.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Vertex.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
@@ -112,13 +109,35 @@
     <ClCompile Include="Source\Source\Camera.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Constants.cpp">
+    <ClCompile Include="Source\Source\main.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Constants.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Math\Matrix.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\main.cpp">
+    <ClCompile Include="Source\Math\Matrix4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Quaternion.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Transform.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Vector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Vector3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Vector4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="TickCounter.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #include <Source/Texture.h>
-#include <Source/Common.hpp>
+#include <Source/Common.h>
 #include <assert.h>
 
 namespace Challenge
@@ -27,21 +27,21 @@ getInternalFormat(ImageFormat _format, bool _srgb)
 }
 
 Texture::Texture()
-	: object(0)
-	, width(0)
-	, height(0)
+	: m_object(0)
+	, m_width(0)
+	, m_height(0)
 {
-	glGenTextures(1, &object);
+	glGenTextures(1, &m_object);
 }
 
 Texture::Texture(const Image& _image,
 				 GLint _minMagFilter,
 				 GLint _wrapMode)
-	: object(0)
-	, width(_image.getWidth())
-	, height(_image.getHeight())
+	: m_object(0)
+	, m_width(_image.getWidth())
+	, m_height(_image.getHeight())
 {
-	glGenTextures(1, &object);
+	glGenTextures(1, &m_object);
 
 	assert(loadFromImage(_image, _minMagFilter, _wrapMode) && "Texture::Texture()");
 }
@@ -68,18 +68,18 @@ Texture::loadFromImage(const Image& _image,
 	if ((usize)_image.getFormat() <= 0 || (usize)_image.getFormat() > 4) {
 		return(false);
 	}
-	width = (GLfloat)_image.getWidth();
-	height = (GLfloat)_image.getHeight();
+	m_width = (GLfloat)_image.getWidth();
+	m_height = (GLfloat)_image.getHeight();
 
-	glGenTextures(1, &object);
-	glBindTexture(GL_TEXTURE_2D, object);
+	glGenTextures(1, &m_object);
+	glBindTexture(GL_TEXTURE_2D, m_object);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minMagFilter);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _minMagFilter);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, getInternalFormat(_image.getFormat(), true),
-				 (GLsizei)width, (GLsizei)height,
+				 (GLsizei)m_width, (GLsizei)m_height,
 				 0,
 				 getInternalFormat(_image.getFormat(), false),
 				 GL_UNSIGNED_BYTE,
@@ -91,7 +91,7 @@ Texture::loadFromImage(const Image& _image,
 
 Texture::~Texture()
 {
-	glDeleteTextures(1, &object);
+	glDeleteTextures(1, &m_object);
 }
 
 void
@@ -107,7 +107,7 @@ Texture::bind(GLuint _position)
 	glEnable(GL_TEXTURE_2D);
 
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, (object ? object : 0));
+	glBindTexture(GL_TEXTURE_2D, (m_object ? m_object : 0));
 	glDisable(GL_TEXTURE_2D);
 }
 } //namespace Challenge

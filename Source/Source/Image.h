@@ -29,16 +29,16 @@ public:
 	bool loadFromMemory(u32 _width, u32 _height, ImageFormat _format, const u8* _pixels);
 
 	inline u32 getWidth() const { 
-		return(width); 
+		return(m_width);
 	}
 	inline u32 getHeight() const {
-		return(height); 
+		return(m_height);
 	}
 	inline ImageFormat getFormat() const { 
-		return(format); 
+		return(m_format);
 	}
 	inline u8* getPixelPtr() const {
-		return(pixels); 
+		return(m_pixels);
 	}
 
 	u8*  getPixel(u32 _column, u32 _row) const;
@@ -46,11 +46,11 @@ public:
 
 	void flipVertically();
 
-//TODO(mate): ReadOnly or private
-	ImageFormat format;
-	u32 width;
-	u32 height;
-	u8* pixels;
+private:
+	ImageFormat m_format;
+	u32 m_width;
+	u32 m_height;
+	u8* m_pixels;
 };
 }
 

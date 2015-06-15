@@ -22,14 +22,14 @@ public:
 
 	void bind(GLuint _position);
 
-	inline GLuint getObject()	const { return( object)	; }
-	inline GLfloat getWidth()	const { return( width)	; }
-	inline GLfloat getHeight()	const { return( height)	; }
+	inline GLuint getObject()	const { return( m_object)	; }
+	inline GLfloat getWidth()	const { return( m_width)	; }
+	inline GLfloat getHeight()	const { return( m_height)	; }
 
-	//TODO(mate): ReadOnly or private
-	GLuint  object;
-	GLsizei width;
-	GLsizei  height;
+private:
+	GLuint   m_object;
+	GLsizei  m_width;
+	GLsizei  m_height;
 };
 } //namespace Challenge
 #endif // !CHALLENGE_TEXTURE_H

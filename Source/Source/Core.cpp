@@ -10,7 +10,7 @@
 #include <glm/glm.hpp>
 #include <GLFW\glfw3.h>
 
-//std
+//
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -18,19 +18,18 @@
 #include <sstream>
 
 // Challenge
-#include <Source\Common.hpp>
-#include <Source\ShaderProgram.hpp>
+#include <Source\Common.h>
+#include <Source\ShaderProgram.h>
 #include <Source\Image.h>
 #include <Source\Texture.h>
 
-#include <Source\Clock.hpp>
-#include <Source\TickCounter.hpp>
-#include <Source\Camera.hpp>
-#include <Source\Vertex.hpp>
-#include <Source\Transform.hpp>
+#include <Source\Clock.h>
+#include <Source\TickCounter.h>
+#include <Source\Camera.h>
+#include <Source\Vertex.h>
 
-#include <Math\Math.hpp>
-
+#include <Math\Transform.h>
+#include <Math\Math.h>
 
 namespace Challenge
 {
@@ -96,12 +95,12 @@ INTERNAL void loadShaders()
 	if (!g_defaultShader->attachShaderfromFile(Challenge::ShaderType::Vertex,
 															"Source\\Shaders\\vert.glsl"))
 	{
-		throw std::runtime_error(g_defaultShader->errorLog);
+		throw std::runtime_error(g_defaultShader->getErrorLog());
 	}
 	if (!g_defaultShader->attachShaderfromFile(Challenge::ShaderType::Fragment, 
 															"Source\\Shaders\\frag.glsl")) 
 	{
-		throw std::runtime_error(g_defaultShader->errorLog);
+		throw std::runtime_error(g_defaultShader->getErrorLog());
 	}
 
 	g_defaultShader->bindAttributeLocation(0, "a_position");
@@ -109,7 +108,7 @@ INTERNAL void loadShaders()
 	g_defaultShader->bindAttributeLocation(2, "a_texCoord");
 
 	if (!g_defaultShader->Link()) {
-		throw std::runtime_error(g_defaultShader->errorLog);
+		throw std::runtime_error(g_defaultShader->getErrorLog());
 	}
 }
 
@@ -153,21 +152,39 @@ INTERNAL void loadInstance()
 	ModelInstance a;
 	a.asset = &g_sprite;
 	a.transform.position = { 0, 0, 0 };
-	a.transform.scale = { 3, 3, 3 };
-	a.transform.orientation = Challenge::angleAxis(Challenge::Degree(45), { 0, 0, 1 });
+	//a.transform.scale = { 3, 3, 3 };
+	a.transform.orientation = Challenge::angleAxis(Challenge::Degree(0), { 0, 0, 1 });
 	g_instances.push_back(a);
 
 	ModelInstance b;
 	b.asset = &g_sprite;
-	b.transform.position = { 2, 0, 0.1f };
+	b.transform.position = { 0.5f, 0, 0.5f };
+	b.transform.orientation = Challenge::angleAxis(Challenge::Degree(90), { 0, 1, 0 });
 	g_instances.push_back(b);
 
 	ModelInstance c;
 	c.asset = &g_sprite;
-	c.transform.position = { 0, 0, 1 };
-	c.transform.orientation = Challenge::angleAxis(Challenge::Degree(45), { 0, 1, 0 });
+	c.transform.position = { -0.5f, 0, 0.5f };
+	c.transform.orientation = Challenge::angleAxis(Challenge::Degree(90), { 0, 1, 0 });
 	g_instances.push_back(c);
 
+	ModelInstance d;
+	d.asset = &g_sprite;
+	d.transform.position = { 0, 0, 1 };
+	d.transform.orientation = Challenge::angleAxis(Challenge::Degree(0), { 0, 1, 0 });
+	g_instances.push_back(d);
+
+	ModelInstance e;
+	e.asset = &g_sprite;
+	e.transform.position = { 0, 0.5f, 0.5f };
+	e.transform.orientation = Challenge::angleAxis(Challenge::Degree(90), { 1, 0, 0 });
+	g_instances.push_back(e);
+
+	ModelInstance f;
+	f.asset = &g_sprite;
+	f.transform.position = {0, -0.5f, 0.5f };
+	f.transform.orientation = Challenge::angleAxis(Challenge::Degree(90), { 1, 0, 0 });
+	g_instances.push_back(f);
 }
 
 INTERNAL void update(float _dt)
@@ -182,7 +199,7 @@ INTERNAL void update(float _dt)
 	Vector3& camPos = g_camera.transform.position;
 
 	camPos.x = 5.0f * std::cos(glfwGetTime());
-	camPos.y = 5.0f;
+	camPos.y = 5.0f * std::sin(glfwGetTime());
 	camPos.z = 5.0f * std::sin(glfwGetTime());
 
 	

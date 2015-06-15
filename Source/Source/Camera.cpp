@@ -1,4 +1,4 @@
-#include <Source\Camera.hpp>
+#include <Source\Camera.h>
 
 namespace Challenge
 {
