@@ -77,15 +77,24 @@
     <ClInclude Include="Source\Math\Quaternion.hpp">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Transform.hpp" />
     <ClInclude Include="Source\Math\Math.hpp">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Vertex.hpp" />
     <ClInclude Include="Source\Source\ShaderProgram.hpp">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Camera.hpp" />
+    <ClInclude Include="Source\Source\Camera.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Transform.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Vertex.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Core.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Source\Core.cpp">
@@ -100,9 +109,18 @@
     <ClCompile Include="Source\Source\Texture.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Constants.cpp" />
-    <ClCompile Include="Source\Math\Matrix.cpp" />
-    <ClCompile Include="Source\Source\Camera.cpp" />
+    <ClCompile Include="Source\Source\Camera.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Constants.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Matrix.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\frag.glsl">

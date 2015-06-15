@@ -138,7 +138,6 @@ Image::loadFromMemory(u32 _width, u32 _height,
 
 	assert(_width != 0 && "Image::setPixels -> width=0 ");
 	assert(_height != 0 && "Image::setPixels -> height=0");
-	//TODO(mate):  assert((_format >= 0 && _format <= 4) && "Image::setPixels-> invalid format");
 
 	width = _width;
 	height = _height;

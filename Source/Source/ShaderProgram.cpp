@@ -1,6 +1,6 @@
 #include <Source/ShaderProgram.hpp>
 #include <fstream>
-#include <assert.h> //TODO(mate): boost assert??
+#include <assert.h> 
 
 namespace Challenge
 {

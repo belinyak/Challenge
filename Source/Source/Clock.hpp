@@ -2,7 +2,7 @@
 #define CHALLENGE_CLOCK_HPP
 
 #include <GLFW\glfw3.h>
-//TODO(mate): types.hhp-t kiszedni
+//TODO(mate): remove Types.hpp
 //#include "Source\Types.hpp"
 
 namespace Challenge

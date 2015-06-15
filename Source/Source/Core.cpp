@@ -3,6 +3,8 @@
 
 #define GLEW_STATIC
 
+//TODO(mate): get rid of .hpp-s!
+
 //OpenGl
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -30,12 +32,9 @@
 #include <Math\Math.hpp>
 
 
-//const value
-GLOBAL int WindowWidth = 1024;
-GLOBAL int WindowHeight = 768;
-GLOBAL const float TIME_STEP = 1.0f / 60.0f;
-
-using namespace glm;
+namespace Challenge
+{
+GLFWwindow* window;
 
 struct ModelAsset
 {
@@ -54,10 +53,17 @@ struct ModelInstance
 	Challenge::Transform transform;
 };
 
+GLOBAL int WindowWidth = 1024;
+GLOBAL int WindowHeight = 768;
+GLOBAL const float TIME_STEP = 1.0f / 60.0f;
+
 GLOBAL Challenge::ShaderProgram* g_defaultShader;
 GLOBAL ModelAsset g_sprite;
 GLOBAL std::vector<ModelInstance> g_instances;
 GLOBAL Challenge::Camera g_camera;
+
+namespace Core
+{
 
 INTERNAL void glfwHints()
 {
@@ -73,7 +79,7 @@ INTERNAL void resizeCallback(GLFWwindow* _window, int _width, int _height)
 	WindowHeight = _height;
 }
 
-//TODO(mate): keyboardhandler
+//TODO(mate): Inputhandler class
 INTERNAL void HandleInput(GLFWwindow* _window, bool* _running)
 {
 	if (glfwWindowShouldClose(_window) ||
@@ -175,9 +181,9 @@ INTERNAL void update(float _dt)
 
 	Vector3& camPos = g_camera.transform.position;
 
-	camPos.x = 7.0f * std::cos(glfwGetTime());
+	camPos.x = 5.0f * std::cos(glfwGetTime());
 	camPos.y = 5.0f;
-	camPos.z = 10.0f * std::sin(glfwGetTime());
+	camPos.z = 5.0f * std::sin(glfwGetTime());
 
 	
 	g_camera.lookAt({ 0,0,0 });
@@ -242,10 +248,8 @@ INTERNAL void render(GLFWwindow* _window)
 	glfwPollEvents();
 }
 
-int main(void)
+void init()
 {
-	GLFWwindow* window;
-
 	// Initialize GLFW
 	assert(glfwInit() && "Failed to init GLFW\n");
 
@@ -254,7 +258,7 @@ int main(void)
 									  NULL, NULL);
 
 	assert(window != NULL && "Failed to open GLFW window");
-	glfwSetWindowSizeCallback(window,resizeCallback);
+	glfwSetWindowSizeCallback(window, resizeCallback);
 	glfwMakeContextCurrent(window);
 
 	// Initialize GLEW
@@ -272,9 +276,13 @@ int main(void)
 	loadShaders();
 	loadSpriteAsset();
 	loadInstance();
+}
 
+
+void run()
+{
 	bool running = true;
-//Note(mate): FPS
+	//Note(mate): FPS
 	Challenge::TickCounter tc;
 	Challenge::Clock frameClock;
 
@@ -303,19 +311,28 @@ int main(void)
 		{
 			titleStream.str("");
 			titleStream.clear();
-			titleStream << "Dunjun - " << 1000.0 / tc.getTickRate() << " ms";
+			titleStream << "Challenge - " << 1000.0 / tc.getTickRate() << " ms";
 			glfwSetWindowTitle(window, titleStream.str().c_str());
 		}
-		
+
 		render(window);
 
 		// Frame Limiter
 		while (frameClock.getElapsedTime() < 1.0 / 240.0)
-		{}
+		{
+		}
 		frameClock.restart();
 	}
-	glfwDestroyWindow(window);
-	glfwTerminate();
-	return(EXIT_SUCCESS);
 }
 
+void exit()
+{
+	glfwDestroyWindow(window);
+	glfwTerminate();
+}
+
+GLFWwindow* getWindow() { return window; }
+
+
+} // !namespace Core
+} // !namespace Challenge

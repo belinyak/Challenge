@@ -1,7 +1,7 @@
 #ifndef CHALLENGE_MATH_MATRIX_HPP
 #define CHALLENGE_MATH_MATRIX_HPP
 
-//TODO(mate): CPP!!
+//TODO(mate): separate to .h and .cpp
 
 #include <Math\Vector3.hpp>
 #include <Math\Matrix4.hpp>
@@ -14,7 +14,7 @@
 namespace Challenge
 {
 
-/* TODO(mate):
+/* 
 	*translate		http://en.wikipedia.org/wiki/Transformation_matrix
 	*rotate			http://en.wikipedia.org/wiki/Rotation_matrix
 	*scale			http://en.wikipedia.org/wiki/Scaling_(geometry)
@@ -38,5 +38,5 @@ Matrix4 perspective(const Radian& _fovy, f32 _aspect,
 Matrix4 infinitePerspective(const Radian& _fovy, f32 _aspect, f32 _zNear);
 
 Matrix4 lookAt(const Vector3& _eye, const Vector3& center, const Vector3& up);
-} //!namespace Challenge
+} // !namespace Challenge
 #endif

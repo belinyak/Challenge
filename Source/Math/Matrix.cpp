@@ -3,7 +3,7 @@
 namespace Challenge
 {
 
-/* TODO(mate):
+/*
 *translate		http://en.wikipedia.org/wiki/Transformation_matrix
 *rotate			http://en.wikipedia.org/wiki/Rotation_matrix
 *scale			http://en.wikipedia.org/wiki/Scaling_(geometry)

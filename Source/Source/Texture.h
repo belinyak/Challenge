@@ -26,7 +26,7 @@ public:
 	inline GLfloat getWidth()	const { return( width)	; }
 	inline GLfloat getHeight()	const { return( height)	; }
 
-	//TODO(mate): readonly
+	//TODO(mate): ReadOnly or private
 	GLuint  object;
 	GLsizei width;
 	GLsizei  height;

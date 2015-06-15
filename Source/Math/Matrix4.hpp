@@ -302,5 +302,5 @@ inline std::ostream& operator<<(std::ostream& os, const Matrix4& m)
 	return(os);
 }
 
-} // !namespace Dunjun
+} // !namespace Challenge
 #endif

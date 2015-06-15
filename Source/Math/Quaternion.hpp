@@ -10,7 +10,6 @@ namespace Challenge
 {
 struct Quaternion
 {
-
 	Quaternion()
 		: x(0)
 		, y(0)
@@ -112,7 +111,6 @@ struct Quaternion
 		return(true);
 	}
 
-	//TODO(mate): tutijo-é??
 	bool operator!=(const Quaternion& _other) const
 	{
 		return(!(this->data == _other.data));
@@ -358,6 +356,6 @@ inline Quaternion matrix4ToQuaternion(const Matrix4& m)
 	return q;
 }
 
-} //!namespace Challenge
+} // !namespace Challenge
 #endif // !#define CHALLENGE_QUATERNION_HPP
 

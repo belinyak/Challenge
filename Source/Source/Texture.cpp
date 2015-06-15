@@ -5,7 +5,7 @@
 namespace Challenge
 {
 
-//TODO(mate): srgb??
+//TODO(mate): check SRGB
 INTERNAL GLenum
 getInternalFormat(ImageFormat _format, bool _srgb)
 {
@@ -19,7 +19,6 @@ getInternalFormat(ImageFormat _format, bool _srgb)
 		return(_srgb ? GL_SRGB : GL_RGB);
 	case ImageFormat::RGBA:
 		return(_srgb ? GL_SRGB_ALPHA : GL_RGBA);
-	//TODO(mate): assert
 	default:
 	case ImageFormat::None:
 		return(0);
@@ -98,7 +97,6 @@ Texture::~Texture()
 void
 Texture::bind(GLuint _position)
 {
-	//TODO(mate): error message
 	assert(_position < 31 && "Texture::bin");
 	if (_position > 31) {
 		_position = 31;

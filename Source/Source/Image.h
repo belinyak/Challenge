@@ -28,18 +28,25 @@ public:
 	bool loadFromFile(const char* _fileName);
 	bool loadFromMemory(u32 _width, u32 _height, ImageFormat _format, const u8* _pixels);
 
-	inline u32 getWidth()		const { return( width	)	; }
-	inline u32 getHeight()		const { return( height)	; }
-	inline ImageFormat getFormat()	const { return( format)	; }
-	inline u8* getPixelPtr()	const { return( pixels)	; }
+	inline u32 getWidth() const { 
+		return(width); 
+	}
+	inline u32 getHeight() const {
+		return(height); 
+	}
+	inline ImageFormat getFormat() const { 
+		return(format); 
+	}
+	inline u8* getPixelPtr() const {
+		return(pixels); 
+	}
 
 	u8*  getPixel(u32 _column, u32 _row) const;
-	void	setPixel(u32 _column, u32 _row,const u32* _pixel) const;
+	void	setPixel(u32 _column, u32 _row, const u32* _pixel) const;
 
 	void flipVertically();
-	//TODO(mate): void rotate90CCW();
-	
-	//TODO(mate): readonly
+
+//TODO(mate): ReadOnly or private
 	ImageFormat format;
 	u32 width;
 	u32 height;

@@ -1,7 +1,6 @@
 #ifndef CHALLENGE_NONCOPYABLE_HPP
 #define CHALLENGE_NONCOPYABLE_HPP
 
-//TODO(mate): Laci féle?
 namespace Challenge
 {
 class NonCopyable
