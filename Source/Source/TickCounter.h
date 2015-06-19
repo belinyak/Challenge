@@ -1,8 +1,10 @@
 #ifndef CHALLENGE_TICKCOUNTER_H
 #define CHALLENGE_TICKCOUNTER_H
 
+#include <cstdint>
+#include <cstddef>
+
 #include <Source\Clock.h>
-#include <Source\Types.hpp>
 
 namespace Challenge
 {

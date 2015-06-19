@@ -9,7 +9,7 @@ Matrix4::Matrix4()
 				 Vector4(0, 0, 1, 0),
 				 Vector4(0, 0, 0, 1) } })
 {}
-Matrix4::Matrix4(f32 x)
+Matrix4::Matrix4(float x)
 	: data({ { Vector4(x, 0, 0, 0),
 			 Vector4(0, x, 0, 0),
 			 Vector4(0, 0, x, 0),
@@ -22,7 +22,7 @@ Matrix4::Matrix4(const Vector4& v0,const Vector4& v1,const Vector4& v2,const Vec
 bool Matrix4::operator==(const Matrix4& m2) const
 {
 	const Matrix4& m1 = *this; // shorthand
-	for (usize i = 0; i < 4; i++)
+	for (std::size_t i = 0; i < 4; i++)
 	{
 		if (m1[i] != m2[i]) {
 			return(false);
@@ -37,7 +37,7 @@ bool Matrix4::operator!=(const Matrix4& m2) const {
 Matrix4 Matrix4::operator+(const Matrix4& other) const
 {
 	Matrix4 mat;
-	for (usize i = 0; i < 4; i++) {
+	for (std::size_t i = 0; i < 4; i++) {
 		mat[i] = data[i] + other.data[i];
 	}
 	return(mat);
@@ -45,7 +45,7 @@ Matrix4 Matrix4::operator+(const Matrix4& other) const
 Matrix4 Matrix4::operator-(const Matrix4& other) const
 {
 	Matrix4 mat;
-	for (usize i = 0; i < 4; i++) {
+	for (std::size_t i = 0; i < 4; i++) {
 		mat[i] = data[i] - other.data[i];
 	}
 	return(mat);
@@ -87,19 +87,19 @@ Vector4 Matrix4::operator*(const Vector4& v) const
 
 	return(add0 + add1);
 }
-Matrix4 Matrix4::operator*(f32 scalar) const
+Matrix4 Matrix4::operator*(float scalar) const
 {
 	Matrix4 mat;
-	for (usize i = 0; i < 4; i++) {
+	for (std::size_t i = 0; i < 4; i++) {
 		mat[i] = data[i] * scalar;
 	}
 	return(mat);
 }
 
-Matrix4 Matrix4::operator/(f32 scalar) const
+Matrix4 Matrix4::operator/(float scalar) const
 {
 	Matrix4 mat;
-	for (usize i = 0; i < 4; i++) {
+	for (std::size_t i = 0; i < 4; i++) {
 		mat[i] = data[i] / scalar;
 	}
 	return(mat);
@@ -117,33 +117,33 @@ Matrix4& Matrix4::operator*=(const Matrix4& other)
 	return((*this = (*this) * other));
 }
 
-f32 Matrix4::determinant() const
+float Matrix4::determinant() const
 {
 	const Matrix4& m = *this;
 
-	f32 coef00 = m[2][2] * m[3][3] - m[3][2] * m[2][3];
-	f32 coef02 = m[1][2] * m[3][3] - m[3][2] * m[1][3];
-	f32 coef03 = m[1][2] * m[2][3] - m[2][2] * m[1][3];
+	float coef00 = m[2][2] * m[3][3] - m[3][2] * m[2][3];
+	float coef02 = m[1][2] * m[3][3] - m[3][2] * m[1][3];
+	float coef03 = m[1][2] * m[2][3] - m[2][2] * m[1][3];
 
-	f32 coef04 = m[2][1] * m[3][3] - m[3][1] * m[2][3];
-	f32 coef06 = m[1][1] * m[3][3] - m[3][1] * m[1][3];
-	f32 coef07 = m[1][1] * m[2][3] - m[2][1] * m[1][3];
+	float coef04 = m[2][1] * m[3][3] - m[3][1] * m[2][3];
+	float coef06 = m[1][1] * m[3][3] - m[3][1] * m[1][3];
+	float coef07 = m[1][1] * m[2][3] - m[2][1] * m[1][3];
 
-	f32 coef08 = m[2][1] * m[3][2] - m[3][1] * m[2][2];
-	f32 coef10 = m[1][1] * m[3][2] - m[3][1] * m[1][2];
-	f32 coef11 = m[1][1] * m[2][2] - m[2][1] * m[1][2];
+	float coef08 = m[2][1] * m[3][2] - m[3][1] * m[2][2];
+	float coef10 = m[1][1] * m[3][2] - m[3][1] * m[1][2];
+	float coef11 = m[1][1] * m[2][2] - m[2][1] * m[1][2];
 
-	f32 coef12 = m[2][0] * m[3][3] - m[3][0] * m[2][3];
-	f32 coef14 = m[1][0] * m[3][3] - m[3][0] * m[1][3];
-	f32 coef15 = m[1][0] * m[2][3] - m[2][0] * m[1][3];
+	float coef12 = m[2][0] * m[3][3] - m[3][0] * m[2][3];
+	float coef14 = m[1][0] * m[3][3] - m[3][0] * m[1][3];
+	float coef15 = m[1][0] * m[2][3] - m[2][0] * m[1][3];
 
-	f32 coef16 = m[2][0] * m[3][2] - m[3][0] * m[2][2];
-	f32 coef18 = m[1][0] * m[3][2] - m[3][0] * m[1][2];
-	f32 coef19 = m[1][0] * m[2][2] - m[2][0] * m[1][2];
+	float coef16 = m[2][0] * m[3][2] - m[3][0] * m[2][2];
+	float coef18 = m[1][0] * m[3][2] - m[3][0] * m[1][2];
+	float coef19 = m[1][0] * m[2][2] - m[2][0] * m[1][2];
 
-	f32 coef20 = m[2][0] * m[3][1] - m[3][0] * m[2][1];
-	f32 coef22 = m[1][0] * m[3][1] - m[3][0] * m[1][1];
-	f32 coef23 = m[1][0] * m[2][1] - m[2][0] * m[1][1];
+	float coef20 = m[2][0] * m[3][1] - m[3][0] * m[2][1];
+	float coef22 = m[1][0] * m[3][1] - m[3][0] * m[1][1];
+	float coef23 = m[1][0] * m[2][1] - m[2][0] * m[1][1];
 
 	Vector4 fac0(coef00, coef00, coef02, coef03);
 	Vector4 fac1(coef04, coef04, coef06, coef07);
@@ -169,31 +169,31 @@ f32 Matrix4::determinant() const
 	Vector4 row0(inverse[0][0], inverse[1][0], inverse[2][0], inverse[3][0]);
 
 	Vector4 dot0(m[0] * row0);
-	f32 dot1 = (dot0.x + dot0.y) + (dot0.z + dot0.w);
+	float dot1 = (dot0.x + dot0.y) + (dot0.z + dot0.w);
 	return(dot1);
 }
 Matrix4 Matrix4::inverse() const
 {
 	const Matrix4& m = *this;
 
-	f32 coef00 = m[2][2] * m[3][3] - m[3][2] * m[2][3];
-	f32 coef02 = m[1][2] * m[3][3] - m[3][2] * m[1][3];
-	f32 coef03 = m[1][2] * m[2][3] - m[2][2] * m[1][3];
-	f32 coef04 = m[2][1] * m[3][3] - m[3][1] * m[2][3];
-	f32 coef06 = m[1][1] * m[3][3] - m[3][1] * m[1][3];
-	f32 coef07 = m[1][1] * m[2][3] - m[2][1] * m[1][3];
-	f32 coef08 = m[2][1] * m[3][2] - m[3][1] * m[2][2];
-	f32 coef10 = m[1][1] * m[3][2] - m[3][1] * m[1][2];
-	f32 coef11 = m[1][1] * m[2][2] - m[2][1] * m[1][2];
-	f32 coef12 = m[2][0] * m[3][3] - m[3][0] * m[2][3];
-	f32 coef14 = m[1][0] * m[3][3] - m[3][0] * m[1][3];
-	f32 coef15 = m[1][0] * m[2][3] - m[2][0] * m[1][3];
-	f32 coef16 = m[2][0] * m[3][2] - m[3][0] * m[2][2];
-	f32 coef18 = m[1][0] * m[3][2] - m[3][0] * m[1][2];
-	f32 coef19 = m[1][0] * m[2][2] - m[2][0] * m[1][2];
-	f32 coef20 = m[2][0] * m[3][1] - m[3][0] * m[2][1];
-	f32 coef22 = m[1][0] * m[3][1] - m[3][0] * m[1][1];
-	f32 coef23 = m[1][0] * m[2][1] - m[2][0] * m[1][1];
+	float coef00 = m[2][2] * m[3][3] - m[3][2] * m[2][3];
+	float coef02 = m[1][2] * m[3][3] - m[3][2] * m[1][3];
+	float coef03 = m[1][2] * m[2][3] - m[2][2] * m[1][3];
+	float coef04 = m[2][1] * m[3][3] - m[3][1] * m[2][3];
+	float coef06 = m[1][1] * m[3][3] - m[3][1] * m[1][3];
+	float coef07 = m[1][1] * m[2][3] - m[2][1] * m[1][3];
+	float coef08 = m[2][1] * m[3][2] - m[3][1] * m[2][2];
+	float coef10 = m[1][1] * m[3][2] - m[3][1] * m[1][2];
+	float coef11 = m[1][1] * m[2][2] - m[2][1] * m[1][2];
+	float coef12 = m[2][0] * m[3][3] - m[3][0] * m[2][3];
+	float coef14 = m[1][0] * m[3][3] - m[3][0] * m[1][3];
+	float coef15 = m[1][0] * m[2][3] - m[2][0] * m[1][3];
+	float coef16 = m[2][0] * m[3][2] - m[3][0] * m[2][2];
+	float coef18 = m[1][0] * m[3][2] - m[3][0] * m[1][2];
+	float coef19 = m[1][0] * m[2][2] - m[2][0] * m[1][2];
+	float coef20 = m[2][0] * m[3][1] - m[3][0] * m[2][1];
+	float coef22 = m[1][0] * m[3][1] - m[3][0] * m[1][1];
+	float coef23 = m[1][0] * m[2][1] - m[2][0] * m[1][1];
 
 	Vector4 fac0(coef00, coef00, coef02, coef03);
 	Vector4 fac1(coef04, coef04, coef06, coef07);
@@ -219,9 +219,9 @@ Matrix4 Matrix4::inverse() const
 	Vector4 row0(inverse[0][0], inverse[1][0], inverse[2][0], inverse[3][0]);
 
 	Vector4 dot0(m[0] * row0);
-	f32 dot1 = (dot0.x + dot0.y) + (dot0.z + dot0.w);
+	float dot1 = (dot0.x + dot0.y) + (dot0.z + dot0.w);
 
-	f32 oneOverDeterminant = 1.0f / dot1;
+	float oneOverDeterminant = 1.0f / dot1;
 
 	return(inverse * oneOverDeterminant);
 }

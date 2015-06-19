@@ -1,12 +1,12 @@
 #ifndef CHALLENGE_MATH_MATRIX_H
 #define CHALLENGE_MATH_MATRIX_H
 
+#include <cmath>
 
 #include <Math\Vector3.h>
 #include <Math\Matrix4.h>
 #include <Math\Angle.hpp>
 
-#include <cmath>
 
 //Note(mate): All the matrix functions
 
@@ -32,9 +32,9 @@ Matrix4 ortho(float _left, float _right,
 Matrix4 ortho(float _left, float _right,
 				  float _bottom, float _top,
 				  float _zNear, float _zFar);
-Matrix4 perspective(const Radian& _fovy, f32 _aspect,
+Matrix4 perspective(const Radian& _fovy, float _aspect,
 						  float _zNear, float _zFar);
-Matrix4 infinitePerspective(const Radian& _fovy, f32 _aspect, f32 _zNear);
+Matrix4 infinitePerspective(const Radian& _fovy, float _aspect, float _zNear);
 
 Matrix4 lookAt(const Vector3& _eye, const Vector3& center, const Vector3& up);
 } // !namespace Challenge

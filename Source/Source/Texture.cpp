@@ -65,7 +65,7 @@ Texture::loadFromImage(const Image& _image,
 					   GLint _minMagFilter,
 					   GLint wrapMode)
 {
-	if ((usize)_image.getFormat() <= 0 || (usize)_image.getFormat() > 4) {
+	if ((std::size_t)_image.getFormat() <= 0 || (std::size_t)_image.getFormat() > 4) {
 		return(false);
 	}
 	m_width = (GLfloat)_image.getWidth();

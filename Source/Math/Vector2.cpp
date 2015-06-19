@@ -75,14 +75,14 @@ Vector2&Vector2::operator/=(float _scalar)
 Vector2 Vector2::operator*(const Vector2& _other) const
 {
 	Vector2 result;
-	for (usize i = 0; i < 2; i++)
+	for (std::size_t i = 0; i < 2; i++)
 		result[i] = data[i] * _other.data[i];
 	return(result);
 }
 Vector2 Vector2::operator/(const Vector2& _other) const
 {
 	Vector2 result;
-	for (usize i = 0; i < 2; i++) {
+	for (std::size_t i = 0; i < 2; i++) {
 		result[i] = data[i] / _other.data[i];
 	}
 	return(result);

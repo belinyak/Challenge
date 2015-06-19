@@ -22,8 +22,8 @@ Matrix4 translate(const Vector3& _v)
 Matrix4 rotate(const Radian& _angle, const Vector3& _v)
 {
 
-	const f32 c = std::cos((float)_angle);
-	const f32 s = std::sin((float)_angle);
+	const float c = std::cos((float)_angle);
+	const float s = std::sin((float)_angle);
 
 	const Vector3 axis(normalize(_v));
 	const Vector3 t = (1.0f - c) * axis;
@@ -84,12 +84,12 @@ Matrix4 ortho(float _left, float _right,
 
 	return(result);
 }
-Matrix4 perspective(const Radian& _fovy, f32 _aspect,
+Matrix4 perspective(const Radian& _fovy, float _aspect,
 						  float _zNear, float _zFar)
 {
-	//assert(std::fabs(_aspect - std::numeric_limits<f32>::epsilon()) > 0.0f);
+	//assert(std::fabs(_aspect - std::numeric_limits<float>::epsilon()) > 0.0f);
 
-	const f32 tanHalf_fovy = std::tan(static_cast<f32>(_fovy) / 2.0f);
+	const float tanHalf_fovy = std::tan(static_cast<float>(_fovy) / 2.0f);
 
 	Matrix4 result(0.0f);
 	result[0][0] = 1.0f / (_aspect * tanHalf_fovy);
@@ -100,14 +100,14 @@ Matrix4 perspective(const Radian& _fovy, f32 _aspect,
 
 	return (result);
 }
-Matrix4 infinitePerspective(const Radian& _fovy, f32 _aspect, f32 _zNear)
+Matrix4 infinitePerspective(const Radian& _fovy, float _aspect, float _zNear)
 {
 
-	const f32 range = std::tan(static_cast<f32>(_fovy) / 2.0f) * _zNear;
-	const f32 left = -range * _aspect;
-	const f32 right = range * _aspect;
-	const f32 bottom = -range;
-	const f32 top = range;
+	const float range = std::tan(static_cast<float>(_fovy) / 2.0f) * _zNear;
+	const float left = -range * _aspect;
+	const float right = range * _aspect;
+	const float bottom = -range;
+	const float top = range;
 
 	Matrix4 result(0.0f);
 

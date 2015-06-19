@@ -7,7 +7,19 @@
 
 //TODO(mate): Laci template magic
 
-namespace Challenge { namespace Impl {
+namespace Challenge {
+
+inline float Degree_(const float& _value)
+{
+	return ( 360 * _value / Constants::TAU );
+}
+
+inline float Radian_(const float& _value)
+{
+	return ( _value * Constants::TAU / 360 );
+}
+
+namespace Impl {
 template <class T>
 class Radian;
 

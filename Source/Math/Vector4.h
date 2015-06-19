@@ -1,7 +1,6 @@
 #ifndef CHALLENGE_MATH_VECTOR4_H
 #define CHALLENGE_MATH_VECTOR4_H
 
-#include <Source/Types.hpp>
 #include <cmath>
 
 #include <Math/Vector3.h>
@@ -23,8 +22,8 @@ struct Vector4
 
 	Vector4 operator-() const;
 
-	float& operator[](usize index) { return( data[index]); }
-	const float& operator[](usize index) const { return( data[index]); }
+	float& operator[](std::size_t index) { return( data[index]); }
+	const float& operator[](std::size_t index) const { return( data[index]); }
 
 	bool operator==(const Vector4& other) const;
 
@@ -38,7 +37,7 @@ struct Vector4
 	inline Vector4 operator*(const Vector4& other) const
 	{
 		Vector4 result;
-		for (usize i = 0; i < 4; i++) {
+		for (std::size_t i = 0; i < 4; i++) {
 			result[i] = data[i] * other.data[i];
 		}
 		return( result);
@@ -46,7 +45,7 @@ struct Vector4
 	inline Vector4 operator/(const Vector4& _other) const
 	{
 		Vector4 result;
-		for (usize i = 0; i < 4; i++) {
+		for (std::size_t i = 0; i < 4; i++) {
 			result[i] = data[i] / _other.data[i];
 		}
 		return(result);

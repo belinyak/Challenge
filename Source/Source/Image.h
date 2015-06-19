@@ -1,7 +1,8 @@
 #ifndef CHALLENGE_IMAGE_H
 #define CHALLENGE_IMAGE_H
 
-#include <Source/Types.hpp>
+#include <cstdint>
+#include <cstddef>
 
 namespace Challenge
 {
@@ -20,37 +21,37 @@ public:
 	//Note(mate): bytes/pixel
 
 	Image();
-	Image(u32 _width, u32 _height, ImageFormat _format, const u8* _pixels = nullptr);
+	Image(std::uint32_t _width, std::uint32_t _height, ImageFormat _format, const std::uint8_t* _pixels = nullptr);
 	Image(const Image& _other);
 	Image& operator=(const Image& _other);
 	~Image();
 
 	bool loadFromFile(const char* _fileName);
-	bool loadFromMemory(u32 _width, u32 _height, ImageFormat _format, const u8* _pixels);
+	bool loadFromMemory(std::uint32_t _width, std::uint32_t _height, ImageFormat _format, const std::uint8_t* _pixels);
 
-	inline u32 getWidth() const { 
+	inline std::uint32_t getWidth() const { 
 		return(m_width);
 	}
-	inline u32 getHeight() const {
+	inline std::uint32_t getHeight() const {
 		return(m_height);
 	}
 	inline ImageFormat getFormat() const { 
 		return(m_format);
 	}
-	inline u8* getPixelPtr() const {
+	inline std::uint8_t* getPixelPtr() const {
 		return(m_pixels);
 	}
 
-	u8*  getPixel(u32 _column, u32 _row) const;
-	void	setPixel(u32 _column, u32 _row, const u32* _pixel) const;
+	std::uint8_t*  getPixel(std::uint32_t _column, std::uint32_t _row) const;
+	void	setPixel(std::uint32_t _column, std::uint32_t _row, const std::uint32_t* _pixel) const;
 
 	void flipVertically();
 
 private:
 	ImageFormat m_format;
-	u32 m_width;
-	u32 m_height;
-	u8* m_pixels;
+	std::uint32_t m_width;
+	std::uint32_t m_height;
+	std::uint8_t* m_pixels;
 };
 }
 

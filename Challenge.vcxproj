@@ -44,11 +44,9 @@
     <ClInclude Include="Source\Source\ShaderProgram.h" />
     <ClInclude Include="Source\Source\Texture.h" />
     <ClInclude Include="Source\Source\TickCounter.h" />
-    <ClInclude Include="Source\Source\Types.hpp" />
     <ClInclude Include="Source\Source\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Source\Math\Constants.cpp" />
     <ClCompile Include="Source\Math\Matrix.cpp" />
     <ClCompile Include="Source\Math\Matrix4.cpp" />
@@ -58,6 +56,7 @@
     <ClCompile Include="Source\Math\Vector3.cpp" />
     <ClCompile Include="Source\Math\Vector4.cpp" />
     <ClCompile Include="Source\Source\Camera.cpp" />
+    <ClCompile Include="Source\Source\Clock.cpp" />
     <ClCompile Include="Source\Source\Core.cpp" />
     <ClCompile Include="Source\Source\Image.cpp" />
     <ClCompile Include="Source\Source\main.cpp" />
@@ -124,8 +123,8 @@
     <LibraryPath>f:\Programozás\OpenGl\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\Programozás\Boost\boost_1_58_0;E:\Programozás\OpenGl\Includes\OpenGL includes;E:\Programozás\OpenGl\Includes\FreeType includes;c:\Users\Belinyak\Documents\GitHub\Challenge\Source;E:\Programozás\OpenGl\Includes\STB includes;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Programozás\Boost\boost_1_58_0\stage\lib;E:\Programozás\OpenGl\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\Include\Include\OpenGL includes;$(SolutionDir)\Include\Include\FreeType includes;$(SolutionDir)\Source;$(SolutionDir)\Include\Include\STB includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Include\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

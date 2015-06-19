@@ -14,10 +14,10 @@ struct Quaternion
 	Quaternion(float _x, float _y, float _z, float _w);
 	Quaternion(const Vector3& _v, float _s);
 
-	inline const float operator[](usize _index) const {
+	inline const float operator[](std::size_t _index) const {
 		return(data[_index]);
 	}
-	inline float& operator[](usize _index) {
+	inline float& operator[](std::size_t _index) {
 		return(data[_index]);
 	}
 
@@ -102,11 +102,26 @@ inline Vector3 axis(const Quaternion& _q)
 		return Vector3(0, 0, 1);
 	}
 
-	f32 invs2 = 1.0f / std::sqrt(s2);
+	float invs2 = 1.0f / std::sqrt(s2);
 
 	return _q.vector() * invs2;
 }
 inline Quaternion angleAxis(const Radian& _angle, const Vector3& _axis)
+{
+	Quaternion value;
+
+	const Vector3 a = normalize(_axis);
+
+	const float s = std::sin((float)(0.5f * _angle));
+
+	value.vector() = a * s;
+	value.w = std::cos((float)(0.5f * _angle));
+
+
+	return(value);
+}
+
+inline Quaternion angleAxis(const float& _angle, const Vector3& _axis)
 {
 	Quaternion value;
 
@@ -155,15 +170,15 @@ inline Matrix4 quaternionToMatrix4(const Quaternion& _q)
 	Matrix4 mat(1);
 	Quaternion a = normalize(_q);
 
-	const f32 xx = a.x * a.x;
-	const f32 yy = a.y * a.y;
-	const f32 zz = a.z * a.z;
-	const f32 xy = a.x * a.y;
-	const f32 xz = a.x * a.z;
-	const f32 yz = a.y * a.z;
-	const f32 wx = a.w * a.x;
-	const f32 wy = a.w * a.y;
-	const f32 wz = a.w * a.z;
+	const float xx = a.x * a.x;
+	const float yy = a.y * a.y;
+	const float zz = a.z * a.z;
+	const float xy = a.x * a.y;
+	const float xz = a.x * a.z;
+	const float yz = a.y * a.z;
+	const float wx = a.w * a.x;
+	const float wy = a.w * a.y;
+	const float wz = a.w * a.z;
 
 	mat[0][0] = 1.0f - 2.0f * (yy + zz);
 	mat[0][1] = 2.0f * (xy + wz);
@@ -182,13 +197,13 @@ inline Matrix4 quaternionToMatrix4(const Quaternion& _q)
 
 inline Quaternion matrix4ToQuaternion(const Matrix4& m)
 {
-	f32 fourXSquaredMinus1 = m[0][0] - m[1][1] - m[2][2];
-	f32 fourYSquaredMinus1 = m[1][1] - m[0][0] - m[2][2];
-	f32 fourZSquaredMinus1 = m[2][2] - m[0][0] - m[1][1];
-	f32 fourWSquaredMinus1 = m[0][0] + m[1][1] + m[2][2];
+	float fourXSquaredMinus1 = m[0][0] - m[1][1] - m[2][2];
+	float fourYSquaredMinus1 = m[1][1] - m[0][0] - m[2][2];
+	float fourZSquaredMinus1 = m[2][2] - m[0][0] - m[1][1];
+	float fourWSquaredMinus1 = m[0][0] + m[1][1] + m[2][2];
 
 	int biggestIndex = 0;
-	f32 fourBiggestSquaredMinus1 = fourWSquaredMinus1;
+	float fourBiggestSquaredMinus1 = fourWSquaredMinus1;
 	if (fourXSquaredMinus1 > fourBiggestSquaredMinus1)
 	{
 		fourBiggestSquaredMinus1 = fourXSquaredMinus1;
@@ -205,8 +220,8 @@ inline Quaternion matrix4ToQuaternion(const Matrix4& m)
 		biggestIndex = 3;
 	}
 
-	f32 biggestVal = std::sqrt(fourBiggestSquaredMinus1 + 1.0f) * 0.5f;
-	f32 mult = 0.25f / biggestVal;
+	float biggestVal = std::sqrt(fourBiggestSquaredMinus1 + 1.0f) * 0.5f;
+	float mult = 0.25f / biggestVal;
 
 	Quaternion q;
 

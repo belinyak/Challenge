@@ -53,7 +53,7 @@ Vector4 Vector4::operator-() const {
 
 bool Vector4::operator==(const Vector4& other) const
 {
-	for (usize i = 0; i < 4; i++)
+	for (std::size_t i = 0; i < 4; i++)
 	{
 		if (data[i] != other.data[i]) {
 			return(false);

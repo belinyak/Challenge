@@ -1,7 +1,6 @@
 #ifndef CHALLENGE_MATH_VECTOR2_H
 #define CHALLENGE_MATH_VECTOR2_H
 
-#include <Source\Types.hpp>
 #include <cmath>
 #include <iostream>
 
@@ -14,10 +13,10 @@ struct Vector2
 	Vector2(float _x, float _y);
 	Vector2(float _xy[2]);
 
-	inline float& operator[](usize _index) {
+	inline float& operator[](std::size_t _index) {
 		return(data[_index]);
 	};
-	inline const float& operator[](usize _index) const {
+	inline const float& operator[](std::size_t _index) const {
 		return(data[_index]);
 	};
 

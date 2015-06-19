@@ -1,7 +1,6 @@
 #ifndef CHALLENGE_MATH_VECTOR3_H
 #define CHALLENGE_MATH_VECTOR3_H
 
-#include <Source\Types.hpp>
 #include <Math\Vector2.h>
 
 #include <iostream>
@@ -23,8 +22,8 @@ struct Vector3
 		return{ -x,-y,-z };
 	}
 
-	float& operator[](usize _index);
-	const float& operator[](usize _index) const;
+	float& operator[](std::size_t _index);
+	const float& operator[](std::size_t _index) const;
 	bool operator==(const Vector3& other) const;
 	bool operator!=(const Vector3& other) const;
 
@@ -37,7 +36,7 @@ struct Vector3
 	inline Vector3  operator*(const Vector3& other) const
 	{
 		Vector3 result;
-		for (usize i = 0; i < 3; i++) {
+		for (std::size_t i = 0; i < 3; i++) {
 			result[i] = data[i] * other.data[i];
 		}
 		return(result);
@@ -45,7 +44,7 @@ struct Vector3
 	inline Vector3 operator/(const Vector3& _other) const
 	{
 		Vector3 result;
-		for (usize i = 0; i < 3; i++) {
+		for (std::size_t i = 0; i < 3; i++) {
 			result[i] = data[i] / _other.data[i];
 		}
 		return(result);

@@ -32,9 +32,6 @@
     <ClInclude Include="Source\Source\Texture.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Types.hpp">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Source\Color.hpp">
       <Filter>Source</Filter>
     </ClInclude>
@@ -136,8 +133,10 @@
     <ClCompile Include="Source\Math\Vector4.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="TickCounter.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Clock.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

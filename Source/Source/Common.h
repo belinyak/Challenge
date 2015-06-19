@@ -1,7 +1,7 @@
-#ifndef CHALLENGE_COMMON_HPP
-#define CHALLENGE_COMMON_HPP
+#ifndef CHALLENGE_COMMON_H
+#define CHALLENGE_COMMON_H
 
-#include <Source\Types.hpp>
+//Note(mate): https://www.youtube.com/watch?v=GAi_nTx1zG8 18:00
 
 #define GLOBAL static
 #define INTERNAL static
@@ -11,5 +11,5 @@ namespace Challenge
 {
 
 } //namespace Challenge
-#endif // !#define CHALLENGE_COMMON_HPP
+#endif // !#define CHALLENGE_COMMON_H
 

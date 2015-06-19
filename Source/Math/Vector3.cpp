@@ -29,15 +29,15 @@ Vector3::Vector3(const Vector2& other, float z)
 	, z(z)
 {}
 
-float& Vector3::operator[](usize _index) {
+float& Vector3::operator[](std::size_t _index) {
 	return(data[_index]);
 }
-const float& Vector3::operator[](usize _index) const {
+const float& Vector3::operator[](std::size_t _index) const {
 	return(data[_index]);
 }
 bool Vector3::operator==(const Vector3& other) const
 {
-	for (usize i = 0; i < 3; i++)
+	for (std::size_t i = 0; i < 3; i++)
 	{
 		if (data[i] != other.data[i]) {
 			return(false);

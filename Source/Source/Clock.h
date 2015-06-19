@@ -1,11 +1,7 @@
 #ifndef CHALLENGE_CLOCK_H
 #define CHALLENGE_CLOCK_H
 
-//TODO(mate): Inline functions?
-
 #include <GLFW\glfw3.h>
-//TODO(mate): remove Types.hpp
-//#include "Source\Types.hpp"
 
 namespace Challenge
 {

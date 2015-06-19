@@ -3,7 +3,6 @@
 
 #define GLEW_STATIC
 
-//TODO(mate): get rid of .hpp-s!
 
 //OpenGl
 #include <GL/glew.h>
@@ -160,6 +159,7 @@ INTERNAL void loadInstance()
 	b.asset = &g_sprite;
 	b.transform.position = { 0.5f, 0, 0.5f };
 	b.transform.orientation = Challenge::angleAxis(Challenge::Degree(90), { 0, 1, 0 });
+	b.transform.orientation = Challenge::angleAxis(Challenge::Radian_( Challenge::Constants::PI /2 ), { 0, 1, 0 });
 	g_instances.push_back(b);
 
 	ModelInstance c;
