@@ -133,10 +133,10 @@
     <ClCompile Include="Source\Math\Vector4.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="TickCounter.cpp">
+    <ClCompile Include="Source\Source\Clock.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Clock.cpp">
+    <ClCompile Include="Source\Source\TickCounter.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

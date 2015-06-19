@@ -32,3 +32,11 @@
 *.pdb
 *.log
 *.opensdf
+*.bat
+
+#Folders
+
+[Dd]ebug/
+[Ii]nclude/
+[Xx]64/
+

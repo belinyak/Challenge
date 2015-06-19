@@ -62,7 +62,7 @@
     <ClCompile Include="Source\Source\main.cpp" />
     <ClCompile Include="Source\Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\Source\Texture.cpp" />
-    <ClCompile Include="TickCounter.cpp" />
+    <ClCompile Include="Source\Source\TickCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\frag.glsl" />
