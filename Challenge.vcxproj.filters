@@ -1,152 +1,181 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source">
-      <UniqueIdentifier>{fa065f72-4e8f-4597-8a0f-0c2c9836fb50}</UniqueIdentifier>
+    <Filter Include="Data">
+      <UniqueIdentifier>{31c4011c-f557-4651-bbeb-b76e7909afd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Math">
-      <UniqueIdentifier>{1a838dd8-511a-4fc6-af17-003361bd7cbf}</UniqueIdentifier>
+    <Filter Include="Data\Shaders">
+      <UniqueIdentifier>{475587fe-19b5-4d0d-902c-97c251ec98c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{e4691c79-4e47-4f42-b115-9d66d47f47b4}</UniqueIdentifier>
+    <Filter Include="Data\Textures">
+      <UniqueIdentifier>{217bc58a-07f7-49c1-a5c4-53afde5cf667}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Textures">
-      <UniqueIdentifier>{de76cd46-383d-4c29-bce3-26c139ab6722}</UniqueIdentifier>
+    <Filter Include="Code">
+      <UniqueIdentifier>{6f9023c6-e58a-4711-9744-34393029e72a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Math">
+      <UniqueIdentifier>{8b15b780-083b-45c4-bb3f-810ed8e3d817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Graphics">
+      <UniqueIdentifier>{35f001c0-bb7d-43e1-a44e-9093057d747a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Game">
+      <UniqueIdentifier>{53948517-84d1-4542-b3f2-4f5e487a4500}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Source\Textures\test.jpg">
-      <Filter>Textures</Filter>
+    <Image Include="Data\Textures\asd.png">
+      <Filter>Data\Textures</Filter>
     </Image>
-    <Image Include="Source\Textures\sh.jpg">
-      <Filter>Textures</Filter>
+    <Image Include="Data\Textures\grass.jpg">
+      <Filter>Data\Textures</Filter>
+    </Image>
+    <Image Include="Data\Textures\sh.jpg">
+      <Filter>Data\Textures</Filter>
+    </Image>
+    <Image Include="Data\Textures\test.jpg">
+      <Filter>Data\Textures</Filter>
+    </Image>
+    <Image Include="Data\Textures\wall.jpg">
+      <Filter>Data\Textures</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Source\Image.h">
-      <Filter>Source</Filter>
+    <None Include="Data\Shaders\frag.glsl">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="Data\Shaders\vert.glsl">
+      <Filter>Data\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Code\Math\Angle.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\NonCopyable.hpp">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Math\Constants.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Texture.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Math\Math.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Color.hpp">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Math\Matrix.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Core.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Math\Matrix4.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Angle.hpp">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Math\Quaternion.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Constants.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Math\Transform.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Math.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Math\Vector2.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Matrix.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Math\Vector3.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Matrix4.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Math\Vector4.h">
+      <Filter>Code\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Quaternion.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Graphics\Camera.h">
+      <Filter>Code\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Transform.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Graphics\Color.hpp">
+      <Filter>Code\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Unit.hpp">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Graphics\Image.h">
+      <Filter>Code\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Vector2.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Graphics\ShaderProgram.h">
+      <Filter>Code\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Vector3.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Graphics\Texture.h">
+      <Filter>Code\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Vector4.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Code\Graphics\Vertex.h">
+      <Filter>Code\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Camera.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Game\Clock.h">
+      <Filter>Code\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Clock.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Game\Common.h">
+      <Filter>Code\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Common.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Game\Core.h">
+      <Filter>Code\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\ShaderProgram.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Game\Hero_Movement.h">
+      <Filter>Code\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\TickCounter.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Game\InputHandler.h">
+      <Filter>Code\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Vertex.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Code\Game\model.h">
+      <Filter>Code\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Game\NonCopyable.hpp">
+      <Filter>Code\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Game\Render.h">
+      <Filter>Code\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Game\TickCounter.h">
+      <Filter>Code\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Game\Wall.h">
+      <Filter>Code\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Graphics\Mesh.h">
+      <Filter>Code\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Source\Core.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Code\Math\Matrix.cpp">
+      <Filter>Code\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Image.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Code\Math\Matrix4.cpp">
+      <Filter>Code\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\ShaderProgram.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Code\Math\Quaternion.cpp">
+      <Filter>Code\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Texture.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Code\Math\Transform.cpp">
+      <Filter>Code\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Camera.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Code\Math\Vector2.cpp">
+      <Filter>Code\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\main.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Code\Math\Vector3.cpp">
+      <Filter>Code\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Constants.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Code\Math\Vector4.cpp">
+      <Filter>Code\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Matrix.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Code\Graphics\Camera.cpp">
+      <Filter>Code\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Matrix4.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Code\Graphics\Image.cpp">
+      <Filter>Code\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Quaternion.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Code\Graphics\ShaderProgram.cpp">
+      <Filter>Code\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Transform.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Code\Graphics\Texture.cpp">
+      <Filter>Code\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Vector2.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Code\Game\Clock.cpp">
+      <Filter>Code\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Vector3.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Code\Game\Core.cpp">
+      <Filter>Code\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Vector4.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Code\Game\TickCounter.cpp">
+      <Filter>Code\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Clock.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Code\Graphics\Mesh.cpp">
+      <Filter>Code\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\TickCounter.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Source\Shaders\frag.glsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Source\Shaders\vert.glsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Source\todo.bat" />
   </ItemGroup>
 </Project>

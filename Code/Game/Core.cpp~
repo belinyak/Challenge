@@ -1,0 +1,273 @@
+#define OPENGL_MAJOR_VERSION	2
+#define OPENGL_MINOR_VERSION	1 
+
+#define GLEW_STATIC
+
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <GLFW/glfw3.h>
+
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <vector>
+#include <sstream>
+
+#include <Game/TickCounter.h>
+#include <Game/Core.h>
+#include <Graphics/ShaderProgram.h>
+#include <Graphics/Image.h>
+
+#include <Game/Clock.h>
+#include <Graphics/Camera.h>
+#include <Math/Math.h>
+#include <Math/Transform.h>
+
+#include <Game/Common.h>
+#include <Graphics/Texture.h>
+#include <Graphics/Vertex.h>
+#include <Graphics/Mesh.h>
+
+#include <Game/Render.h>
+#include <Game/InputHandler.h>
+#include <Game/Hero_Movement.h>
+#include <Game/Wall.h>
+
+#include <Game/Hero.h>
+#include <Game/Config.h>
+
+#include <Game/World.h>
+#include <Game/Monster.h>
+
+#include <Graphics/Fonttest.h>
+
+GLFWwindow* window;
+GLOBAL int WindowWidth = 1024 ;
+GLOBAL int WindowHeight = 768;
+
+GLOBAL ShaderProgram* g_defaultShader;
+
+GLOBAL world World;
+GLOBAL ModelAsset wallAsset;
+GLOBAL Material wallMaterial;
+GLOBAL Camera g_camera;
+
+INTERNAL void glfwHints()
+{
+    glfwDefaultWindowHints();
+    glfwWindowHint(GLFW_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+}
+
+INTERNAL void resizeCallback(GLFWwindow* _window, int _width, int _height)
+{
+    WindowWidth = _width;
+    WindowHeight = _height;
+}
+
+INTERNAL void update(float _dt)
+{
+}
+
+INTERNAL void render(GLFWwindow* _window)
+{
+    glViewport(0, 0, WindowWidth, WindowHeight);
+
+    glClearColor(0x00, 0x00, 0x00, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	 
+    ShaderProgram* currentShaders = nullptr;
+    for(int i=0;
+	i<World.maps.size();
+	i++)
+    {
+	for (const auto& inst : World.maps[World.activeMap].staticWalls.Walls)
+	{
+	    if (inst.asset->material->shaders != currentShaders)
+	    {
+		currentShaders = inst.asset->material->shaders;
+		currentShaders->Use();
+	    }
+	    renderInstance(inst, g_camera);
+	}
+	if (currentShaders)
+	{
+	    currentShaders->stopUsing();
+	}
+
+	for (const auto& inst : World.maps[World.activeMap].dynamicWalls.Walls)
+	{
+	    if (inst.asset->material->shaders != currentShaders)
+	    {
+		currentShaders = inst.asset->material->shaders;
+		currentShaders->Use();
+	    }
+	    renderInstance(inst, g_camera);
+	}
+	if (currentShaders)
+	{
+	    currentShaders->stopUsing();
+	}
+
+    }
+
+    renderInstance(monster.instance,g_camera);
+    //renderInstance(monster2.instance,g_camera);
+    //renderInstance(monster3.instance,g_camera);
+    //renderInstance(monster4.instance,g_camera);
+
+    renderInstance(hero.instance,g_camera);
+    glfwSwapBuffers(_window);
+    glfwPollEvents();
+}
+
+
+void init()
+{   
+    g_camera.transform.position.x = 12.0f;
+    g_camera.transform.position.z = 19.0f;
+    g_camera.transform.position.y = 9.0f;
+
+
+    // Initialize GLFW
+    assert(glfwInit() && "Failed to init GLFW\n");
+
+    window = glfwCreateWindow(WindowWidth, WindowHeight,
+			      "Challenge",
+			      NULL, NULL);
+
+    assert(window != NULL && "Failed to open GLFW window");
+    glfwSetWindowSizeCallback(window, resizeCallback);
+    glfwMakeContextCurrent(window);
+
+    // Initialize GLEW
+    assert(!glewInit() && "Failed to init GLEW");
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+
+    glfwSetScrollCallback(window, InputHandler::ScrollCallback);
+    glfwHints();
+    
+    glEnable(GL_BLEND);
+    glEnable(GL_ALPHA_TEST);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    std::string vertPath = "c:\\Users\\Belinyak\\Documents\\GitHub\\Challenge\\Data\\Shaders\\vert.glsl";
+    std::string fragPath = "c:\\Users\\Belinyak\\Documents\\GitHub\\Challenge\\Data\\Shaders\\frag.glsl";
+    const char* wallPath = "c:\\Users\\Belinyak\\Documents\\GitHub\\Challenge\\Data\\Textures\\wall2.jpg";
+    const char* map1Path = "c:\\Users\\Belinyak\\Documents\\GitHub\\Challenge\\Data\\Maps\\map1.data";
+    const char* map2Path = "c:\\Users\\Belinyak\\Documents\\GitHub\\Challenge\\Data\\Maps\\map2.data";
+    const char* map3Path = "c:\\Users\\Belinyak\\Documents\\GitHub\\Challenge\\Data\\Maps\\map3.data";
+    
+    g_defaultShader = loadShaders(vertPath, fragPath);
+
+    //NOTE(mate): wall
+    {
+	wallMaterial = loadMaterial(wallPath,g_defaultShader);
+
+	wallAsset = loadSpriteAsset(g_defaultShader );
+	wallAsset.material = &wallMaterial;
+    }
+    //NOTE(mate): world
+    {
+	Map map1;
+	World.activeMap = 0;
+
+	map1.staticWalls.Walls = Wall::loadWallInstances(&wallAsset,map1Path, Wall::Type::Static );
+	map1.dynamicWalls.Walls = Wall::loadWallInstances(&wallAsset, map1Path, Wall::Type::Dynamic);   
+	World.maps.push_back(map1);
+
+	map1.staticWalls.Walls = Wall::loadWallInstances(&wallAsset,map2Path, Wall::Type::Static );
+	map1.dynamicWalls.Walls = Wall::loadWallInstances(&wallAsset, map2Path, Wall::Type::Dynamic);
+	World.maps.push_back(map1);  
+    }   
+
+    hero.init(g_defaultShader);
+    
+    monster.init(g_defaultShader, {06.0f, 0.5f, 0.0f},10,0.04f);
+}
+
+void run()
+{
+    bool running = true;
+    //Note(mate): FPS
+    TickCounter tc;
+    Clock frameClock;
+
+    double accumulator = 0;
+    double prevTime = glfwGetTime();
+
+    std::stringstream titleStream;
+
+    while (running)
+    {
+	double currentTime = glfwGetTime();
+	double dt = currentTime - prevTime;
+	prevTime = currentTime;
+	accumulator += dt;
+	
+	WindowShouldClose(window, &running);
+
+	while (accumulator >= TIME_STEP)
+	{
+	    accumulator -= TIME_STEP;
+	    update(TIME_STEP);
+	}
+	
+	if (tc.update(TIME_STEP))
+	{
+	    titleStream.str("");
+	    titleStream.clear();
+	    titleStream << "Challenge - " << 1 / TIME_STEP  << " fps";
+	    glfwSetWindowTitle(window, titleStream.str().c_str());
+
+	    InputHandler::updateCamera(window);	    	    
+	    World.maps[World.activeMap].dynamicWalls.update();
+	    monster.update();
+	    //monster2.update();
+	    //monster3.update();
+	    //monster4.update();
+
+
+	    hero.update();
+	    if(hero.instance.transform.position.x > 24)
+	    {
+		World.activeMap = 1;
+//		g_camera.transform.position.x = 35;
+	    }
+	    if(hero.instance.transform.position.x < 24)
+	    {
+
+		World.activeMap = 0;
+		//	g_camera.transform.position.x = 12;
+	    }	    
+	    render(window);
+	    
+	}
+//	g_camera.FollowHero(hero.instance.transform.position);
+
+	//World.maps[World.activeMap].staticWalls.Walls = Wall::loadWallInstances(&wallAsset,"c:\\Users\\Belinyak\\Documents\\GitHub\\Challenge\\Data\\Maps\\map1.data", Wall::Type::Static );	
+
+	// Frame Limiter
+	while (frameClock.getElapsedTime() < 1.0 / 240.0)
+	{
+	}
+	frameClock.restart();
+    }
+}
+
+void exit()
+{
+    glfwDestroyWindow(window);
+    glfwTerminate();
+}
+
+int main()
+{
+    init();
+    run();
+    exit();
+}

@@ -1,0 +1,65 @@
+------------------------------------
+|                                  |
+|   TODO-k                         |
+|                                  |
+------------------------------------
+
+---------------------------------------------------------
+---------------------------------------------------------
+
+[ ] update frequency
+[X] kiszedni a core.cpp-bõl a render cuccokat -> Render.cpp
+[X] koordináta rendszer (0,0,0)-ból induljon
+[X] alpha channel
+[X] átrendezni a project mappát
+[X] misc fájlok
+    [X] build
+    [X] run
+    [X] clean
+    [X] todo
+[X] TileMap
+[X] static wall
+[X] dynamic wall
+   [X] horizontal move
+[X] camera fix/followhero
+
+[ ] monster
+    [ ] monster struct, load image to screen
+
+[ ] hero
+    [X] szétszedni külön hero mappába, és azon belül movement, attack..., vagy csak egy q nagy hero.h ???
+    [X] Hero.h
+    [ ] HeroState
+    [X] movement
+    [X] velocity
+    [X] Movement struct-ot átnézni mi kell bele, mielõtt átkerül a hero-ba
+    [ ] gravity-t átrakni a const-ba
+[X] collision detection
+    [X] basic
+    [X] TileMap based 
+    [X] Minkowski
+    [ ] HitPoint based - vagy csak több rectangle-lel felépíteni egy hero-t
+[ ] gamestate
+[X] mindennek lehessen módosítani a méretét
+    ehhez elõbb kell egy hero.h aztán minden a collision-nél hero.instance.scale
+[ ] csinálni valami méter-piXel kb cuccot, hogy ne magic konstansok legyenek
+    [ ] ki kell venni az fps-t konstansnak és a méter/s-bõl lehet méter/frame
+[X] Map
+    [X] Map.h 
+    [X] levelX.map
+[ ] background
+[ ] animation
+    [X] fiximageload
+    [X] left/right sprite
+[ ] camera
+    [ ] fullscreen
+[ ] adatszerkezetek
+    [ ] bsp-tree
+[ ] cl-el fordítani
+[ ] érték szerinti átadásról nagyon le kéne szokni
+[ ] debugwindow
+    [ ] kb nyitna egy console-t, lehetne választani, hogy mit akarsz kiiratni 
+[X] mesh, material 
+
+[ ] word
+    camera zoomnál nézni, hogy mi van az aktív ablakban, azokat rajzoljuk csak ki  

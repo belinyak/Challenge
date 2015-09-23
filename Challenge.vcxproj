@@ -19,59 +19,66 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Source\Textures\sh.jpg" />
-    <Image Include="Source\Textures\test.jpg" />
+    <Image Include="Data\Textures\asd.png" />
+    <Image Include="Data\Textures\grass.jpg" />
+    <Image Include="Data\Textures\sh.jpg" />
+    <Image Include="Data\Textures\test.jpg" />
+    <Image Include="Data\Textures\wall.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Math\Angle.hpp" />
-    <ClInclude Include="Source\Math\Constants.h" />
-    <ClInclude Include="Source\Math\Math.h" />
-    <ClInclude Include="Source\Math\Matrix.h" />
-    <ClInclude Include="Source\Math\Matrix4.h" />
-    <ClInclude Include="Source\Math\Quaternion.h" />
-    <ClInclude Include="Source\Math\Transform.h" />
-    <ClInclude Include="Source\Math\Unit.hpp" />
-    <ClInclude Include="Source\Math\Vector2.h" />
-    <ClInclude Include="Source\Math\Vector3.h" />
-    <ClInclude Include="Source\Math\Vector4.h" />
-    <ClInclude Include="Source\Source\Camera.h" />
-    <ClInclude Include="Source\Source\Clock.h" />
-    <ClInclude Include="Source\Source\Color.hpp" />
-    <ClInclude Include="Source\Source\Common.h" />
-    <ClInclude Include="Source\Source\Core.h" />
-    <ClInclude Include="Source\Source\Image.h" />
-    <ClInclude Include="Source\Source\NonCopyable.hpp" />
-    <ClInclude Include="Source\Source\ShaderProgram.h" />
-    <ClInclude Include="Source\Source\Texture.h" />
-    <ClInclude Include="Source\Source\TickCounter.h" />
-    <ClInclude Include="Source\Source\Vertex.h" />
+    <None Include="Data\Shaders\frag.glsl" />
+    <None Include="Data\Shaders\vert.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Math\Constants.cpp" />
-    <ClCompile Include="Source\Math\Matrix.cpp" />
-    <ClCompile Include="Source\Math\Matrix4.cpp" />
-    <ClCompile Include="Source\Math\Quaternion.cpp" />
-    <ClCompile Include="Source\Math\Transform.cpp" />
-    <ClCompile Include="Source\Math\Vector2.cpp" />
-    <ClCompile Include="Source\Math\Vector3.cpp" />
-    <ClCompile Include="Source\Math\Vector4.cpp" />
-    <ClCompile Include="Source\Source\Camera.cpp" />
-    <ClCompile Include="Source\Source\Clock.cpp" />
-    <ClCompile Include="Source\Source\Core.cpp" />
-    <ClCompile Include="Source\Source\Image.cpp" />
-    <ClCompile Include="Source\Source\main.cpp" />
-    <ClCompile Include="Source\Source\ShaderProgram.cpp" />
-    <ClCompile Include="Source\Source\Texture.cpp" />
-    <ClCompile Include="Source\Source\TickCounter.cpp" />
+    <ClInclude Include="Code\Game\Clock.h" />
+    <ClInclude Include="Code\Game\Common.h" />
+    <ClInclude Include="Code\Game\Core.h" />
+    <ClInclude Include="Code\Game\Hero_Movement.h" />
+    <ClInclude Include="Code\Game\InputHandler.h" />
+    <ClInclude Include="Code\Game\model.h" />
+    <ClInclude Include="Code\Game\NonCopyable.hpp" />
+    <ClInclude Include="Code\Game\Render.h" />
+    <ClInclude Include="Code\Game\TickCounter.h" />
+    <ClInclude Include="Code\Game\Wall.h" />
+    <ClInclude Include="Code\Graphics\Camera.h" />
+    <ClInclude Include="Code\Graphics\Color.hpp" />
+    <ClInclude Include="Code\Graphics\Image.h" />
+    <ClInclude Include="Code\Graphics\Mesh.h" />
+    <ClInclude Include="Code\Graphics\ShaderProgram.h" />
+    <ClInclude Include="Code\Graphics\Texture.h" />
+    <ClInclude Include="Code\Graphics\Vertex.h" />
+    <ClInclude Include="Code\Math\Angle.h" />
+    <ClInclude Include="Code\Math\Constants.h" />
+    <ClInclude Include="Code\Math\Math.h" />
+    <ClInclude Include="Code\Math\Matrix.h" />
+    <ClInclude Include="Code\Math\Matrix4.h" />
+    <ClInclude Include="Code\Math\Quaternion.h" />
+    <ClInclude Include="Code\Math\Transform.h" />
+    <ClInclude Include="Code\Math\Vector2.h" />
+    <ClInclude Include="Code\Math\Vector3.h" />
+    <ClInclude Include="Code\Math\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Source\Shaders\frag.glsl" />
-    <None Include="Source\Shaders\vert.glsl" />
-    <None Include="Source\todo.bat" />
+    <ClCompile Include="Code\Game\Clock.cpp" />
+    <ClCompile Include="Code\Game\Core.cpp" />
+    <ClCompile Include="Code\Game\TickCounter.cpp" />
+    <ClCompile Include="Code\Graphics\Camera.cpp" />
+    <ClCompile Include="Code\Graphics\Image.cpp" />
+    <ClCompile Include="Code\Graphics\Mesh.cpp" />
+    <ClCompile Include="Code\Graphics\ShaderProgram.cpp" />
+    <ClCompile Include="Code\Graphics\Texture.cpp" />
+    <ClCompile Include="Code\Math\Matrix.cpp" />
+    <ClCompile Include="Code\Math\Matrix4.cpp" />
+    <ClCompile Include="Code\Math\Quaternion.cpp" />
+    <ClCompile Include="Code\Math\Transform.cpp" />
+    <ClCompile Include="Code\Math\Vector2.cpp" />
+    <ClCompile Include="Code\Math\Vector3.cpp" />
+    <ClCompile Include="Code\Math\Vector4.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FFC3F50E-BC2D-4628-BD45-2C1520604A74}</ProjectGuid>
     <RootNamespace>Challenge</RootNamespace>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -123,8 +130,12 @@
     <LibraryPath>f:\Programozás\OpenGl\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\Include\Include\OpenGL includes;$(SolutionDir)\Include\Include\FreeType includes;$(SolutionDir)\Source;$(SolutionDir)\Include\Include\STB includes;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Include\Libraries_vs2015\Debug\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\External\Include\OpenGL includes;$(SolutionDir)\External\Include\FreeType includes;C:\Users\Belinyak\Documents\GitHub\Challenge\Data;$(SolutionDir)\Code;$(SolutionDir)\External\Include\STB includes;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Programozás\OpenGl2\Libraries_vs2015\Debug\x64;E:\Programozás\OpenGL\Lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\Studio\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)\Studio\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -142,6 +153,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <ShowIncludes>true</ShowIncludes>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

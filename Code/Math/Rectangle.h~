@@ -1,0 +1,44 @@
+#ifndef CHALLENGE_RECTANGLE_H
+#define CHALLENGE_RECTANGLE_H
+
+#include <Math/Vector2.h>
+#include <Math/Vector3.h>
+
+/*
+ b      c
+  ------
+  |    |
+  ------
+ a      d
+*/
+  
+struct Rectangle
+{
+    Vector2 a;
+    Vector2 b;
+    Vector2 c;
+    Vector2 d;
+    Vector2 center;
+    float width;
+    float height;
+    Rectangle() = default;
+    Rectangle( Vector3 pos, Vector3 scale);
+};
+
+Rectangle::Rectangle( Vector3 pos, Vector3 scale)
+{
+    a = {pos.x, pos.y};
+    b = {pos.x,pos.y + scale.y};
+    c = {pos.x + scale.x,pos.y + scale.y};
+    d = {pos.x + scale.x,pos.y};
+
+    height = b.y - a.y;
+    width = d.x - a.x;
+
+    center.x = a.x + width/2.0f;
+    center.y = a.y + height/2.0f;
+}
+
+
+
+#endif
